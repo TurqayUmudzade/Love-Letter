@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container login">
+
+    <form class="small-container" method="post" asp-action="Register" asp-controller="Account">
+        <h3>Register </h3>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" name="email" value="" />
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <input type="text" class="form-control"  name="username" value="" />
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="text" name="password" class="form-control" value="" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+</div>
+
+

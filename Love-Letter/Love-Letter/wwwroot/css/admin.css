@@ -1,0 +1,32 @@
+table i {
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.fa-edit {
+    background-color: #4285F4;
+}
+
+.fa-trash-alt {
+    background-color: #D8000C;
+}
+
+.container {
+    margin-top: 30px !important;
+}
+
+.custom-file-label {
+    top: 32px !important;
+}
+
+.small-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.login {
+    position: relative;
+    top: 200px;
+}
