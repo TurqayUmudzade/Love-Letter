@@ -6,6 +6,7 @@ using Love_Letter.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Love_Letter.Models;
+using Love_Letter.ViewModel;
 
 namespace Love_Letter.Controllers
 {
@@ -29,22 +30,24 @@ namespace Love_Letter.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var user = await _userManager.FindByNameAsync(username);
-
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                //sign  in
-                var signInresult = await _signInManager.PasswordSignInAsync(username, password, false, false);
-                if (signInresult.Succeeded)
+                var user = await _userManager.FindByNameAsync(model.Username);
+
+                if (user != null)
                 {
-                    return RedirectToAction("Index");
+                    //sign  in
+                    var signInresult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+                    if (signInresult.Succeeded)
+                        return RedirectToAction("Index");
+
                 }
+                
             }
 
-
-            return View();
+            return View(model);
         }
 
         public IActionResult Register()
@@ -52,30 +55,48 @@ namespace Love_Letter.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password,string email)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new IdentityUser
+
+            if (ModelState.IsValid)
             {
-                UserName = username,
-                Email = email,
-            };
-
-            var result = await _userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
-            {
-
-                //sign  in
-                var signInresult = await _signInManager.PasswordSignInAsync(username, password, false, false);
-                if (signInresult.Succeeded)
+                var user = new IdentityUser
                 {
-                    return RedirectToAction("Index");
+                    UserName = model.Username,
+                    Email = model.Email,
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    //sign  in
+                    var signInresult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+
+                    if (signInresult.Succeeded)
+                        return RedirectToAction("Index");
+
+                    return View("Login");
+                }
+                else
+                {
+                    List<IdentityError> errorList = result.Errors.ToList();
+                    string errors = "";
+                    foreach (var error in errorList)
+                    {
+                        errors = errors + error.Description.ToString();
+                    }
+                    ModelState.AddModelError("Custom", errors);
+
+                    return View(model);
                 }
 
             }
+            else
+                return View(model);
 
-            return View();
         }
+
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();

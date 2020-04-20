@@ -2,25 +2,28 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+@model RegisterViewModel
 <div class="container login">
 
     <form class="small-container" method="post" asp-action="Register" asp-controller="Account">
         <h3>Register </h3>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" name="email" value="" />
+            <label asp-for="Email">Email address</label>
+            <input type="email" class="form-control" asp-for="Email"  />
+            <span asp-validation-for="Email"></span>
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1">Username</label>
-            <input type="text" class="form-control"  name="username" value="" />
+            <label asp-for="Username">Username</label>
+            <input type="text" class="form-control" asp-for="Username"  />
+            <span asp-validation-for="Username"></span>
         </div>
 
         <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="text" name="password" class="form-control" value="" />
+            <label asp-for="Password">Password</label>
+            <input type="text" asp-for="Password"  class="form-control" />
+            <span asp-validation-for="Password"></span>
         </div>
-
+        @Html.ValidationMessage("Custom")
         <button type="submit" class="btn btn-primary">Log In</button>
     </form>
 </div>

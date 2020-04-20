@@ -32,6 +32,7 @@ namespace Love_Letter
                 config.Password.RequireDigit = false;
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = false;
+                config.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();

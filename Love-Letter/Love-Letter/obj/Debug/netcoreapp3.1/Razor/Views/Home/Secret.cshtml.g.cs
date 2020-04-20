@@ -26,8 +26,15 @@ using Love_Letter.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\Views\_ViewImports.cshtml"
+using Love_Letter.ViewModel;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"111d15a71c3d66f8a577b35d04d5a13aa7550822", @"/Views/Home/Secret.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1ca91aebce171b83096b7c4d396dc984869ab813", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"4224dab69271b8e65078cbf7aebf4557bb1fda71", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Secret : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998
