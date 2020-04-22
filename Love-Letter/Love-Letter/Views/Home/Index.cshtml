@@ -2,7 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-center">
+
+        <style>
+            .card {
+                height: 300px;
+                width: 200px;
+                border: 1px solid black;
+                border-radius: 20px;
+                margin: 20px;
+            }
+
+            .moved {
+                transform: translateY(200%);
+            }
+        </style>
+        <div class="container d-flex">
+            <div id="card1" class="card"></div>
+            <div id="card2"class="card"></div>
+            <div id="card3" class="card"></div>
+            <div id="card4" class="card"></div>
+        </div>
+
+        
+
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/signalr/signalr.js"></script>
+        <script src="~/lib/signalr/game.js"></script>
+    </div>

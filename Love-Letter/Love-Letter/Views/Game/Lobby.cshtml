@@ -3,7 +3,27 @@
     ViewData["Title"] = "Lobby";
 }
 
-<h1>Lobby</h1>
+    <body>
+        <style>
+            .card {
+                height: 300px;
+                width: 200px;
+                border: 1px solid black;
+                border-radius: 20px;
+                margin: 20px;
+            }
+
+            .moved {
+                transform: translateY(200%);
+            }
+        </style>
+        <div class="container d-flex">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+    </body>
 
 <script src="~/lib/jquery/dist/jquery.js" ></script>
 <script src="~/lib/signalr/signalr.js"></script>
