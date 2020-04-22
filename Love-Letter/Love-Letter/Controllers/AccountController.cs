@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Love_Letter.Models;
 using Love_Letter.ViewModel;
+using NETCore.MailKit.Core;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 
 namespace Love_Letter.Controllers
 {
@@ -14,10 +17,15 @@ namespace Love_Letter.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly Context _context;
+        private readonly IEmailService _emailService;
+
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, Context context,IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
+            _emailService = emailService;
         }
         public IActionResult Index()
         {
@@ -60,6 +68,7 @@ namespace Love_Letter.Controllers
 
             if (ModelState.IsValid)
             {
+
                 var user = new IdentityUser
                 {
                     UserName = model.Username,
@@ -70,23 +79,33 @@ namespace Love_Letter.Controllers
 
                 if (result.Succeeded)
                 {
-                    //sign  in
+
+                    /*//sign  in
                     var signInresult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
                     if (signInresult.Succeeded)
                         return RedirectToAction("Index");
 
-                    return View("Login");
+                    return View("Login");*/
+                    //generation of the email token
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                    var link = Url.Action(nameof(VerifyEmail), "Home", new { userId = user.Id, code }, Request.Scheme, Request.Host.ToString());
+
+                    //
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //
+                    await _emailService.SendAsync(model.Email, "email verify", $"<a href=\"{link}\">Verify Email</a>", true);
+
+                    return RedirectToAction("EmailVerification");
                 }
                 else
                 {
-                    List<IdentityError> errorList = result.Errors.ToList();
-                    string errors = "";
-                    foreach (var error in errorList)
+                  
+                    foreach (var error in result.Errors)
                     {
-                        errors = errors + error.Description.ToString();
+                        ModelState.AddModelError("Custom", error.Description);
                     }
-                    ModelState.AddModelError("Custom", errors);
 
                     return View(model);
                 }
@@ -96,6 +115,23 @@ namespace Love_Letter.Controllers
                 return View(model);
 
         }
+        public async Task<IActionResult> VerifyEmail(string userId, string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null) return BadRequest();
+
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+
+            if (result.Succeeded)
+            {
+                return View();
+            }
+
+            return BadRequest();
+        }
+
+        public IActionResult EmailVerification() => View();
 
         public async Task<IActionResult> LogOut()
         {

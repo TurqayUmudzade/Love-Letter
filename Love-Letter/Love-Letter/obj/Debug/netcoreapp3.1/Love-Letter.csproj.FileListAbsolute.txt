@@ -106,7 +106,6 @@ C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Love-Letter.dll
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Love-Letter.pdb
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Secret.cshtml.g.cs
-C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Love-Letter.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -146,3 +145,12 @@ C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Account\VerifyEmail.cshtml.g.cs
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Account\EmailVerification.cshtml.g.cs
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3.1\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Love-Letter.MvcApplicationPartsAssemblyInfo.cache

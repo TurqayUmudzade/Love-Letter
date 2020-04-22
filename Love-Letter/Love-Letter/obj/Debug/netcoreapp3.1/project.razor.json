@@ -20531,6 +20531,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Game\\Lobby.cshtml",
+      "TargetPath": "Views\\Game\\Lobby.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Account\\Index.cshtml",
       "TargetPath": "Views\\Account\\Index.cshtml",
       "FileKind": "mvc"
@@ -20546,6 +20551,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Account\\VerifyEmail.cshtml",
+      "TargetPath": "Views\\Account\\VerifyEmail.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
@@ -20558,6 +20568,11 @@
     {
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Home\\Secret.cshtml",
       "TargetPath": "Views\\Home\\Secret.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Account\\EmailVerification.cshtml",
+      "TargetPath": "Views\\Account\\EmailVerification.cshtml",
       "FileKind": "mvc"
     },
     {

@@ -23,6 +23,7 @@ namespace Love_Letter.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
