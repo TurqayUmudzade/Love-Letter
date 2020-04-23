@@ -4,65 +4,22 @@ using Love_Letter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Love_Letter.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20200422224548_lobby")]
+    partial class lobby
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Love_Letter.Models.Lobby", b =>
-                {
-                    b.Property<int>("LobbyID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(12)")
-                        .HasMaxLength(12);
-
-                    b.Property<bool>("Private")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Space")
-                        .HasColumnType("int");
-
-                    b.Property<int>("numberOfPlayers")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("user1UserID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("user2UserID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("user3UserID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("user4UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("LobbyID");
-
-                    b.HasIndex("user1UserID");
-
-                    b.HasIndex("user2UserID");
-
-                    b.HasIndex("user3UserID");
-
-                    b.HasIndex("user4UserID");
-
-                    b.ToTable("Lobbies");
-                });
 
             modelBuilder.Entity("Love_Letter.Models.User", b =>
                 {
@@ -321,25 +278,6 @@ namespace Love_Letter.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Love_Letter.Models.Lobby", b =>
-                {
-                    b.HasOne("Love_Letter.Models.User", "user1")
-                        .WithMany()
-                        .HasForeignKey("user1UserID");
-
-                    b.HasOne("Love_Letter.Models.User", "user2")
-                        .WithMany()
-                        .HasForeignKey("user2UserID");
-
-                    b.HasOne("Love_Letter.Models.User", "user3")
-                        .WithMany()
-                        .HasForeignKey("user3UserID");
-
-                    b.HasOne("Love_Letter.Models.User", "user4")
-                        .WithMany()
-                        .HasForeignKey("user4UserID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

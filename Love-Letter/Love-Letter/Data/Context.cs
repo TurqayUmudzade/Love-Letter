@@ -11,5 +11,6 @@ namespace Love_Letter.Data
 
         }
         public DbSet<User> users { get; set; }
+        public DbSet<Lobby> Lobbies { get; set; }
     }
 }

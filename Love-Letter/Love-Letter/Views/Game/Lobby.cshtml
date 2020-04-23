@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Lobby";
 }
-
+@model LobbiesViewModel
     <body>
         <style>
             .card {
@@ -18,13 +18,18 @@
             }
         </style>
         <div class="container d-flex">
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+            <div id="card1" class="card"></div>
+            <div id="card2" class="card"></div>
+            <div id="card3" class="card"></div>
+            <div id="card4" class="card"></div>
+        </div>
+
+        <div class="container">
+            <h1 class="">UserList</h1>
+            <ul id="userlist">
+            </ul>
         </div>
     </body>
-
-<script src="~/lib/jquery/dist/jquery.js" ></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/signalr/signalr.js"></script>
 <script src="~/lib/signalr/game.js"></script>

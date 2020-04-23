@@ -16,6 +16,5 @@ namespace Love_Letter.Models
 
         public string Password { get; set; }
 
-        public string Email { get; set; }
     }
 }

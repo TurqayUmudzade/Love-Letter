@@ -20531,6 +20531,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Game\\Index.cshtml",
+      "TargetPath": "Views\\Game\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Game\\Lobby.cshtml",
       "TargetPath": "Views\\Game\\Lobby.cshtml",
       "FileKind": "mvc"
