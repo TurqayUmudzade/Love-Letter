@@ -36,7 +36,7 @@ namespace Love_Letter
                 config.Password.RequireNonAlphanumeric = false;
                 config.Password.RequireUppercase = false;
                 config.User.RequireUniqueEmail = true;
-                config.SignIn.RequireConfirmedEmail = true;
+                config.SignIn.RequireConfirmedEmail = false;
             })
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
@@ -44,7 +44,7 @@ namespace Love_Letter
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Home/Login";
+                config.LoginPath = "/Account/Login";
             });
             var mailKitOptions = Configuration.GetSection("Email").Get<MailKitOptions>();
             services.AddMailKit(config => config.UseMailKit(mailKitOptions));

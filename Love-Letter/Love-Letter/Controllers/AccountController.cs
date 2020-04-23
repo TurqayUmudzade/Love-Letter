@@ -42,7 +42,7 @@ namespace Love_Letter.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Username);
+                var user = await _userManager.FindByEmailAsync(model.Username);
 
                 if (user != null)
                 {
@@ -73,6 +73,7 @@ namespace Love_Letter.Controllers
                 {
                     UserName = model.Username,
                     Email = model.Email,
+                    
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -80,24 +81,14 @@ namespace Love_Letter.Controllers
                 if (result.Succeeded)
                 {
 
-                    /*//sign  in
+                    //sign  in
                     var signInresult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
                     if (signInresult.Succeeded)
                         return RedirectToAction("Index");
 
-                    return View("Login");*/
-                    //generation of the email token
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                    var link = Url.Action(nameof(VerifyEmail), "Home", new { userId = user.Id, code }, Request.Scheme, Request.Host.ToString());
-
-                    //
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //
-                    await _emailService.SendAsync(model.Email, "email verify", $"<a href=\"{link}\">Verify Email</a>", true);
-
-                    return RedirectToAction("EmailVerification");
+                    return Content(signInresult.ToString());
+                   // return View("Login");
                 }
                 else
                 {
