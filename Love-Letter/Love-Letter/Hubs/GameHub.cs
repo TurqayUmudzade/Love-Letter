@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -7,18 +8,22 @@ namespace Love_Letter.Hubs
 {
     public class GameHub : Hub
     {
-        public async Task SendMessage(string user, string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
-        }
+        
+
         public async Task MoveCard(string id)
         {
             await Clients.All.SendAsync("CardMoved", id);
         }
 
+        
         public Task JoinLobby(string lobbyID)
         {
             return Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
+        }
+
+        public Task LeaveLobby(string roomName)
+        {
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
         }
 
         public async Task MoveLobbyCard(string id, string lobbyID)
@@ -26,6 +31,7 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("CardMoved", id);
         }
 
+        [Authorize]
         public override async Task OnConnectedAsync()
         {
             await Clients.All.SendAsync("UserConnected", Context.User.Identity.Name);
