@@ -1,0 +1,36 @@
+.card {
+    height: 300px;
+    width: 200px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.container {
+    margin-bottom: 200px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    margin: 0 75px;
+}
+
+.moved {
+    transform: tr;
+    transform: translateY(200%);
+}
+
+.enemy-cards {
+    display: flex;
+}
+
+.card-container {
+    margin: 0 75px;
+}
+
+.my-cards {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
