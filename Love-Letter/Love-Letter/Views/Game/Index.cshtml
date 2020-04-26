@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
+    
 }
 @model LobbiesViewModel
 <div class="container ">
@@ -12,7 +13,12 @@
             <div class="card-body">
                 <h1>Lobby#@lobby.LobbyID</h1>
                 <h5>@lobby.numberOfPlayers/@lobby.Space</h5>
-                <a class="btn btn-light" href="@Url.ActionLink("Lobby","Game",new {lobbyID=lobby.LobbyID })">Join</a>
+                <form method="post" asp-action="JoinLobby" asp-controller="Game" >
+                    <input type="text" class="form-group" name="username" placeholder="Enter Username" required>
+                    <input type="hidden" name="LobbyID" value="@lobby.LobbyID" />
+                    <button class="btn btn-light" type="submit">Join</button>
+                </form>
+                @*<a class="btn btn-light" href="@Url.ActionLink("Lobby","Game",new {lobbyID=lobby.LobbyID })">Join</a>*@
             </div>
         </div>
     }

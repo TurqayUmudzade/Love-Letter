@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Waitting";
+    Layout = null;
+}
+
+@model WaitViewModel
+<div class="container ">
+    <h1>Lobby#@Model.Lobby.LobbyID</h1>
+    <div class="card">
+        <div class="card-body">
+            @Model.myUsername
+        </div>
+    </div>
+    @if (Model.Lobby.user2 != null && Model.Lobby.user2!=Model.myUsername)
+    {
+        <div class="card">
+            <div class="card-body">
+                @Model.Lobby.user2
+            </div>
+        </div>
+    }
+    @if (Model.Lobby.user2 != null && Model.Lobby.user2!=Model.myUsername)
+    {
+        <div class="card">
+            <div class="card-body">
+                @Model.Lobby.user2
+            </div>
+        </div>
+    }
+    @if (Model.Lobby.user3 != null && Model.Lobby.user2!=Model.myUsername)
+    {
+        <div class="card">
+            <div class="card-body">
+                @Model.Lobby.user3
+            </div>
+        </div>
+    }
+    @if (Model.Lobby.user4 != null && Model.Lobby.user2!=Model.myUsername)
+    {
+        <div class="card">
+            <div class="card-body">
+                @Model.Lobby.user4
+            </div>
+        </div>
+    }
+
+
+    <button type="button" class="btn btn-lg btn-primary" disabled>Start</button>
+    <button type="button" class="btn btn-secondary btn-lg" disabled>Start</button>
+</div>
+

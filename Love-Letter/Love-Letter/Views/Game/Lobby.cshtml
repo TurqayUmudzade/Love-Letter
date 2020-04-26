@@ -1,34 +1,45 @@
 ﻿
 @{
     ViewData["Title"] = "Lobby";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 @model LobbiesViewModel
     <body>
-        <style>
-            .card {
-                height: 300px;
-                width: 200px;
-                border: 1px solid black;
-                border-radius: 20px;
-                margin: 20px;
-            }
+       
 
-            .moved {
-                transform: translateY(200%);
-            }
-        </style>
-        <div class="container d-flex">
-            <h1>Lobby#
+        <h1>
+            Lobby#
             <span id="lobbyID">@Model.Lobby.LobbyID</span>
-            </h1>
-            <div id="card1" class="card"></div>
-            <div id="card2" class="card"></div>
-            <div id="card3" class="card"></div>
-            <div id="card4" class="card"></div>
+        </h1>
+        <div class="">
+            <div class="enemy-cards">
+                <div class="card-container c2">
+                    <h4 class="username-h4">???</h4>
+                    <div class="card">2</div>
+                    <div class="card">2</div>
+                </div>
+                <div class="card-container c3">
+                    <h4 class="username-h4">???</h4>
+                    <div class="card">3</div>
+                    <div class="card">3</div>
+                </div>
+
+                <div class="card-container c4">
+                    <h4 class="username-h4">???</h4>
+                    <div class="card">4</div>
+                    <div class="card">4</div>
+                </div>
+            </div>
+            <div class="card-container c1 my-cards">
+                @*<h4 class="username-h4">@Model.username</h4>*@
+                <h4 class="username-h4">myName</h4>
+                <div class="card">1</div>
+                <div class="card">1</div>
+            </div>
         </div>
 
         <div class="container">
-            <h1 class="">UserList</h1>
+            <h1></h1>
             <ul id="userlist">
             </ul>
         </div>

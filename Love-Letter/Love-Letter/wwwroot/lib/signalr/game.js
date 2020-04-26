@@ -12,8 +12,6 @@ connection.start().then(function () {
 
 connection.on("UserConnected", function (ConnectionId) {
     $("#userlist").append($("<li>").text(ConnectionId + "has joined"));
-    
-    
     connection.invoke("JoinLobby", lobbyID).catch(function (err) {
         return console.error(err.toString());
     });

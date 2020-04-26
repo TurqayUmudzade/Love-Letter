@@ -156,3 +156,5 @@ C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\bin\Debug\netcoreapp3
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Love-Letter.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Game\Lobby.cshtml.g.cs
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Game\Index.cshtml.g.cs
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CustomLayout.cshtml.g.cs
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Game\Waitting.cshtml.g.cs

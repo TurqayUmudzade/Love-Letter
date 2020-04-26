@@ -22,13 +22,13 @@ namespace Love_Letter.Models
         [MaxLength(12)]
         public string Password { get; set; }
 
-        public User user1 { get; set; }
+        public string user1 { get; set; }
 
-        public User user2 { get; set; }
+        public string user2 { get; set; }
 
-        public User user3 { get; set; }
+        public string user3 { get; set; }
 
-        public User user4 { get; set; }
+        public string user4 { get; set; }
 
         public Lobby(int space)
         {

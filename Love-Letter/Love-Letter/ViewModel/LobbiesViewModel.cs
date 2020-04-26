@@ -11,5 +11,7 @@ namespace Love_Letter.ViewModel
         public List<Lobby> Lobbies { get; set; }
 
         public Lobby Lobby { get; set; }
+
+        public string username { get; set; }
     }
 }

@@ -33,12 +33,55 @@ namespace Love_Letter.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult JoinLobby(string username, string LobbyID)
+        {
+            Lobby lobby = _context.Lobbies.Find(Int32.Parse(LobbyID));
+
+            if (String.IsNullOrEmpty(lobby.user1))
+                lobby.user1 = username;
+            else if (String.IsNullOrEmpty(lobby.user2))
+                lobby.user2 = username;
+            else if (String.IsNullOrEmpty(lobby.user3))
+                lobby.user3 = username;
+            else if (String.IsNullOrEmpty(lobby.user4))
+                lobby.user4 = username;
+            else
+                return Content("LobbyFull");
+
+
+            _context.SaveChanges();
+
+            WaitViewModel model = new WaitViewModel()
+            {
+                myUsername = username,
+                Lobby = lobby
+            };
+
+            return View("Waitting",model);
+        }
+
+        public IActionResult Waitting()
+        {
+
+
+            return View();
+        }
+
+
+
+
+
+
         [Authorize]
         public IActionResult Lobby(int lobbyID)
         {
+            string username = User.Identity.Name;
+
             //_hubContext.Groups.AddToGroupAsync(Context.ConnectionId, lobbyname);
             LobbiesViewModel model = new LobbiesViewModel()
             {
+                username = username,
                 Lobby = _context.Lobbies.Find(lobbyID)
             };
 

@@ -8,18 +8,13 @@ namespace Love_Letter.Hubs
 {
     public class GameHub : Hub
     {
-        
-
-        public async Task MoveCard(string id)
-        {
-            await Clients.All.SendAsync("CardMoved", id);
-        }
-
-        
+       
         public Task JoinLobby(string lobbyID)
         {
             return Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
         }
+
+
 
         public Task LeaveLobby(string roomName)
         {
