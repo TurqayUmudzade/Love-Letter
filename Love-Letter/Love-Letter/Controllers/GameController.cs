@@ -86,6 +86,7 @@ namespace Love_Letter.Controllers
             else
                 return Content("LobbyFull");
 
+            _context.SaveChanges();
             LobbiesViewModel model = new LobbiesViewModel()
             {
                 username = username,

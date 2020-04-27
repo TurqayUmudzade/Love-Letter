@@ -13,26 +13,26 @@
     </h1>
     <div class="">
         <div class="enemy-cards">
-            @if (Model.Lobby.user1 != null && Model.Lobby.user1 != Model.username)
+            @if (Model.Lobby.user1 != null && Model.Lobby.user1 != Model.username )
             {
                 <div class="card-container c2">
                     <h4 class="username-h4">@Model.Lobby.user1</h4>
                 </div>
             }
 
-            @if (Model.Lobby.user2 != null && Model.Lobby.user2 != Model.username)
+            @if (Model.Lobby.user2 != null && (Model.Lobby.user2 != Model.username || true))
             {
                 <div class="card-container c2">
                     <h4 class="username-h4">@Model.Lobby.user2</h4>
                 </div>
             }
-            @if (Model.Lobby.user3 != null && Model.Lobby.user3 != Model.username)
+            @if (Model.Lobby.user3 != null && (Model.Lobby.user3 != Model.username || true))
             {
                 <div class="card-container c2">
                     <h4 class="username-h4">@Model.Lobby.user3</h4>
                 </div>
             }
-            @if (Model.Lobby.user4 != null && Model.Lobby.user4 != Model.username)
+            @if (Model.Lobby.user4 != null && (Model.Lobby.user4 != Model.username || true))
             {
                 <div class="card-container c2">
                     <h4 class="username-h4">@Model.Lobby.user4</h4>
