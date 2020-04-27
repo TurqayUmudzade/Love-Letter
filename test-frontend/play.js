@@ -89,7 +89,6 @@ function gameStart() {
     });
 };
 gameStart();
-console.log(userArray);
 
 function Round() {
     userArray.forEach(u => {

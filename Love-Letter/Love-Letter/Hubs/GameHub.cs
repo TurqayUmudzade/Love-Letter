@@ -14,8 +14,6 @@ namespace Love_Letter.Hubs
             return Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
         }
 
-
-
         public Task LeaveLobby(string roomName)
         {
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
@@ -26,6 +24,11 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("CardMoved", id);
         }
 
+        public async Task GiveFirstCards(int[] a)
+        {
+            await Clients.All.SendAsync("GiveCards",a);
+        }
+
         [Authorize]
         public override async Task OnConnectedAsync()
         {
@@ -33,6 +36,7 @@ namespace Love_Letter.Hubs
             // await Clients.All.SendAsync("UserDisconnected", Context.User.Identity.Name);
             //await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
             await Clients.Others.SendAsync("UserConnected", Context.ConnectionId);
+            await Clients.All.SendAsync("GameStart");
             await base.OnConnectedAsync();
 
         }

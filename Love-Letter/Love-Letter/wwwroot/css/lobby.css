@@ -33,6 +33,7 @@
 
 .enemy-cards {
     display: flex;
+    margin-bottom: 50px;
 }
 
 .card-container {
@@ -40,7 +41,13 @@
 }
 
 .my-cards {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+    position:relative;
+    display: flex;
+    justify-content: space-around;
+}
+
+.deck {
+    border: 1px solid;
+    height: 250px;
+    width: 35%;
 }

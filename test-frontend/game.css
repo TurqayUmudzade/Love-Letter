@@ -34,7 +34,12 @@
 }
 
 .my-cards {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.deck {
+    border: 1px solid;
+    height: 250px;
+    width: 35%;
 }
