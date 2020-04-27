@@ -4,46 +4,56 @@
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 @model LobbiesViewModel
-    <body>
-       
+<body>
 
-        <h1>
-            Lobby#
-            <span id="lobbyID">@Model.Lobby.LobbyID</span>
-        </h1>
-        <div class="">
-            <div class="enemy-cards">
+
+    <h1>
+        Lobby#
+        <span id="lobbyID">@Model.Lobby.LobbyID</span>
+    </h1>
+    <div class="">
+        <div class="enemy-cards">
+            @if (Model.Lobby.user1 != null && Model.Lobby.user1 != Model.username)
+            {
                 <div class="card-container c2">
-                    <h4 class="username-h4">???</h4>
-                    <div class="card">2</div>
-                    <div class="card">2</div>
+                    <h4 class="username-h4">@Model.Lobby.user1</h4>
                 </div>
-                <div class="card-container c3">
-                    <h4 class="username-h4">???</h4>
-                    <div class="card">3</div>
-                    <div class="card">3</div>
-                </div>
+            }
 
-                <div class="card-container c4">
-                    <h4 class="username-h4">???</h4>
-                    <div class="card">4</div>
-                    <div class="card">4</div>
+            @if (Model.Lobby.user2 != null && Model.Lobby.user2 != Model.username)
+            {
+                <div class="card-container c2">
+                    <h4 class="username-h4">@Model.Lobby.user2</h4>
                 </div>
-            </div>
-            <div class="card-container c1 my-cards">
-                @*<h4 class="username-h4">@Model.username</h4>*@
-                <h4 class="username-h4">myName</h4>
-                <div class="card">1</div>
-                <div class="card">1</div>
-            </div>
+            }
+            @if (Model.Lobby.user3 != null && Model.Lobby.user3 != Model.username)
+            {
+                <div class="card-container c2">
+                    <h4 class="username-h4">@Model.Lobby.user3</h4>
+                </div>
+            }
+            @if (Model.Lobby.user4 != null && Model.Lobby.user4 != Model.username)
+            {
+                <div class="card-container c2">
+                    <h4 class="username-h4">@Model.Lobby.user4</h4>
+                </div>
+            }
         </div>
 
-        <div class="container">
-            <h1></h1>
-            <ul id="userlist">
-            </ul>
+        <div class="card-container c1 my-cards">
+            @*<h4 class="username-h4">@Model.username</h4>*@
+            <h4 class="username-h4">@Model.username</h4>
+            <div class="card">1</div>
+            <div class="card">1</div>
         </div>
-    </body>
+    </div>
+
+    <div class="container">
+        <h1></h1>
+        <ul id="userlist">
+        </ul>
+    </div>
+</body>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/signalr/signalr.js"></script>
 <script src="~/lib/signalr/game.js"></script>

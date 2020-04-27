@@ -21,6 +21,12 @@
     margin: 0 75px;
 }
 
+.enemy-cards .card-container {
+    height: 250px;
+    width: 30%;
+    border: 1px solid;
+}
+
 .moved {
     transform: translateY(200%);
 }

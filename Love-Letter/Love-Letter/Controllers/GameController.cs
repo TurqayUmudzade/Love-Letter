@@ -58,31 +58,38 @@ namespace Love_Letter.Controllers
                 Lobby = lobby
             };
 
-            return View("Waitting",model);
+            return View("Waitting", model);
         }
 
         public IActionResult Waitting()
         {
 
-
             return View();
         }
-
-
-
-
-
+        
 
         [Authorize]
         public IActionResult Lobby(int lobbyID)
         {
             string username = User.Identity.Name;
 
-            //_hubContext.Groups.AddToGroupAsync(Context.ConnectionId, lobbyname);
+            Lobby lobby = _context.Lobbies.Find(lobbyID);
+
+            if (String.IsNullOrEmpty(lobby.user1))
+                lobby.user1 = username;
+            else if (String.IsNullOrEmpty(lobby.user2))
+                lobby.user2 = username;
+            else if (String.IsNullOrEmpty(lobby.user3))
+                lobby.user3 = username;
+            else if (String.IsNullOrEmpty(lobby.user4))
+                lobby.user4 = username;
+            else
+                return Content("LobbyFull");
+
             LobbiesViewModel model = new LobbiesViewModel()
             {
                 username = username,
-                Lobby = _context.Lobbies.Find(lobbyID)
+                Lobby = lobby
             };
 
             return View(model);

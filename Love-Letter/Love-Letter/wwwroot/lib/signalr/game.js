@@ -11,7 +11,7 @@ connection.start().then(function () {
 });
 
 connection.on("UserConnected", function (ConnectionId) {
-    $("#userlist").append($("<li>").text(ConnectionId + "has joined"));
+    $(".enemy-cards").append("<div class='card-container c2'> <h2>" + ConnectionId + "</h2> </div >");
     connection.invoke("JoinLobby", lobbyID).catch(function (err) {
         return console.error(err.toString());
     });
@@ -25,13 +25,13 @@ connection.on("UserDisconnected", function (ConnectionId) {
 
 
 connection.on("CardMoved", function (id) {
-    $('#'+id).addClass("moved");
+    $('#' + id).addClass("moved");
 });
 
 
-$('.card').on("click", function (){
+$('.card').on("click", function () {
     var id = $(this).attr("id");
-    connection.invoke("MoveLobbyCard",id,lobbyID).catch(function (err) {
+    connection.invoke("MoveLobbyCard", id, lobbyID).catch(function (err) {
         return console.error(err.toString());
     });
 });

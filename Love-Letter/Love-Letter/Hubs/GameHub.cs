@@ -29,13 +29,18 @@ namespace Love_Letter.Hubs
         [Authorize]
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("UserConnected", Context.User.Identity.Name);
+           //remove comment when finished
+            // await Clients.All.SendAsync("UserDisconnected", Context.User.Identity.Name);
+            //await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
+            await Clients.Others.SendAsync("UserConnected", Context.ConnectionId);
             await base.OnConnectedAsync();
 
         }
         public override async Task OnDisconnectedAsync(Exception ex)
         {
-            await Clients.All.SendAsync("UserDisconnected", Context.User.Identity.Name);
+            //remove comment when finished
+            // await Clients.All.SendAsync("UserDisconnected", Context.User.Identity.Name);
+            await Clients.All.SendAsync("UserDisconnected", Context.ConnectionId);
             await base.OnDisconnectedAsync(ex);
         }
     }

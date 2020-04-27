@@ -6,8 +6,9 @@ $('.card').on("click", function() {
 });
 
 $('.pressme').on("click", function() {
-
-    $("#userlist").append($("<li>").text("User x joined"));
+    let username = "use1"
+        //  $(".enemy-cards").append($("<div class='card-container c2'>  </div >")).append($("<h2>"));
+    $(".enemy-cards").append("<div class='card-container c2'> <h2>" + username + "</h2> </div >");
 });
 
 var lobbyID = $('#lobbyID').text();
