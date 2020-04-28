@@ -14,12 +14,18 @@ connection.start().then(function () {
 
 
 connection.on("UserConnected", function (ConnectionId) {
-    userCounter++;
-    $(".enemy-cards").append("<div class='card-container c2'> <h2>" + ConnectionId + "</h2> </div >");
     connection.invoke("JoinLobby", lobbyID).catch(function (err) {
         return console.error(err.toString());
     });
 });
+
+connection.on("JoinedLobby", function (ConnectionId) {
+    console.log("JoinedLobby " + ConnectionId)
+    userCounter++;
+    console.log(userCounter);
+    $(".enemy-cards").append("<div class='card-container c2'> <h2>" + ConnectionId + "</h2> </div >");
+});
+
 
 connection.on("GameStart", function () {
     //if lobby is full
@@ -27,11 +33,19 @@ connection.on("GameStart", function () {
         console.log("game starting");
         allcards.sort(() => Math.random() - 0.5);
         allcards.pop();
-        connection.invoke("GiveFirstCards", allcards).catch(function (err) {
+        connection.invoke("GiveFirstCards", allcards, lobbyID).catch(function (err) {
             return console.error(err.toString());
         });
     }
 });
+
+function Myturn() {
+    if (userCounter == 4) {
+        getCard(allcards[0]);
+        alert("your turn");
+    }
+    allcard.shift();
+}
 
 connection.on("GiveCards", function (a) {
     console.log("cards given");
@@ -49,6 +63,10 @@ connection.on("GiveCards", function (a) {
     if (userCounter == 1) {
         getCard(allcards[3]);
     }
+    for (let i = 0; i < lobbySize; i++) {
+        allcards.shift();
+    }
+
 });
 
 connection.on("UserDisconnected", function (ConnectionId) {
@@ -57,16 +75,24 @@ connection.on("UserDisconnected", function (ConnectionId) {
 
 
 connection.on("CardMoved", function (id) {
-
+    userCounter++;
     $('#' + id).addClass("moved");
 });
 
 
 $('.card').on("click", function () {
-    var id = $(this).attr("id");
-    connection.invoke("MoveLobbyCard", id, lobbyID).catch(function (err) {
+    if (userCounter == 4) {
+        connection.invoke("MoveLobbyCard", id, lobbyID).catch(function (err) {
+            return console.error(err.toString());
+        });
+        userCounter = 0;
+
+    }
+    connection.invoke("cardplusone", id, lobbyID).catch(function (err) {
         return console.error(err.toString());
     });
+    var id = $(this).attr("id");
+  
 });
 
 

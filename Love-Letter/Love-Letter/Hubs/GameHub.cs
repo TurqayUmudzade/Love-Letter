@@ -8,10 +8,15 @@ namespace Love_Letter.Hubs
 {
     public class GameHub : Hub
     {
-       
-        public Task JoinLobby(string lobbyID)
+
+        public async Task JoinLobby(string lobbyID)
         {
-            return Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
+            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
+            Debug.WriteLine("on join lobby " +Context.ConnectionId);
+            //  await Clients.OthersInGroup(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
+            await Clients.OthersInGroup(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
+            //await Clients.Group(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
+
         }
 
         public Task LeaveLobby(string roomName)
@@ -24,19 +29,19 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("CardMoved", id);
         }
 
-        public async Task GiveFirstCards(int[] a)
+        public async Task GiveFirstCards(int[] a, string lobbyID)
         {
-            await Clients.All.SendAsync("GiveCards",a);
+            await Clients.Group(lobbyID).SendAsync("GiveCards", a);
         }
 
         [Authorize]
         public override async Task OnConnectedAsync()
         {
-           //remove comment when finished
+            //remove comment when finished
             // await Clients.All.SendAsync("UserDisconnected", Context.User.Identity.Name);
-            //await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
-            await Clients.Others.SendAsync("UserConnected", Context.ConnectionId);
-            await Clients.All.SendAsync("GameStart");
+            Debug.WriteLine("on connect "+Context.ConnectionId);
+            await Clients.Caller.SendAsync("UserConnected", Context.ConnectionId);
+            //await Clients.All.SendAsync("GameStart");
             await base.OnConnectedAsync();
 
         }

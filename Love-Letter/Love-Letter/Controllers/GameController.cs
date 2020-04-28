@@ -36,8 +36,8 @@ namespace Love_Letter.Controllers
         [HttpPost]
         public IActionResult JoinLobby(string username, string LobbyID)
         {
+            //object from database
             Lobby lobby = _context.Lobbies.Find(Int32.Parse(LobbyID));
-
             if (String.IsNullOrEmpty(lobby.user1))
                 lobby.user1 = username;
             else if (String.IsNullOrEmpty(lobby.user2))
@@ -49,7 +49,7 @@ namespace Love_Letter.Controllers
             else
                 return Content("LobbyFull");
 
-
+            //database update
             _context.SaveChanges();
 
             WaitViewModel model = new WaitViewModel()
