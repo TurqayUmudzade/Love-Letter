@@ -11,30 +11,49 @@ $('.pressme').on("click", function() {
 });
 
 
-var lobbyID = $('#lobbyID').text();
-console.log(lobbyID);
-
-
 
 function getCard(cardValue) {
     $(".my-cards").append("<div class='card' id=" + cardValue + ">1</div>");
 }
+getCard(1);
+getCard(2);
 
-var userCounter = 4;
+let userCounter = 4;
 
+let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
+allcards.sort(() => Math.random() - 0.5);
+allcards.pop();
 
-function gameStart(lobbySize) {
-    console.log(userCounter + " and lobbysize: " + lobbySize);
-    if (userCounter == lobbySize) {
-        console.log("game started your usercounter=" + userCounter);
-        allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
-        //shuffle the deck
-        console.log(allcards);
-        allcards.sort(() => Math.random() - 0.5);
-        allcards.pop();
-        getCard(allcards[0]);
-        allcards.shift();
+let mycards = new Array();
+mycards.push(1);
+mycards.push(3);
+$('.card').on("click", function() {
+    let thiscard = $(this).attr('id')
+
+    if (mycards.includes(parseInt(thiscard))) {
+        console.log("nice");
     }
-};
-//gameStart(lobbySize);
-console.log(allcards);
+
+});
+
+$(document).ready(function() {
+    $('.card').on("click", function() {
+        console.log("breakpoint1");
+        if (userCounter == 4) {
+            console.log("breakpoint1");
+            let thiscard = $(this).attr('id');
+            if (mycards.includes(parseInt(thiscard))) {
+                console.log("breakpoint1");
+                userCounter = 1;
+                console.log("you played card");
+                connection.invoke("PlayCard", thiscard, lobbyID).catch(function(err) {
+                    return console.error(err.toString());
+                });
+            } else
+
+
+        } else
+            console.log("not your trun");
+
+    });
+});

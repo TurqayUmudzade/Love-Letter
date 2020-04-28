@@ -12,21 +12,10 @@ namespace Love_Letter.Hubs
         public async Task JoinLobby(string lobbyID)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
-            Debug.WriteLine("on join lobby " +Context.ConnectionId);
-            //  await Clients.OthersInGroup(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
+            Debug.WriteLine("on join lobby " + Context.ConnectionId);
             await Clients.OthersInGroup(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
-            //await Clients.Group(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
+            await Clients.Group(lobbyID).SendAsync("GameStart");
 
-        }
-
-        public Task LeaveLobby(string roomName)
-        {
-            return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
-        }
-
-        public async Task MoveLobbyCard(string id, string lobbyID)
-        {
-            await Clients.Group(lobbyID).SendAsync("CardMoved", id);
         }
 
         public async Task GiveFirstCards(int[] a, string lobbyID)
@@ -34,14 +23,29 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("GiveCards", a);
         }
 
+        public async Task Play( string lobbyID)
+        {
+            await Clients.Group(lobbyID).SendAsync("MyTurn");
+        }
+        public async Task PlayCard(string thiscard, string lobbyID)
+        {
+            await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", thiscard);
+        }
+
+        //FOR later
+        public Task LeaveLobby(string roomName)
+        {
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
+        }
+
+        
         [Authorize]
         public override async Task OnConnectedAsync()
         {
             //remove comment when finished
-            // await Clients.All.SendAsync("UserDisconnected", Context.User.Identity.Name);
-            Debug.WriteLine("on connect "+Context.ConnectionId);
+            // await Clients.Caller.SendAsync("UserDisconnected", Context.User.Identity.Name);
+            Debug.WriteLine("on connect " + Context.ConnectionId);
             await Clients.Caller.SendAsync("UserConnected", Context.ConnectionId);
-            //await Clients.All.SendAsync("GameStart");
             await base.OnConnectedAsync();
 
         }
