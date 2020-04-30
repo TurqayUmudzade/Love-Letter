@@ -79,12 +79,14 @@
 
 .pile-card {
     background-color: transparent;
+    position: relative;
+    left: 40px;
 }
 
 .shift-card {
     display: block;
     transition: ease-in .5s;
-    transform: translate(-453px, 32px);
+    transform: translate(-500px, 32px);
 }
 
 .my-side {

@@ -23,7 +23,7 @@ connection.on("UserConnected", function (ConnectionId) {
 connection.on("JoinedLobby", function (ConnectionId) {
     userCounter++;
     console.log(userCounter);
-    $(".enemy-cards").append("<div class='card-container c2'> <h2>" + ConnectionId + "</h2> </div >");
+    $(".enemy-cards").append("<div class='card-container '> <h4 class='username-h4'>" + ConnectionId + "</h4>  <div class='enemy-deck' ondrop='drop(event)' ondragover='dragover(event)'></div></div >");
 
 });
 

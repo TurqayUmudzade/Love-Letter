@@ -16,9 +16,8 @@ function getCard(cardValue) {
     $('.pile-card').addClass('shift-card').delay(500).queue(function(next) {
         $(".my-cards").append("<div class='card princess' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
         $('.pile-card').removeClass('shift-card');
+        next();
     });
-
-
 }
 
 var draggedcard;
