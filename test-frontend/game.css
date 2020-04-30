@@ -1,34 +1,6 @@
-.card {
-    height: 300px;
-    width: 200px;
-    border: 1px solid black;
-    border-radius: 20px;
-    margin: 50px 20px;
-}
-
-.username-h4 {
-    position: absolute;
-    top: 0px
-}
-
-.container {
-    margin-bottom: 200px;
-}
-
-.card-container {
-    display: flex;
-    justify-content: center;
-    margin: 0 75px;
-}
-
-.enemy-cards .card-container {
-    height: 250px;
-    width: 30%;
-    border: 1px solid;
-}
-
-.moved {
-    transform: translateY(200%);
+#table {
+    background-image: url(images/343672.jpg);
+    background-size: cover;
 }
 
 .enemy-cards {
@@ -36,8 +8,43 @@
     margin-bottom: 50px;
 }
 
-.card-container {
-    margin: 0 75px;
+.enemy-cards .card-container {
+    height: 300px;
+    flex: 1;
+    margin: 0px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.enemy-cards .card-container .username-h4 {}
+
+.enemy-cards .card-container .enemy-deck {
+    width: 80%;
+    height: 80%;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.enemy-deck {
+    display: flex;
+}
+
+.card {
+    position: relative;
+    height: 250px;
+    width: 150px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 50px 20px;
+}
+
+.container {
+    margin-bottom: 200px;
+}
+
+.moved {
+    transform: translateY(200%);
 }
 
 .my-cards {
@@ -46,8 +53,58 @@
     justify-content: space-around;
 }
 
-.deck {
+.card:nth-child(2) {
+    left: -20px;
+}
+
+.card:nth-child(3) {
+    left: -40px;
+}
+
+.card:nth-child(4) {
+    left: -60px;
+}
+
+.card:nth-child(5) {
+    left: -80px;
+}
+
+.pile {
+    height: 300px;
+    width: 60px;
+    border: 1px solid;
+    position: absolute;
+    right: 0;
+}
+
+.pile-card {
+    background-color: transparent;
+}
+
+.shift-card {
+    display: block;
+    transition: ease-in .5s;
+    transform: translate(-453px, 32px);
+}
+
+.my-side {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.my-side .deck {
+    display: flex;
     border: 1px solid;
     height: 250px;
-    width: 35%;
+    flex: 1;
+    height: 300px;
+}
+
+.my-side .right {
+    flex: 1;
+}
+
+.my-cards {
+    width: 60%;
+    margin: 0 auto;
 }

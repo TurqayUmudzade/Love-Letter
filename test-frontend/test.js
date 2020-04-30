@@ -7,16 +7,49 @@ $('.card').on("click", function() {
 });
 
 $('.pressme').on("click", function() {
-    getCard();
+    getCard(1);
 });
 
 
 
 function getCard(cardValue) {
-    $(".my-cards").append("<div class='card' id=" + cardValue + ">1</div>");
+    $('.pile-card').addClass('shift-card').delay(500).queue(function(next) {
+        $(".my-cards").append("<div class='card princess' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
+        $('.pile-card').removeClass('shift-card');
+    });
+
+
 }
-getCard(1);
-getCard(2);
+
+var draggedcard;
+var draggedcardtype;
+
+function dragStart(event) {
+    console.log(event.target);
+    draggedcard = event.target;
+    draggedcardtype = $(event.target).attr('class');
+}
+
+function dragover(event) {
+    event.preventDefault();;
+}
+
+function drop(event) {
+    event.preventDefault();
+    var enemydeck = event.target;
+
+    $(draggedcard).removeAttr('draggable');
+    $(draggedcard).removeAttr('ondragstart');
+    $(draggedcard).css('margin', '0');
+    $(draggedcard).remove();
+    // for enemy view
+    $(enemydeck).append($(draggedcard).clone());
+    //your view
+    $('.deck').append(draggedcard);
+}
+
+//getCard(1);
+//getCard(2);
 
 let userCounter = 4;
 
@@ -34,26 +67,4 @@ $('.card').on("click", function() {
         console.log("nice");
     }
 
-});
-
-$(document).ready(function() {
-    $('.card').on("click", function() {
-        console.log("breakpoint1");
-        if (userCounter == 4) {
-            console.log("breakpoint1");
-            let thiscard = $(this).attr('id');
-            if (mycards.includes(parseInt(thiscard))) {
-                console.log("breakpoint1");
-                userCounter = 1;
-                console.log("you played card");
-                connection.invoke("PlayCard", thiscard, lobbyID).catch(function(err) {
-                    return console.error(err.toString());
-                });
-            } else
-
-
-        } else
-            console.log("not your trun");
-
-    });
 });

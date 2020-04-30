@@ -13,8 +13,8 @@
 <body>
 
 
-    <body>
-
+    <body id="table">
+        <button class="pressme"></button>
 
         <h1>
             Lobby#
@@ -25,21 +25,31 @@
 
                 <div class="card-container c2">
                     <h4 class="username-h4">@Model.Lobby.user2</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
                 </div>
                 <div class="card-container c2">
-                    <h4 class="username-h4">@Model.Lobby.user3</h4>
+                    <h4 class="username-h4">@Model.Lobby.user2</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
                 </div>
                 <div class="card-container c2">
-                    <h4 class="username-h4">@Model.Lobby.user4</h4>
+                    <h4 class="username-h4">@Model.Lobby.user2</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
                 </div>
-                }
+
             </div>
 
-            <div class="card-container c1 d-flex">
-                <div class="deck"></div>
+            <div class="pile">
+                <div class="card pile-card">back of the card</div>
+            </div>
 
-                <h4 class="">@Model.username</h4>
-                <div class="my-cards d-flex"></div>
+            <div class="my-side">
+                <div class="deck " ondrop="drop(event)" ondragover="dragover(event)"></div>
+                <div class="right">
+                    <h4 class="text-center">@Model.username</h4>
+                    <div class="my-cards-container">
+                        <div class="my-cards"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -48,8 +58,8 @@
 
 
 
-    <script src="./test.js"></script>
-    <script src="./play.js"></script>
+    <script src="./test.js "></script>
+    <script src="./play.js "></script>
 
 </body>
 
