@@ -8,6 +8,8 @@ $('.card').on("click", function() {
 
 $('.pressme').on("click", function() {
     getCard(1);
+    array.shift();
+    console.log(typeof array[0] == 'undefined');
 });
 
 
@@ -31,7 +33,6 @@ addenemies("dsada1", "dsadas2", "dsadads3")
     //
 const array = ["sa2", "sa3", "sa4"];
 
-console.log(array);
 
 // const index = array.indexOf("sa2");
 // if (index > -1) {
@@ -39,10 +40,8 @@ console.log(array);
 // }
 // towhom = "salam";
 //$('#' + towhom).append($("<h1>SDADAS</h1>").clone());
-console.log(array.length);
 for (var i = 0; i < array.length; i++) {
     var c = i + 1;
-    console.log(i);
     $(".enemy-cards").children('.card-container:nth-child(' + c + ')').children(".enemy-deck").attr('id', array[i]);
 }
 
@@ -53,9 +52,7 @@ for (var i = 0; i < array.length; i++) {
 //     element.children(".enemy-deck").attr('id', '1');
 // });
 // array = [2, 9]
-console.log(array);
-//
-console.log(enemies);
+
 var draggedcard;
 var draggedcardtype;
 

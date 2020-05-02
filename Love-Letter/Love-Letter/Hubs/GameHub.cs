@@ -38,6 +38,11 @@ namespace Love_Letter.Hubs
             await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", card,toWhom,byWho);
         }
 
+        public async Task GameOver(string lobbyID)
+        {
+            await Clients.Group(lobbyID).SendAsync("GameOver");
+        }
+
         //FOR later
         public Task LeaveLobby(string roomName)
         {
