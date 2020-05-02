@@ -29,15 +29,29 @@ function addenemies(randomshit1, randomshit2, randomshit3) {
 }
 addenemies("dsada1", "dsadas2", "dsadads3")
     //
-const array = ["sa1", "sa2", "sa3", "sa4", ];
+const array = ["sa2", "sa3", "sa4"];
 
 console.log(array);
 
-const index = array.indexOf("sa2");
-if (index > -1) {
-    array.splice(index, 1);
+// const index = array.indexOf("sa2");
+// if (index > -1) {
+//     array.splice(index, 1);
+// }
+// towhom = "salam";
+//$('#' + towhom).append($("<h1>SDADAS</h1>").clone());
+console.log(array.length);
+for (var i = 0; i < array.length; i++) {
+    var c = i + 1;
+    console.log(i);
+    $(".enemy-cards").children('.card-container:nth-child(' + c + ')').children(".enemy-deck").attr('id', array[i]);
 }
 
+//$(".enemy-cards").children(".card-container").children(".enemy-deck").attr('id', 'value');
+// var test = $(".enemy-cards").children(".card-container");
+// console.log(test);
+// test.forEach(element => {
+//     element.children(".enemy-deck").attr('id', '1');
+// });
 // array = [2, 9]
 console.log(array);
 //

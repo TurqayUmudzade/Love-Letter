@@ -3,7 +3,7 @@ let userCounter = 1;
 //
 let myconnectionID;
 let enemies = new Array();
-
+var enemyID;
 
 //
 let lobbySize = 4;
@@ -35,16 +35,14 @@ connection.on("UserConnected", function (ConnectionId) {
 connection.on("JoinedLobby", function (ConnectionId) {
     userCounter++;
     console.log(userCounter);
-        //get all cards
+    //get all cards
     enemies.push(ConnectionId);
-    $(".enemy-cards").append("<div class='card-container '> <h4 class='username-h4'>" + ConnectionId + "</h4>  <div class='enemy-deck' ondrop='drop(event)' ondragover='dragover(event)'></div></div >");
+    $(".enemy-cards").append("<div class='card-container '> <h4 class='username-h4'>" + ConnectionId + "</h4>  <div class='enemy-deck' id=" + ConnectionId + " ondrop='drop(event)' ondragover='dragover(event)'></div></div >");
     if (userCounter == lobbySize) {
         //send them
         connection.invoke("SendEnemylist", lobbyID, enemies).catch(function (err) {
             return console.error(err.toString());
         });
-        //remove mine
-        enemies.shift();
     }
 
 });
@@ -57,6 +55,11 @@ connection.on("RecievEnemyList", function (enemieslist) {
         enemies.splice(index, 1);
     }
     console.log(enemies);
+    for (var i = 0; i < enemies.length; i++) {
+        var c = i + 1;
+        console.log(i);
+        $(".enemy-cards").children('.card-container:nth-child(' + c + ')').children(".enemy-deck").attr('id', enemies[i]);
+    }
 });
 
 connection.on("GameStart", function () {
@@ -126,7 +129,9 @@ function dragover(event) {
 function drop(event) {
     if (userCounter == 4 && didnotcheat) {
         event.preventDefault();
-
+        enemyID = $(event.target).attr("id");
+        //add if null
+        console.log(enemyID)
         $(draggedcard).removeAttr('draggable');
         $(draggedcard).removeAttr('ondragstart');
         $(draggedcard).css('margin', '0');
@@ -135,7 +140,7 @@ function drop(event) {
         //$(enemydeck).append($(draggedcard).clone());
         //your view
         $('.deck').append(draggedcard);
-        connection.invoke("CardPlayed", thiscard, lobbyID).catch(function (err) {
+        connection.invoke("CardPlayed", lobbyID, thiscard, enemyID, myconnectionID).catch(function (err) {
             return console.error(err.tostring());
         });
         allcards.shift();
@@ -145,12 +150,16 @@ function drop(event) {
 
 }
 
-
-connection.on("CardMoved", function (enemyID, thiscard) {
+//others
+connection.on("CardMoved", function (card, towhom, bywho) {
     userCounter++;
+    //shift my card from others
     allcards.shift();
-    console.log(userCounter);
-    $(enemydeck).append($(thiscard).clone());
+    console.log(card);
+    console.log("counter after card move:" + userCounter);
+    $('#' + bywho).append($("<div class='card princess' id=" + card + " >" + card + "</div>").clone());
+    console.log(bywho)
+    console.log(towhom);
     if (userCounter == 4) {
         getCard(allcards[0]);
     }

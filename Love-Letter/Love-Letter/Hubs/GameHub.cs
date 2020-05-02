@@ -33,9 +33,9 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("MyTurn");
         }
-        public async Task CardPlayed(string thiscard, string lobbyID)
+        public async Task CardPlayed(string lobbyID,string card,string toWhom,string byWho)
         {
-            await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", Context.User.Identity.Name, thiscard);
+            await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", card,toWhom,byWho);
         }
 
         //FOR later
