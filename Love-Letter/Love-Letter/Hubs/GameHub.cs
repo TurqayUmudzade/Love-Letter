@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Love_Letter.Hubs
@@ -16,6 +17,11 @@ namespace Love_Letter.Hubs
             await Clients.OthersInGroup(lobbyID).SendAsync("JoinedLobby", Context.ConnectionId);
             await Clients.Group(lobbyID).SendAsync("GameStart");
 
+        }
+
+        public async Task SendEnemylist( string lobbyID,string[] enemies)
+        {
+            await Clients.Group(lobbyID).SendAsync("RecievEnemyList",enemies);
         }
 
         public async Task GiveFirstCards(int[] a, string lobbyID)

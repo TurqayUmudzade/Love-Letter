@@ -20,6 +20,28 @@ function getCard(cardValue) {
     });
 }
 
+let enemies = new Array();
+
+function addenemies(randomshit1, randomshit2, randomshit3) {
+    enemies.push(randomshit1);
+    enemies.push(randomshit2);
+    enemies.push(randomshit3);
+}
+addenemies("dsada1", "dsadas2", "dsadads3")
+    //
+const array = ["sa1", "sa2", "sa3", "sa4", ];
+
+console.log(array);
+
+const index = array.indexOf("sa2");
+if (index > -1) {
+    array.splice(index, 1);
+}
+
+// array = [2, 9]
+console.log(array);
+//
+console.log(enemies);
 var draggedcard;
 var draggedcardtype;
 

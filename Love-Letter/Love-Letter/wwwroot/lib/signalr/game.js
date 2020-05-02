@@ -1,5 +1,11 @@
 ﻿"use strict";
 let userCounter = 1;
+//
+let myconnectionID;
+let enemies = new Array();
+
+
+//
 let lobbySize = 4;
 let thiscard;
 let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
@@ -18,18 +24,40 @@ connection.start().then(function () {
 
 
 connection.on("UserConnected", function (ConnectionId) {
+    myconnectionID = ConnectionId;
+    enemies.push(myconnectionID);
     connection.invoke("JoinLobby", lobbyID).catch(function (err) {
         return console.error(err.toString());
     });
+
 });
 
 connection.on("JoinedLobby", function (ConnectionId) {
     userCounter++;
     console.log(userCounter);
+        //get all cards
+    enemies.push(ConnectionId);
     $(".enemy-cards").append("<div class='card-container '> <h4 class='username-h4'>" + ConnectionId + "</h4>  <div class='enemy-deck' ondrop='drop(event)' ondragover='dragover(event)'></div></div >");
+    if (userCounter == lobbySize) {
+        //send them
+        connection.invoke("SendEnemylist", lobbyID, enemies).catch(function (err) {
+            return console.error(err.toString());
+        });
+        //remove mine
+        enemies.shift();
+    }
 
 });
 
+//recive list of opponets
+connection.on("RecievEnemyList", function (enemieslist) {
+    enemies = enemieslist;
+    const index = enemies.indexOf(myconnectionID);
+    if (index > -1) {
+        enemies.splice(index, 1);
+    }
+    console.log(enemies);
+});
 
 connection.on("GameStart", function () {
     //if lobby is full
@@ -93,7 +121,7 @@ function dragStart(event) {
 
 function dragover(event) {
     event.preventDefault();;
-}  
+}
 
 function drop(event) {
     if (userCounter == 4 && didnotcheat) {
@@ -118,7 +146,7 @@ function drop(event) {
 }
 
 
-connection.on("CardMoved", function (enemydeck, thiscard) {
+connection.on("CardMoved", function (enemyID, thiscard) {
     userCounter++;
     allcards.shift();
     console.log(userCounter);
