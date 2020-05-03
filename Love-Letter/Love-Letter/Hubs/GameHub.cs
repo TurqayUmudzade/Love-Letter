@@ -36,6 +36,20 @@ namespace Love_Letter.Hubs
         public async Task CardPlayed(string lobbyID,string card,string toWhom,string byWho)
         {
             await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", card,toWhom,byWho);
+            await Clients.Caller.SendAsync("CardPower",card,toWhom,byWho);
+        }
+
+        //CARDS
+
+        public async Task Baron(string lobbyID, string card, string toWhom, string byWho)
+        {
+            await Clients.Group(lobbyID).SendAsync("Baron", card, toWhom, byWho);
+        }
+
+
+        public async Task Result(string lobbyID, string result,string loser)
+        {
+            await Clients.Group(lobbyID).SendAsync("Result", result,loser);
         }
 
         public async Task GameOver(string lobbyID)

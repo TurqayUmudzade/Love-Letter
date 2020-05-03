@@ -8,50 +8,65 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./game.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
 
     <body id="table">
+
         <button class="pressme"></button>
+        <<!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
 
-        <h1>
-            Lobby#
-            <span id="lobbyID">@Model.Lobby.LobbyID</span>
-        </h1>
-        <div>
-            <div class="enemy-cards">
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
 
-                <div class="card-container ">
-                    <h4 class="username-h4">@Model.Lobby.user2</h4>
-                    <div class="enemy-deck" id="salam" ondrop="drop(event)" ondragover="dragover(event)"></div>
                 </div>
-                <div class="card-container ">
-                    <h4 class="username-h4">@Model.Lobby.user2</h4>
-                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
-                </div>
-                <div class="card-container ">
-                    <h4 class="username-h4">@Model.Lobby.user2</h4>
-                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
-                </div>
-
             </div>
 
-            <div class="pile">
-                <div class="card pile-card">back of the card</div>
-            </div>
+            <h1>
+                Lobby#
+                <span id="lobbyID">@Model.Lobby.LobbyID</span>
+            </h1>
+            <div>
+                <div class="enemy-cards">
 
-            <div class="my-side">
-                <div class="deck " ondrop="drop(event)" ondragover="dragover(event)"></div>
-                <div class="right">
-                    <h4 class="text-center">@Model.username</h4>
-                    <div class="my-cards-container">
-                        <div class="my-cards"></div>
+                    <div class="card-container ">
+                        <h4 class="username-h4">@Model.Lobby.user2</h4>
+                        <div class="enemy-deck" id="salam" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                    </div>
+                    <div class="card-container ">
+                        <h4 class="username-h4">@Model.Lobby.user2</h4>
+                        <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                    </div>
+                    <div class="card-container ">
+                        <h4 class="username-h4">@Model.Lobby.user2</h4>
+                        <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                    </div>
+
+                </div>
+
+                <div class="pile">
+                    <div class="card pile-card">back of the card</div>
+                </div>
+
+                <div class="my-side">
+                    <div class="deck " ondrop="drop(event)" ondragover="dragover(event)"></div>
+                    <div class="right">
+                        <h4 class="text-center">@Model.username</h4>
+                        <div class="my-cards-container">
+                            <div class="my-cards"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
     </body>
@@ -60,6 +75,8 @@
 
     <script src="./test.js "></script>
     <script src="./play.js "></script>
+    <script src="./modal.js "></script>
+
 
 </body>
 

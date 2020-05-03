@@ -5,14 +5,16 @@ $('.card').on("click", function() {
     $(this).attr('id', 'movethis');
 
 });
-
+getCard(1);
 $('.pressme').on("click", function() {
-    getCard(1);
-    array.shift();
-    console.log(typeof array[0] == 'undefined');
+
+    $('.my-cards').children('.card ').removeAttr('draggable');
+    $('.my-cards').children('.card ').removeAttr('ondragstart');
 });
 
-
+$('#myModal').on('shown.bs.modal', function() {
+    // $('#exampleModal').trigger('focus')
+})
 
 function getCard(cardValue) {
     $('.pile-card').addClass('shift-card').delay(500).queue(function(next) {

@@ -52,7 +52,7 @@ connection.on("JoinedLobby", function (ConnectionId) {
 connection.on("RecievEnemyList", function (enemieslist) {
     enemies = enemieslist;
     //remove yourself from list
-    const index = enemies.indexOf(myconnectionID);
+    var index = enemies.indexOf(myconnectionID);
     if (index > -1) {
         enemies.splice(index, 1);
     }
@@ -118,6 +118,7 @@ function dragover(event) {
 function drop(event) {
     if (userCounter == lobbySize && didnotcheat) {
         event.preventDefault();
+
         enemyID = $(event.target).attr("id");
         //UPDATEadd if null
         //make it undraggable
@@ -126,11 +127,18 @@ function drop(event) {
         $(draggedcard).css('margin', '0');
         $(draggedcard).remove();//remove from your cards
         $('.deck').append(draggedcard);
+        //cardplayed->others Card move and All cardPower
         connection.invoke("CardPlayed", lobbyID, thiscard, enemyID, myconnectionID).catch(function (err) {
             return console.error(err.tostring());
         });
+        //my changes
         allcards.shift();//shift mydeck
         userCounter = 1;
+        var index = mycards.indexOf(parseInt(thiscard));
+        if (index > -1) {
+            mycards.splice(index, 1);
+        }
+
     }
 
 }
@@ -150,8 +158,65 @@ connection.on("CardMoved", function (card, towhom, bywho) {
             getCard(allcards[0]);//whoevers turn it is draws a card
     }
 });
+
+//
+connection.on("CardPower", function (card, towhom, bywho) {
+    //Guard
+    if (card == 1) {
+        console.log("guard");
+    }
+    if (card == 2) {
+        console.log("priest");
+    }
+    if (card == 3) {
+        console.log("baron");
+        connection.invoke("Baron", lobbyID, card, towhom, bywho).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+
+
+});
 //loops back to drag
 
+//CARDS
+connection.on("Baron", function (card, towhom, bywho) {
+    let text = bywho + " attacked with " + card + " " + towhom;
+    let loser;
+    if (towhom == myconnectionID) {
+        //win
+        if (mycards[0] > card) {
+            text += towhom + "wins";
+            loser = bywho;
+        }
+        else if (mycards[0] < card) {
+            text += bywho + "lost";
+            iLost();
+            loser = towhom;
+        }
+        else {
+            text += " tie ";
+        }
+        console.log(text);
+        
+        connection.invoke("Result", lobbyID, text,loser).catch(function (err) {
+            return console.error(err.tostring());
+        });
+
+    }
+});
+
+
+connection.on("Result", function (text,loser) {
+    $(".modal").show();
+    $(".modal-content").append("<h5 class='header'>" + text + "</h5>");
+    $('#' + loser).append("<div>LOST</div>");
+    if (myconnectionID == loser) {
+        iLost();
+    }
+});
+
+//CARDS END
 connection.on("GameOver", function () {
     alert("game over");
 });
@@ -171,3 +236,39 @@ function getCard(cardValue) {
         next();
     });
 }
+
+//
+function activateCard(cardValue, toWho, bywhom) {
+    console.log("attack on " + toWho + "by " + bywhom);
+    $(".modal").show();
+    $(".modal-content").append("<h2 class='header'>" + cardValue + "</h2><p>" + bywhom + "Play by on " + toWho + "</p>");
+    if (cardValue == 3)//baron
+    {
+
+
+    }
+
+}
+
+
+function iLost() {
+    alert("you lost");
+    //make my view unplayable
+    $('.my-cards').children('.card ').removeAttr('draggable');
+    $('.my-cards').children('.card ').removeAttr('ondragstart');
+}
+
+
+
+//VISIBILITY
+
+$(".close").on("click", function () {
+    $(this).parent().parent().hide();
+});
+
+
+$(".x").on("click", function () {
+    $(".modal").hide();
+});
+
+$
