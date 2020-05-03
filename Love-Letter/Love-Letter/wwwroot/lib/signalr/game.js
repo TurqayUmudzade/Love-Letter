@@ -13,6 +13,7 @@ let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
 var didnotcheat;
+var Lost = false;
 
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
@@ -70,6 +71,7 @@ connection.on("GameStart", function () {
         //user 1 will randomize cards
         allcards.sort(() => Math.random() - 0.5);
         allcards.pop();//discard one 
+        console.log(allcards);
         connection.invoke("GiveFirstCards", allcards, lobbyID).catch(function (err) {
             return console.error(err.toString());
         });
@@ -92,7 +94,7 @@ connection.on("GiveCards", function (a) {
     if (userCounter == lobbySize - 3) {
         getCard(allcards[3]);
     }
-    for (let i = 0; i < lobbySize + 1; i++) {
+    for (let i = 0; i < lobbySize ; i++) {
         allcards.shift();
     }
     console.log(allcards);
@@ -127,10 +129,6 @@ function drop(event) {
         $(draggedcard).css('margin', '0');
         $(draggedcard).remove();//remove from your cards
         $('.deck').append(draggedcard);
-        //cardplayed->others Card move and All cardPower
-        connection.invoke("CardPlayed", lobbyID, thiscard, enemyID, myconnectionID).catch(function (err) {
-            return console.error(err.tostring());
-        });
         //my changes
         allcards.shift();//shift mydeck
         userCounter = 1;
@@ -138,6 +136,11 @@ function drop(event) {
         if (index > -1) {
             mycards.splice(index, 1);
         }
+        //cardplayed->others CardMove and All cardPower
+        connection.invoke("CardPlayed", lobbyID, thiscard, enemyID, myconnectionID,mycards[0]).catch(function (err) {
+            return console.error(err.tostring());
+        });
+       
 
     }
 
@@ -146,21 +149,25 @@ function drop(event) {
 //othersInGroup
 connection.on("CardMoved", function (card, towhom, bywho) {
     userCounter++;
+    console.log(userCounter);
     //shift my card from others
     allcards.shift();//shift others deck
     $('#' + bywho).append($("<div class='card princess' id=" + card + " >" + card + "</div>").clone());//add to enemy view that i moved
-    if (userCounter == lobbySize) {
+    if (userCounter >= lobbySize) {
+
         if (typeof allcards[0] == 'undefined') {
             connection.invoke("GameOver", lobbyID).catch(function (err) {
                 return console.error(err.tostring());
             });
+        } else if (Lost == true) {
+            skip();
         } else
             getCard(allcards[0]);//whoevers turn it is draws a card
     }
 });
 
 //
-connection.on("CardPower", function (card, towhom, bywho) {
+connection.on("CardPower", function (card, towhom, bywho,card2) {
     //Guard
     if (card == 1) {
         console.log("guard");
@@ -170,7 +177,7 @@ connection.on("CardPower", function (card, towhom, bywho) {
     }
     if (card == 3) {
         console.log("baron");
-        connection.invoke("Baron", lobbyID, card, towhom, bywho).catch(function (err) {
+        connection.invoke("Baron", lobbyID, card, towhom, bywho,card2).catch(function (err) {
             return console.error(err.tostring());
         });
     }
@@ -180,16 +187,17 @@ connection.on("CardPower", function (card, towhom, bywho) {
 //loops back to drag
 
 //CARDS
-connection.on("Baron", function (card, towhom, bywho) {
+connection.on("Baron", function (card, towhom, bywho,attackercard) {
     let text = bywho + " attacked with " + card + " " + towhom;
     let loser;
+    console.log(attackercard);
     if (towhom == myconnectionID) {
         //win
-        if (mycards[0] > card) {
+        if (mycards[0] > attackercard) {
             text += towhom + "wins";
             loser = bywho;
         }
-        else if (mycards[0] < card) {
+        else if (mycards[0] < attackercard) {
             text += bywho + "lost";
             iLost();
             loser = towhom;
@@ -198,8 +206,8 @@ connection.on("Baron", function (card, towhom, bywho) {
             text += " tie ";
         }
         console.log(text);
-        
-        connection.invoke("Result", lobbyID, text,loser).catch(function (err) {
+
+        connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
             return console.error(err.tostring());
         });
 
@@ -207,10 +215,13 @@ connection.on("Baron", function (card, towhom, bywho) {
 });
 
 
-connection.on("Result", function (text,loser) {
+connection.on("Result", function (text, loser) {
     $(".modal").show();
     $(".modal-content").append("<h5 class='header'>" + text + "</h5>");
     $('#' + loser).append("<div>LOST</div>");
+    $('#' + loser).removeAttr('ondrop');
+    $('#' + loser).removeAttr('ondragover');
+    //UPDATE add here remove droppable
     if (myconnectionID == loser) {
         iLost();
     }
@@ -250,9 +261,23 @@ function activateCard(cardValue, toWho, bywhom) {
 
 }
 
+function skip() {
+    connection.invoke("Skip", lobbyID).catch(function (err) {
+        return console.error(err.tostring());
+    });
+}
+
+connection.on("Skipped", function () {
+    userCounter++;
+    if (userCounter == lobbySize) {
+        getCard(allcards[0]);
+    }
+    console.log("skipped");
+});
 
 function iLost() {
     alert("you lost");
+    Lost = true;
     //make my view unplayable
     $('.my-cards').children('.card ').removeAttr('draggable');
     $('.my-cards').children('.card ').removeAttr('ondragstart');
