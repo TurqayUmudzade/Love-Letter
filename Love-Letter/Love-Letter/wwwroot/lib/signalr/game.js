@@ -93,9 +93,7 @@ connection.on("GiveCards", function (a) {
     if (userCounter == lobbySize - 3) {
         getCard(allcards[3]);
     }
-    for (let i = 0; i < lobbySize; i++) {
-        allcards.shift();
-    }
+    
     console.log(allcards);
 });
 //drag and drop
@@ -214,7 +212,6 @@ connection.on("Next", function () {
     unshiftcard = allcards[0];
     if (Lost === false) {
         userCounter++;
-        allcards.shift();
         if (userCounter == lobbySize) {
             if (typeof allcards[0] == 'undefined') {
                 connection.invoke("GameOver", lobbyID).catch(function (err) {
@@ -232,9 +229,6 @@ connection.on("Next", function () {
             userCounter = 0;
             //others
             connection.invoke("Next", lobbyID).catch(function (err) {
-                return console.error(err.tostring());
-            });
-            connection.invoke("Unshift", lobbyID).catch(function (err) {
                 return console.error(err.tostring());
             });
         }
@@ -391,7 +385,19 @@ function getCard(cardValue) {
         mycards.push(cardValue);
         next();
     });
+    connection.invoke("shiftdeck", lobbyID).catch(function (err) {
+        return console.error(err.tostring());
+    });
+    
 }
+
+connection.on("shiftdeck", function () {
+    console.log("shifted1");
+    allcards.shift();
+    console.log("shifted2");
+    console.log(allcard);
+});
+
 
 function iLost() {
     alert("you lost");

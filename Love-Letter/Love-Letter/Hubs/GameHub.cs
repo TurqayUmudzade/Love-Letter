@@ -61,7 +61,6 @@ namespace Love_Letter.Hubs
             await Clients.OthersInGroup(lobbyID).SendAsync("PriestShowCard", card, attacker);
         }
 
-
         public async Task Baron(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
             Debug.WriteLine("baron");
@@ -104,6 +103,11 @@ namespace Love_Letter.Hubs
         public async Task Next(string lobbyID)
         {
             await Clients.Group(lobbyID).SendAsync("Next");
+        }
+
+        public async Task shiftdeck(string lobbyID)
+        {
+            await Clients.Group(lobbyID).SendAsync("shiftdeck");
         }
 
         public async Task Unshift(string lobbyID)
