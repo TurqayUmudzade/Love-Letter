@@ -10,6 +10,7 @@ namespace Love_Letter.Hubs
     public class GameHub : Hub
     {
 
+        //START BASICS
         public async Task JoinLobby(string lobbyID)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, lobbyID);
@@ -29,10 +30,6 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("GiveCards", a);
         }
 
-        public async Task Play( string lobbyID)
-        {
-            await Clients.Group(lobbyID).SendAsync("MyTurn");
-        }
         public async Task CardPower(string lobbyID,string card,string toWhom,string byWho,int mycard)
         {
             await Clients.Caller.SendAsync("CardPower", card, toWhom, byWho,mycard);
@@ -91,6 +88,8 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("Princess", card, toWhom, byWho, attackercard);
         }
 
+        //CARDS END
+
 
         public async Task Result(string lobbyID, string result,string loser)
         {
@@ -102,11 +101,11 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("Next");
         }
 
-
-        public async Task Skip(string lobbyID)
+        public async Task Unshift(string lobbyID)
         {
-            await Clients.Group(lobbyID).SendAsync("Skipped");
+            await Clients.OthersInGroup(lobbyID).SendAsync("Unshift");
         }
+
 
         public async Task GameOver(string lobbyID)
         {

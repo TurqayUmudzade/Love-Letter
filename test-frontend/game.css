@@ -17,7 +17,9 @@
     align-items: center;
 }
 
-.enemy-cards .card-container .username-h4 {}
+.enemy-cards .card-container .username-h4 {
+    color: black;
+}
 
 .enemy-cards .card-container .enemy-deck {
     width: 80%;
