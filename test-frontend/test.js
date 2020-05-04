@@ -34,7 +34,7 @@ function addenemies(randomshit1, randomshit2, randomshit3) {
 addenemies("dsada1", "dsadas2", "dsadads3")
     //
 const array = ["sa2", "sa3", "sa4"];
-
+$('#salam').append($("<div class='card princess' id=" + 1 + " >" + 1 + "</div>").clone()); //add to enemy view that i moved
 
 // const index = array.indexOf("sa2");
 // if (index > -1) {
@@ -71,7 +71,8 @@ function dragover(event) {
 function drop(event) {
     event.preventDefault();
     var enemydeck = event.target;
-
+    console.log(enemydeck);
+    console.log(enemydeck.length);
     $(draggedcard).removeAttr('draggable');
     $(draggedcard).removeAttr('ondragstart');
     $(draggedcard).css('margin', '0');

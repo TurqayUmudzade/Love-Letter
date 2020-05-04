@@ -60,7 +60,6 @@ connection.on("RecievEnemyList", function (enemieslist) {
     console.log("enemieslist:" + enemies);
     for (var i = 0; i < enemies.length; i++) {
         var c = i + 1;
-        console.log(i);
         $(".enemy-cards").children('.card-container:nth-child(' + c + ')').children(".enemy-deck").attr('id', enemies[i]);
     }
 });
@@ -94,7 +93,7 @@ connection.on("GiveCards", function (a) {
     if (userCounter == lobbySize - 3) {
         getCard(allcards[3]);
     }
-    for (let i = 0; i < lobbySize ; i++) {
+    for (let i = 0; i < lobbySize; i++) {
         allcards.shift();
     }
     console.log(allcards);
@@ -122,6 +121,7 @@ function drop(event) {
         event.preventDefault();
 
         enemyID = $(event.target).attr("id");
+        if (enemyID)
         //UPDATEadd if null
         //make it undraggable
         $(draggedcard).removeAttr('draggable');
@@ -130,54 +130,77 @@ function drop(event) {
         $(draggedcard).remove();//remove from your cards
         $('.deck').append(draggedcard);
         //my changes
-        allcards.shift();//shift mydeck
-        userCounter = 1;
+        /*  allcards.shift();//shift mydeck
+          userCounter = 1;*/
+        userCounter = 0;
+        console.log("counter reset");
         var index = mycards.indexOf(parseInt(thiscard));
         if (index > -1) {
             mycards.splice(index, 1);
         }
         //cardplayed->others CardMove and All cardPower
-        connection.invoke("CardPlayed", lobbyID, thiscard, enemyID, myconnectionID,mycards[0]).catch(function (err) {
+        connection.invoke("CardPower", lobbyID, thiscard, enemyID, myconnectionID, mycards[0]).catch(function (err) {
             return console.error(err.tostring());
         });
-       
+
 
     }
 
 }
 
-//othersInGroup
-connection.on("CardMoved", function (card, towhom, bywho) {
-    userCounter++;
-    console.log(userCounter);
-    //shift my card from others
-    allcards.shift();//shift others deck
-    $('#' + bywho).append($("<div class='card princess' id=" + card + " >" + card + "</div>").clone());//add to enemy view that i moved
-    if (userCounter >= lobbySize) {
 
-        if (typeof allcards[0] == 'undefined') {
-            connection.invoke("GameOver", lobbyID).catch(function (err) {
-                return console.error(err.tostring());
-            });
-        } else if (Lost == true) {
-            skip();
-        } else
-            getCard(allcards[0]);//whoevers turn it is draws a card
-    }
-});
+//CALLER
+connection.on("CardPower", function (card, towhom, bywho, card2) {
 
-//
-connection.on("CardPower", function (card, towhom, bywho,card2) {
+    connection.invoke("CardMoved", lobbyID, card, bywho).catch(function (err) {
+        return console.error(err.tostring());
+    });
     //Guard
     if (card == 1) {
-        console.log("guard");
+        console.log("Guard");
+        connection.invoke("Guard", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
     }
     if (card == 2) {
-        console.log("priest");
+        console.log("Priest");
+        connection.invoke("Priest", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
     }
     if (card == 3) {
         console.log("baron");
-        connection.invoke("Baron", lobbyID, card, towhom, bywho,card2).catch(function (err) {
+        connection.invoke("Baron", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+    if (card == 4) {
+        console.log("Handmaid");
+        connection.invoke("Handmaid", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+    if (card == 5) {
+        console.log("Prince");
+        connection.invoke("Prince", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+    if (card == 6) {
+        console.log("King");
+        connection.invoke("King", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+    if (card == 7) {
+        console.log("Countess");
+        connection.invoke("Countess", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+    if (card == 8) {
+        console.log("Princess");
+        connection.invoke("Princess", lobbyID, card, towhom, bywho, card2).catch(function (err) {
             return console.error(err.tostring());
         });
     }
@@ -186,11 +209,73 @@ connection.on("CardPower", function (card, towhom, bywho,card2) {
 });
 //loops back to drag
 
+//othersInGroup
+connection.on("CardMoved", function (card, bywho) {
+    $('#' + bywho).append($("<div class='card princess card-on-enemydeck ' id=" + card + " >" + card + "</div>").clone());//add to enemy view that i moved
+});
+
+//All
+connection.on("Next", function () {
+    userCounter++;
+    allcards.shift();
+
+    if (Lost == false) {
+        if (userCounter == lobbySize) {
+            console.log("your turn");
+            if (typeof allcards[0] == 'undefined') {
+
+                console.log("game over");
+                connection.invoke("GameOver", lobbyID).catch(function (err) {
+                    return console.error(err.tostring());
+                });
+            }
+            else {
+                console.log("get card");
+                console.log(userCounter);
+                getCard(allcards[0]);//whoevers turn it is draws a card
+            }
+        }
+    }
+    else if (Lost == true) {
+        if (userCounter == lobbySize) 
+        {
+            userCounter = 1;
+            console.log("lost true")
+            connection.invoke("Next", lobbyID).catch(function (err) {
+                return console.error(err.tostring());
+            });
+        }
+    }
+});
+
+
+
+
+
+
 //CARDS
-connection.on("Baron", function (card, towhom, bywho,attackercard) {
+connection.on("Guard", function (card, towhom, bywho, attackercard) {
+    console.log("send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+
+});
+connection.on("Priest", function (card, towhom, bywho, attackercard) {
+    console.log("send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+});
+connection.on("Baron", function (card, towhom, bywho, attackercard) {
     let text = bywho + " attacked with " + card + " " + towhom;
     let loser;
-    console.log(attackercard);
     if (towhom == myconnectionID) {
         //win
         if (mycards[0] > attackercard) {
@@ -199,8 +284,8 @@ connection.on("Baron", function (card, towhom, bywho,attackercard) {
         }
         else if (mycards[0] < attackercard) {
             text += bywho + "lost";
-            iLost();
             loser = towhom;
+            Lost = true;
         }
         else {
             text += " tie ";
@@ -210,11 +295,69 @@ connection.on("Baron", function (card, towhom, bywho,attackercard) {
         connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
             return console.error(err.tostring());
         });
-
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
     }
 });
 
 
+connection.on("Handmaid", function (card, towhom, bywho, attackercard) {
+    console.log("card:" + card + "atackerscard" + attackercard + "send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+
+});
+
+connection.on("Prince", function (card, towhom, bywho, attackercard) {
+    console.log("send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+});
+
+connection.on("King", function (card, towhom, bywho, attackercard) {
+    console.log("send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+});
+
+connection.on("Countess", function (card, towhom, bywho, attackercard) {
+    console.log("send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+});
+
+connection.on("Princess", function (card, towhom, bywho, attackercard) {
+    console.log("send to" + towhom + "and youre " + myconnectionID);
+    if (towhom == myconnectionID) {
+        console.log("me");
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+    }
+});
+
+
+
+
+
+//
 connection.on("Result", function (text, loser) {
     $(".modal").show();
     $(".modal-content").append("<h5 class='header'>" + text + "</h5>");
@@ -277,7 +420,8 @@ connection.on("Skipped", function () {
 
 function iLost() {
     alert("you lost");
-    Lost = true;
+    /*Lost = true;
+    userCounter = 5;*/
     //make my view unplayable
     $('.my-cards').children('.card ').removeAttr('draggable');
     $('.my-cards').children('.card ').removeAttr('ondragstart');

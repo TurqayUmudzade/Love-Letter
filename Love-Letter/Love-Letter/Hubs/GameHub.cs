@@ -33,18 +33,62 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("MyTurn");
         }
-        public async Task CardPlayed(string lobbyID,string card,string toWhom,string byWho,int mycard)
+        public async Task CardPower(string lobbyID,string card,string toWhom,string byWho,int mycard)
         {
             await Clients.Caller.SendAsync("CardPower", card, toWhom, byWho,mycard);
-            await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", card,toWhom,byWho);
             
         }
 
+        public async Task CardMoved(string lobbyID, string card, string byWho)
+        {
+            await Clients.OthersInGroup(lobbyID).SendAsync("CardMoved", card, byWho);
+
+        }
+
+
+
         //CARDS
+        public async Task Guard(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("Guard");
+            await Clients.Group(lobbyID).SendAsync("Guard", card, toWhom, byWho, attackercard);
+        }
+        public async Task Priest(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("Priest");
+            await Clients.Group(lobbyID).SendAsync("Priest", card, toWhom, byWho, attackercard);
+        }
+
 
         public async Task Baron(string lobbyID, string card, string toWhom, string byWho,int attackercard)
         {
+            Debug.WriteLine("baron");
             await Clients.Group(lobbyID).SendAsync("Baron", card, toWhom, byWho, attackercard);
+        }
+        public async Task Handmaid(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("Handmaid");
+            await Clients.Group(lobbyID).SendAsync("Handmaid", card, toWhom, byWho, attackercard);
+        }
+        public async Task Prince(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("Prince");
+            await Clients.Group(lobbyID).SendAsync("Prince", card, toWhom, byWho, attackercard);
+        }
+        public async Task King(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("King");
+            await Clients.Group(lobbyID).SendAsync("King", card, toWhom, byWho, attackercard);
+        }
+        public async Task Countess(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("Countess");
+            await Clients.Group(lobbyID).SendAsync("Countess", card, toWhom, byWho, attackercard);
+        }
+        public async Task Princess(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        {
+            Debug.WriteLine("Princess");
+            await Clients.Group(lobbyID).SendAsync("Princess", card, toWhom, byWho, attackercard);
         }
 
 
@@ -52,6 +96,12 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("Result", result,loser);
         }
+
+        public async Task Next(string lobbyID)
+        {
+            await Clients.Group(lobbyID).SendAsync("Next");
+        }
+
 
         public async Task Skip(string lobbyID)
         {

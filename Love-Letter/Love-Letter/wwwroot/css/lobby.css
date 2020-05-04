@@ -156,6 +156,12 @@
     }
 
 /* The Close Button */
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .close {
     color: #aaa;
@@ -164,9 +170,9 @@
     font-weight: bold;
 }
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.card-on-enemydeck {
+    pointer-events: none;
+    top: -25px;
+    height: 200px !important;
+    width: 115px !important;
+}

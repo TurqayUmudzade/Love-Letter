@@ -171,3 +171,10 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.card-on-enemydeck {
+    pointer-events: none;
+    top: -25px;
+    height: 200px;
+    width: 115px;
+}
