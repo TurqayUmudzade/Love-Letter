@@ -239,8 +239,6 @@ connection.on("Next", function () {
             });
         }
 
-
-
     }
 });
 
@@ -253,15 +251,22 @@ connection.on("Guard", function (card, towhom, bywho, attackercard) {
             return console.error(err.tostring());
         });
     }
-
 });
 connection.on("Priest", function (card, towhom, bywho, attackercard) {
-    console.log("send to" + towhom + "and youre " + myconnectionID);
     if (towhom == myconnectionID) {
-        console.log("me");
+        
+        connection.invoke("PriestShowCard", lobbyID, mycards[0],bywho).catch(function (err) {
+            return console.error(err.tostring());
+        });
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
+    }
+});
+
+connection.on("PriestShowCard", function (card, attacker) {
+    if (attacker == myconnectionID) {
+        alert(card);
     }
 });
 connection.on("Baron", function (card, towhom, bywho, attackercard) {

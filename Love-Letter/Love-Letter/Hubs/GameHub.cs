@@ -20,9 +20,9 @@ namespace Love_Letter.Hubs
 
         }
 
-        public async Task SendEnemylist( string lobbyID,string[] enemies)
+        public async Task SendEnemylist(string lobbyID, string[] enemies)
         {
-            await Clients.Group(lobbyID).SendAsync("RecievEnemyList",enemies);
+            await Clients.Group(lobbyID).SendAsync("RecievEnemyList", enemies);
         }
 
         public async Task GiveFirstCards(int[] a, string lobbyID)
@@ -30,10 +30,10 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("GiveCards", a);
         }
 
-        public async Task CardPower(string lobbyID,string card,string toWhom,string byWho,int mycard)
+        public async Task CardPower(string lobbyID, string card, string toWhom, string byWho, int mycard)
         {
-            await Clients.Caller.SendAsync("CardPower", card, toWhom, byWho,mycard);
-            
+            await Clients.Caller.SendAsync("CardPower", card, toWhom, byWho, mycard);
+
         }
 
         public async Task CardMoved(string lobbyID, string card, string byWho)
@@ -55,9 +55,14 @@ namespace Love_Letter.Hubs
             Debug.WriteLine("Priest");
             await Clients.Group(lobbyID).SendAsync("Priest", card, toWhom, byWho, attackercard);
         }
+        public async Task PriestShowCard(string lobbyID, int card, string attacker)
+        {
+            Debug.WriteLine("Priest");
+            await Clients.OthersInGroup(lobbyID).SendAsync("PriestShowCard", card, attacker);
+        }
 
 
-        public async Task Baron(string lobbyID, string card, string toWhom, string byWho,int attackercard)
+        public async Task Baron(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
             Debug.WriteLine("baron");
             await Clients.Group(lobbyID).SendAsync("Baron", card, toWhom, byWho, attackercard);
@@ -91,9 +96,9 @@ namespace Love_Letter.Hubs
         //CARDS END
 
 
-        public async Task Result(string lobbyID, string result,string loser)
+        public async Task Result(string lobbyID, string result, string loser)
         {
-            await Clients.Group(lobbyID).SendAsync("Result", result,loser);
+            await Clients.Group(lobbyID).SendAsync("Result", result, loser);
         }
 
         public async Task Next(string lobbyID)
@@ -118,7 +123,7 @@ namespace Love_Letter.Hubs
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
         }
 
-        
+
         [Authorize]
         public override async Task OnConnectedAsync()
         {
