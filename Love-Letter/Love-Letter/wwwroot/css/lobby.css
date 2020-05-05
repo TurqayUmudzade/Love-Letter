@@ -30,7 +30,10 @@
 .enemy-deck {
     display: flex;
 }
-
+.guardModal {
+    width: 50% !important;
+    height: 750px !important;
+}
 .card {
     position: relative;
     height: 250px;

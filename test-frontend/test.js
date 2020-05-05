@@ -16,6 +16,8 @@ $('#myModal').on('shown.bs.modal', function() {
     // $('#exampleModal').trigger('focus')
 })
 
+
+
 function getCard(cardValue) {
     $('.pile-card').addClass('shift-card').delay(500).queue(function(next) {
         $(".my-cards").append("<div class='card princess' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
@@ -23,6 +25,18 @@ function getCard(cardValue) {
         next();
     });
 }
+
+$(".modal").show();
+$(".modal-content").children("modal-content").remove();
+var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card guard-js' id='1'></div> <div class='card guard-js' id='2'></div> <div class='card guard-js' id='3'></div> <div class='card guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card guard-js' id='5'></div> <div class='card guard-js' id='6'> </div> <div class='card guard-js' id='7'></div> <div class='card guard-js' id='8'></div> </div> </div>";
+$(".modal-content").append(guardContent);
+$(".modal-content").addClass('guardModal');
+$('.guard-js').on("click", function() {
+    var value = $(this).attr('id');
+    $(".modal-content").removeClass('guardModal');
+    $(".modal").hide();
+    $(".modal-content").children(".modal-g-cards").remove();
+})
 
 let enemies = new Array();
 
@@ -96,10 +110,6 @@ let mycards = new Array();
 mycards.push(1);
 mycards.push(3);
 $('.card').on("click", function() {
-    let thiscard = $(this).attr('id')
 
-    if (mycards.includes(parseInt(thiscard))) {
-        console.log("nice");
-    }
 
 });

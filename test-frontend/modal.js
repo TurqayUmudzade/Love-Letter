@@ -9,5 +9,3 @@ $(".btn").on("click", function() {
 $(".x").on("click", function() {
     $(".modal").hide();
 });
-
-$(".modal-content").append("<h2 class='header'>CarddVaue</h2><p>Play by on </p>");

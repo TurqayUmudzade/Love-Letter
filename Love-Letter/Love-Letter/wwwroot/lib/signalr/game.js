@@ -93,7 +93,7 @@ connection.on("GiveCards", function (a) {
     if (userCounter == lobbySize - 3) {
         getCard(allcards[3]);
     }
-    
+
     console.log(allcards);
 });
 //drag and drop
@@ -151,10 +151,20 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
     });
     //Guard
     if (card == 1) {
-        console.log("Guard");
-        connection.invoke("Guard", lobbyID, card, towhom, bywho, card2).catch(function (err) {
-            return console.error(err.tostring());
-        });
+        $(".modal").show();
+        $(".modal-content").children("modal-content").remove();
+        var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card guard-js' id='1'></div> <div class='card guard-js' id='2'></div> <div class='card guard-js' id='3'></div> <div class='card guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card guard-js' id='5'></div> <div class='card guard-js' id='6'> </div> <div class='card guard-js' id='7'></div> <div class='card guard-js' id='8'></div> </div> </div>";
+        $(".modal-content").append(guardContent);
+        $(".modal-content").addClass('guardModal');
+        $('.guard-js').on("click", function () {
+            var myGuess = $(this).attr('id');
+            $(".modal-content").removeClass('guardModal');
+            $(".modal").hide();
+            $(".modal-content").children(".modal-g-cards").remove();
+            connection.invoke("Guard", lobbyID, towhom, bywho, myGuess).catch(function (err) {
+                return console.error(err.tostring());
+            });
+        })
     }
     if (card == 2) {
         console.log("Priest");
@@ -237,10 +247,21 @@ connection.on("Next", function () {
 });
 
 //CARDS
-connection.on("Guard", function (card, towhom, bywho, attackercard) {
-    console.log("send to" + towhom + "and youre " + myconnectionID);
+connection.on("Guard", function (towhom, bywho, guess) {
     if (towhom == myconnectionID) {
-        console.log("me");
+        let text = bywho + " guees with " + guess + " " + towhom;
+        let loser = "";
+        if (mycards[0] == guess) {
+            Lost = true;
+            text += " guessed right";
+            loser = myconnectionID;
+            iLost();
+        } else {
+            text += " guessed wrong"
+        }
+        connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
+            return console.error(err.tostring());
+        });
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -248,8 +269,8 @@ connection.on("Guard", function (card, towhom, bywho, attackercard) {
 });
 connection.on("Priest", function (card, towhom, bywho, attackercard) {
     if (towhom == myconnectionID) {
-        
-        connection.invoke("PriestShowCard", lobbyID, mycards[0],bywho).catch(function (err) {
+
+        connection.invoke("PriestShowCard", lobbyID, mycards[0], bywho).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -388,7 +409,7 @@ function getCard(cardValue) {
     connection.invoke("shiftdeck", lobbyID).catch(function (err) {
         return console.error(err.tostring());
     });
-    
+
 }
 
 connection.on("shiftdeck", function () {

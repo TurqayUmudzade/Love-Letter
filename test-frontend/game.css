@@ -137,6 +137,11 @@
     /* Black w/ opacity */
 }
 
+.guardModal {
+    width: 50% !important;
+    height: 750px !important;
+}
+
 
 /* Modal Content/Box */
 

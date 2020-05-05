@@ -45,25 +45,22 @@ namespace Love_Letter.Hubs
 
 
         //CARDS
-        public async Task Guard(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        public async Task Guard(string lobbyID, string toWhom, string byWho,string guess )
         {
             Debug.WriteLine("Guard");
-            await Clients.Group(lobbyID).SendAsync("Guard", card, toWhom, byWho, attackercard);
+            await Clients.Group(lobbyID).SendAsync("Guard", toWhom, byWho, guess);
         }
         public async Task Priest(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
-            Debug.WriteLine("Priest");
             await Clients.Group(lobbyID).SendAsync("Priest", card, toWhom, byWho, attackercard);
         }
         public async Task PriestShowCard(string lobbyID, int card, string attacker)
         {
-            Debug.WriteLine("Priest");
             await Clients.OthersInGroup(lobbyID).SendAsync("PriestShowCard", card, attacker);
         }
 
         public async Task Baron(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
-            Debug.WriteLine("baron");
             await Clients.Group(lobbyID).SendAsync("Baron", card, toWhom, byWho, attackercard);
         }
         public async Task Handmaid(string lobbyID, string card, string toWhom, string byWho, int attackercard)
