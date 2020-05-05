@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = "Index";
+    
+}
+@model LobbiesViewModel
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title></title>
+</head>
+
+<body>
+  <div class="jumbotron text-center" style="margin-bottom:0">
+    <h1>Love Letter</h1>
+    <blockquote>Love me or leave me forever (c) Three Days Grace </blockquote>
+
+  </div>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">LoveLetter.com</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="signin.html">Sign in</a></li>
+          <li><a href="signup.html">Sign up</a></li>
+          <li class="active"><a href="lobbies.html">Lobbies</a></li>
+          <li><a href="about.html">About us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+        <div class="container ">
+    <h1>Lobbies</h1>
+    <button class="btn  btn-primary ">Create Lobby</button>
+    @foreach (Lobby lobby in Model.Lobbies)
+    {
+        <div class="card lobby mt-4">
+            <div class="card-body">
+                <h1>Lobby#@lobby.LobbyID</h1>
+                <h5>@lobby.numberOfPlayers/@lobby.Space</h5>
+                <input type="text" class="form-group" name="username" placeholder="Enter Username" required>
+                @*<form method="post" asp-action="JoinLobby" asp-controller="Game" >
+            <input type="text" class="form-group" name="username" placeholder="Enter Username" required>
+            <input type="hidden" name="LobbyID" value="@lobby.LobbyID" />
+            <button class="btn btn-light" type="submit">Join</button>
+        </form>*@
+                <a class="btn btn-light" href="@Url.ActionLink("Lobby","Game",new {lobbyID=lobby.LobbyID })">Join</a>
+            </div>
+        </div>
+    }
+
+
+</div>
+    </div>
+  </div>
+  <footer class="page-footer font-small blue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+
+
+</body>
