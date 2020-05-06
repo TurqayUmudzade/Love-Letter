@@ -7,9 +7,7 @@ $('.card').on("click", function() {
 });
 getCard(1);
 $('.pressme').on("click", function() {
-
-    $('.my-cards').children('.card ').removeAttr('draggable');
-    $('.my-cards').children('.card ').removeAttr('ondragstart');
+    $('.my-cards .card').remove();
 });
 
 $('#myModal').on('shown.bs.modal', function() {
@@ -20,23 +18,23 @@ $('#myModal').on('shown.bs.modal', function() {
 
 function getCard(cardValue) {
     $('.pile-card').addClass('shift-card').delay(500).queue(function(next) {
-        $(".my-cards").append("<div class='card princess' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
+        $(".my-cards").append("<div class='card' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
         $('.pile-card').removeClass('shift-card');
         next();
     });
 }
 
-$(".modal").show();
-$(".modal-content").children("modal-content").remove();
-var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card guard-js' id='1'></div> <div class='card guard-js' id='2'></div> <div class='card guard-js' id='3'></div> <div class='card guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card guard-js' id='5'></div> <div class='card guard-js' id='6'> </div> <div class='card guard-js' id='7'></div> <div class='card guard-js' id='8'></div> </div> </div>";
-$(".modal-content").append(guardContent);
-$(".modal-content").addClass('guardModal');
-$('.guard-js').on("click", function() {
-    var value = $(this).attr('id');
-    $(".modal-content").removeClass('guardModal');
-    $(".modal").hide();
-    $(".modal-content").children(".modal-g-cards").remove();
-})
+// $(".modal").show();
+// $(".modal-content").children("modal-content").remove();
+// var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card guard-js' id='1'></div> <div class='card guard-js' id='2'></div> <div class='card guard-js' id='3'></div> <div class='card guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card guard-js' id='5'></div> <div class='card guard-js' id='6'> </div> <div class='card guard-js' id='7'></div> <div class='card guard-js' id='8'></div> </div> </div>";
+// $(".modal-content").append(guardContent);
+// $(".modal-content").addClass('guardModal');
+// $('.guard-js').on("click", function() {
+//     var value = $(this).attr('id');
+//     $(".modal-content").removeClass('guardModal');
+//     $(".modal").hide();
+//     $(".modal-content").children(".modal-g-cards").remove();
+// })
 
 let enemies = new Array();
 
@@ -118,3 +116,8 @@ var user = "GG7JgsUVa1tdZTu7vOiCRg";
 $('#' + user + " .handmaidProtected").remove();
 $('#' + user).attr("ondrop", "drop(event)");
 $('#' + user).attr("ondragover", "dragover(event)");
+
+function test() {
+    console.log(test);
+    $('.mycards .card').remove();
+}

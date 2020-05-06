@@ -340,18 +340,20 @@ connection.on("Handmaid", function (bywho) {
 
 //Others
 connection.on("RemoveProtection", function (user) {
-
     $('#' + user + " .handmaidProtected").remove();
     $('#' + user).attr("ondrop", "drop(event)");
     $('#' + user).attr("ondragover", "dragover(event)");
 
-
 });
 
-connection.on("Prince", function (card, towhom, bywho, attackercard) {
-    console.log("send to" + towhom + "and youre " + myconnectionID);
+connection.on("Prince", function (card, towhom, bywho, ) {
+    let text = bywho + " attacked with " + card + " " + towhom;
     if (towhom == myconnectionID) {
-        console.log("me");
+        $('.my-cards .card').remove();
+        getCard(allcards[0]);
+        connection.invoke("Result", lobbyID, text, "").catch(function (err) {
+            return console.error(err.tostring());
+        });
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -389,8 +391,9 @@ connection.on("Princess", function (card, towhom, bywho, attackercard) {
 });
 
 
-//
+//All
 connection.on("Result", function (text, loser) {
+    $(".modal-content").children("modal-content").remove();
     $(".modal").show();
     $(".modal-content").append("<h5 class='header'>" + text + "</h5>");
     $('#' + loser).append("<div>LOST</div>");
@@ -432,7 +435,7 @@ function getCard(cardValue) {
     });
 
 }
-
+//All
 connection.on("shiftdeck", function () {
     allcards.shift();
 });
@@ -458,5 +461,3 @@ $(".close").on("click", function () {
 $(".x").on("click", function () {
     $(".modal").hide();
 });
-
-$
