@@ -45,21 +45,21 @@ function addenemies(randomshit1, randomshit2, randomshit3) {
     enemies.push(randomshit2);
     enemies.push(randomshit3);
 }
-addenemies("dsada1", "dsadas2", "dsadads3")
-    //
-const array = ["sa2", "sa3", "sa4"];
-$('#salam').append($("<div class='card princess' id=" + 1 + " >" + 1 + "</div>").clone()); //add to enemy view that i moved
+// addenemies("dsada1", "dsadas2", "dsadads3")
+//     //
+// const array = ["sa2", "sa3", "sa4"];
+// $('#salam').append($("<div class='card princess' id=" + 1 + " >" + 1 + "</div>").clone()); //add to enemy view that i moved
 
-// const index = array.indexOf("sa2");
-// if (index > -1) {
-//     array.splice(index, 1);
+// // const index = array.indexOf("sa2");
+// // if (index > -1) {
+// //     array.splice(index, 1);
+// // }
+// // towhom = "salam";
+// //$('#' + towhom).append($("<h1>SDADAS</h1>").clone());
+// for (var i = 0; i < array.length; i++) {
+//     var c = i + 1;
+//     $(".enemy-cards").children('.card-container:nth-child(' + c + ')').children(".enemy-deck").attr('id', array[i]);
 // }
-// towhom = "salam";
-//$('#' + towhom).append($("<h1>SDADAS</h1>").clone());
-for (var i = 0; i < array.length; i++) {
-    var c = i + 1;
-    $(".enemy-cards").children('.card-container:nth-child(' + c + ')').children(".enemy-deck").attr('id', array[i]);
-}
 
 //$(".enemy-cards").children(".card-container").children(".enemy-deck").attr('id', 'value');
 // var test = $(".enemy-cards").children(".card-container");
@@ -113,3 +113,8 @@ $('.card').on("click", function() {
 
 
 });
+
+var user = "GG7JgsUVa1tdZTu7vOiCRg";
+$('#' + user + " .handmaidProtected").remove();
+$('#' + user).attr("ondrop", "drop(event)");
+$('#' + user).attr("ondragover", "dragover(event)");

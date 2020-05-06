@@ -14,6 +14,7 @@ var enemydeck;
 var lobbyID = $('#lobbyID').text();
 var didnotcheat;
 var Lost = false;
+var isProtectedH = false;
 
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
@@ -118,6 +119,14 @@ function drop(event) {
     if (userCounter == lobbySize && didnotcheat) {
         event.preventDefault();
 
+        if (isProtectedH == true) {
+            isProtectedH = false;
+            connection.invoke("RemoveProtection", lobbyID, myconnectionID).catch(function (err) {
+                return console.error(err.tostring());
+
+            });
+        }
+
         enemyID = $(event.target).attr("id");
 
         //UPDATEadd if null
@@ -179,8 +188,8 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
         });
     }
     if (card == 4) {
-        console.log("Handmaid");
-        connection.invoke("Handmaid", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+        isProtectedH = true;
+        connection.invoke("Handmaid", lobbyID, bywho).catch(function (err) {
             return console.error(err.tostring());
         });
     }
@@ -316,14 +325,26 @@ connection.on("Baron", function (card, towhom, bywho, attackercard) {
 });
 
 
-connection.on("Handmaid", function (card, towhom, bywho, attackercard) {
-    console.log("card:" + card + "atackerscard" + attackercard + "send to" + towhom + "and youre " + myconnectionID);
-    if (towhom == myconnectionID) {
-        console.log("me");
+connection.on("Handmaid", function (bywho) {
+    $('#' + bywho).append("<div class='handmaidProtected' >PROTECTED</div>");
+    $('#' + bywho).removeAttr('ondrop');
+    $('#' + bywho).removeAttr('ondragover');
+
+    if (bywho == myconnectionID) {
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
     }
+
+});
+
+//Others
+connection.on("RemoveProtection", function (user) {
+
+    $('#' + user + " .handmaidProtected").remove();
+    $('#' + user).attr("ondrop", "drop(event)");
+    $('#' + user).attr("ondragover", "dragover(event)");
+
 
 });
 
@@ -413,10 +434,7 @@ function getCard(cardValue) {
 }
 
 connection.on("shiftdeck", function () {
-    console.log("shifted1");
     allcards.shift();
-    console.log("shifted2");
-    console.log(allcard);
 });
 
 

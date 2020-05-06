@@ -63,11 +63,17 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("Baron", card, toWhom, byWho, attackercard);
         }
-        public async Task Handmaid(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        public async Task Handmaid(string lobbyID, string byWho)
         {
             Debug.WriteLine("Handmaid");
-            await Clients.Group(lobbyID).SendAsync("Handmaid", card, toWhom, byWho, attackercard);
+            await Clients.Group(lobbyID).SendAsync("Handmaid", byWho);
         }
+        public async Task RemoveProtection(string lobbyID, string user)
+        {
+            await Clients.OthersInGroup(lobbyID).SendAsync("RemoveProtection", user);
+        }
+
+
         public async Task Prince(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
             Debug.WriteLine("Prince");
