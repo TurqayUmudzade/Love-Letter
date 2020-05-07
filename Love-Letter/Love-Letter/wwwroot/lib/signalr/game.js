@@ -361,9 +361,20 @@ connection.on("Prince", function (card, towhom, bywho, ) {
 });
 
 connection.on("King", function (card, towhom, bywho, attackercard) {
-    console.log("send to" + towhom + "and youre " + myconnectionID);
+    let text = bywho + " attacked with " + card + " " + towhom;
     if (towhom == myconnectionID) {
-        console.log("me");
+        //remove my card view
+        $('.my-cards .card').remove();
+        //add king attacker card to view
+        $(".my-cards").append("<div class='card princess' id=" + attackercard + " draggable='true' ondragstart='dragStart(event)'>" + attackercard + "</div>");
+        //save my old card
+        var exchangecard = mycards[0];
+        //update my card
+        mycards[0] = attackercard;
+        //sendit
+        connection.invoke("ResultKing", lobbyID, text, bywho, exchangecard).catch(function (err) {
+            return console.error(err.tostring());
+        });
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -402,6 +413,21 @@ connection.on("Result", function (text, loser) {
     //UPDATE add here remove droppable
     if (myconnectionID == loser) {
         iLost();
+    }
+});
+
+connection.on("ResultKing", function (text, loser,returnCard) {
+    $(".modal-content").children("modal-content").remove();
+    $(".modal").show();
+    $(".modal-content").append("<h5 class='header'>" + text + "</h5>");
+    console.log(loser)
+    //UPDATE add here remove droppable
+    if (myconnectionID == loser) {
+        console.log("here");
+        mycards[0] = returnCard;
+        $('.my-cards .card').remove();
+        //add king attacker card to view
+        $(".my-cards").append("<div class='card princess' id=" + returnCard + " draggable='true' ondragstart='dragStart(event)'>" + returnCard + "</div>");
     }
 });
 
