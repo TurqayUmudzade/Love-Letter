@@ -1,38 +1,110 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Love Letter";
+     Layout = "~/Views/Shared/JesusNav.cshtml";
 }
 
-    <div class="text-center">
-
-        <style>
-            .card {
-                height: 300px;
-                width: 200px;
-                border: 1px solid black;
-                border-radius: 20px;
-                margin: 20px;
-            }
-
-            .moved {
-                transform: translateY(200%);
-            }
-        </style>
-        <div class="container d-flex">
-            <div id="card1" class="card"></div>
-            <div id="card2"class="card"></div>
-            <div id="card3" class="card"></div>
-            <div id="card4" class="card"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Love Letter</h2>
+                <h3>Cover photo of game:</h3>
+                <img id="homeImage" src="~/images/Love-Letter.png" class="img-fluid">
+                <p>
+                    2–4 people play.
+                    First, one card is dealt to each person,
+                    and one is discarded face-down from the round
+                    (so the process of elimination cannot be used to prove which cards are left)
+                    and the rest are deposited face-down into a deck in the middle.
+                    During each player's turn, he or she draws one card from the deck and plays either that card,
+                    or the card they already had. After processing the effect described on the discarded card,
+                    the next player gets a turn. This is repeated until either the deck disappears,
+                    in which case the player holding the highest card wins the round
+                    (if tied, then the player with the highest total of cards in their discard pile),
+                    or until all players but one are eliminated, in which case the remaining player wins the round.
+                    The deck (including the discarded card) is shuffled, and play begins again.
+                    Once a player wins the game, that player receives a token of affection.
+                    The game ends when one player has obtained a predetermined number of tokens of affection
+                    (normally anywhere from four to seven).
+                </p>
+            </div>
+            <div class="col-sm-8">
+                <h2>Cards description</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Card</th>
+                            <th>Strength</th>
+                            <th>Number in deck</th>
+                            <th>Effects</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Guard</td>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>
+                                Player designates another player and names a type of card.
+                                If that player's hand matches the type of card specified,
+                                that player is eliminated from the round.
+                                However, <strong>Guard</strong> cannot be named as the type of card.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Priest</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>Player is allowed to see another player's hand.</td>
+                        </tr>
+                        <tr>
+                            <td>Baron</td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td>
+                                Player will choose another player and privately compare hands.
+                                The player with the lower-strength hand is eliminated from the round.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Handmaid</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>Player cannot be affected by any other player's card until the next turn.</td>
+                        </tr>
+                        <tr>
+                            <td>Prince</td>
+                            <td>5</td>
+                            <td>2</td>
+                            <td>
+                                Player can choose any player (including themselves) to discard their hand and draw a new one.
+                                If the discarded card is the <strong>Princess</strong>, the discarding player is eliminated.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>King</td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td>Player trades hands with any other player.</td>
+                        </tr>
+                        <tr>
+                            <td>Countess</td>
+                            <td>7</td>
+                            <td>1</td>
+                            <td>
+                                If a player holds both this card and either the <strong>King</strong> or <strong>Prince</strong>
+                                card,
+                                this card must be played immediately.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Princess</td>
+                            <td>8</td>
+                            <td>1</td>
+                            <td>If a player plays this card for any reason, they are eliminated from the round.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
         </div>
-
-        <div class="container">
-            <h1 class="">UserList</h1>
-            <ul id="userlist">
-            </ul>
-        </div>
-
-        
-
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/signalr/signalr.js"></script>
-        <script src="~/lib/signalr/game.js"></script>
     </div>

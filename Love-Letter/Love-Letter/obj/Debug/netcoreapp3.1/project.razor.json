@@ -20591,6 +20591,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Shared\\JesusNav.cshtml",
+      "TargetPath": "Views\\Shared\\JesusNav.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Account\\Login.cshtml",
       "TargetPath": "Views\\Account\\Login.cshtml",
       "FileKind": "mvc"

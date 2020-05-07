@@ -1,0 +1,13 @@
+nav {
+    position: fixed !important;
+    border-radius: 0px;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+}
+
+img {
+    display: block;
+    height: auto;
+    max-width: 70%;
+}

@@ -1,0 +1,22 @@
+nav {
+    position: fixed !important;
+    border-radius: 0px !important;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+#homeImage {
+    display: block;
+    height: auto;
+    max-width: 70%;
+}
+
+.float-right {
+float:right !important;
+}

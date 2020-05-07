@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/JesusNav.cshtml";
 }
 @model LoginViewModel
     <div class="container login">
@@ -8,7 +9,7 @@
         <form class="small-container" method="post" asp-action="Login" asp-controller="Account">
             <h3>Login </h3>
             <div class="form-group">
-                <label asp-for="Username">username</label>
+                <label asp-for="Username">Username</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" asp-for="Username" aria-describedby="emailHelp" placeholder="Enter Username">
                 <span asp-validation-for="Username"></span>
             </div>

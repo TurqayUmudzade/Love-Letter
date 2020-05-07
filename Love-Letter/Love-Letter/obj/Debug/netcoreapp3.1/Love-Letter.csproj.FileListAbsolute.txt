@@ -158,3 +158,4 @@ C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Game\Index.cshtml.g.cs
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CustomLayout.cshtml.g.cs
 C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Game\Waitting.cshtml.g.cs
+C:\Users\Turqay\Desktop\LoveLetter\Love-Letter\Love-Letter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\JesusNav.cshtml.g.cs
