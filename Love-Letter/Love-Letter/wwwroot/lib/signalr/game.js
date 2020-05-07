@@ -15,6 +15,7 @@ var lobbyID = $('#lobbyID').text();
 var didnotcheat;
 var Lost = false;
 var isProtectedH = false;
+var hasCountess = false;
 
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
@@ -116,8 +117,14 @@ function dragover(event) {
 }
 
 function drop(event) {
+
+    if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6)) {
+        alert("you cant use prince or king if you have countess ");
+        return;
+    }
     if (userCounter == lobbySize && didnotcheat) {
         event.preventDefault();
+        if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6))
 
         if (isProtectedH == true) {
             isProtectedH = false;
@@ -206,8 +213,9 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
         });
     }
     if (card == 7) {
-        console.log("Countess");
-        connection.invoke("Countess", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+        hasCountess = false;
+                
+        connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
     }
@@ -382,7 +390,6 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
 });
 
 connection.on("Countess", function (card, towhom, bywho, attackercard) {
-    console.log("send to" + towhom + "and youre " + myconnectionID);
     if (towhom == myconnectionID) {
         console.log("me");
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -454,6 +461,9 @@ function getCard(cardValue) {
         $(".my-cards").append("<div class='card princess' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
         $('.pile-card').removeClass('shift-card');
         mycards.push(cardValue);
+        if (cardValue == 7) {
+            hasCountess = true;
+        }
         next();
     });
     connection.invoke("shiftdeck", lobbyID).catch(function (err) {
