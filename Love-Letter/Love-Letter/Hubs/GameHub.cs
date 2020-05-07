@@ -89,11 +89,7 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("ResultKing", result, loser,returnCard);
         }
-        public async Task Countess(string lobbyID, string card, string toWhom, string byWho, int attackercard)
-        {
-            Debug.WriteLine("Countess");
-            await Clients.Group(lobbyID).SendAsync("Countess", card, toWhom, byWho, attackercard);
-        }
+      
         public async Task Princess(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
             Debug.WriteLine("Princess");

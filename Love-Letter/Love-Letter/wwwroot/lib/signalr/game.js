@@ -220,8 +220,12 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
         });
     }
     if (card == 8) {
-        console.log("Princess");
-        connection.invoke("Princess", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+        Lost = true;
+        let text = "used princess";
+        connection.invoke("Result", lobbyID, text, myconnectionID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
     }
@@ -389,19 +393,12 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
     }
 });
 
-connection.on("Countess", function (card, towhom, bywho, attackercard) {
-    if (towhom == myconnectionID) {
-        console.log("me");
-        connection.invoke("Next", lobbyID).catch(function (err) {
-            return console.error(err.tostring());
-        });
-    }
-});
 
 connection.on("Princess", function (card, towhom, bywho, attackercard) {
-    console.log("send to" + towhom + "and youre " + myconnectionID);
     if (towhom == myconnectionID) {
-        console.log("me");
+        connection.invoke("ResultKing", lobbyID, text, bywho, exchangecard).catch(function (err) {
+            return console.error(err.tostring());
+        });
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
