@@ -54,9 +54,9 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("Priest", card, toWhom, byWho, attackercard);
         }
-        public async Task PriestShowCard(string lobbyID, int card, string attacker)
+        public async Task PriestShowCard(string lobbyID, int card, string attacker,string text)
         {
-            await Clients.OthersInGroup(lobbyID).SendAsync("PriestShowCard", card, attacker);
+            await Clients.Group(lobbyID).SendAsync("PriestShowCard", card, attacker, text);
         }
 
         public async Task Baron(string lobbyID, string card, string toWhom, string byWho, int attackercard)
