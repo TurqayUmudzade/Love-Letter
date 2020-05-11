@@ -1,5 +1,6 @@
 #table {
-    background-image: url(~/images/343672.jpg);
+    overflow: hidden;
+    background-image: url(./images/backgrounds/442432.jpg);
     background-size: cover;
 }
 
@@ -24,7 +25,7 @@
 .enemy-cards .card-container .enemy-deck {
     width: 80%;
     height: 80%;
-    border: 1px solid rgb(0, 0, 0, 0.2);
+    border: 1px solid rgb(0, 0, 0, 0.4);
     border-radius: 5px;
 }
 
@@ -37,7 +38,7 @@
     height: 250px;
     width: 150px;
     border: 1px solid black;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 50px 20px;
 }
 
@@ -102,6 +103,8 @@
     height: 250px;
     flex: 1;
     height: 300px;
+    border: 1px solid rgb(0, 0, 0, 0.4);
+    border-radius: 5px;
 }
 
 .my-side .right {
@@ -184,4 +187,23 @@
     top: -25px;
     height: 200px;
     width: 115px;
+}
+
+
+/* 
+CARDS
+*/
+
+.guard {
+    background-image: url(./images/EditedCards/guard.svg);
+    background-size: cover;
+}
+
+.priest {
+    background-image: url(./images/EditedCards/priest.svg);
+    background-size: cover;
+}
+
+.handmaid {
+    background-image: url(./images/EditedCards/handmaid.svg);
 }

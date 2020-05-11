@@ -5,8 +5,9 @@ let myconnectionID;
 let enemies = new Array();
 var enemyID;
 let unshiftcard;
+
+const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
-let lobbySize = 4;
 let thiscard;
 let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
 let mycards = new Array();
@@ -455,7 +456,8 @@ connection.on("UserDisconnected", function (ConnectionId) {
 //GAMEPLAY
 function getCard(cardValue) {
     $('.pile-card').addClass('shift-card').delay(500).queue(function (next) {
-        $(".my-cards").append("<div class='card princess' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
+        var className = classDeterminer(cardValue);
+        $(".my-cards").append("<div class='card " + className + "' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'></div>");
         $('.pile-card').removeClass('shift-card');
         mycards.push(cardValue);
         if (cardValue == 7) {
@@ -494,3 +496,25 @@ $(".close").on("click", function () {
 $(".x").on("click", function () {
     $(".modal").hide();
 });
+
+function classDeterminer(cardValue) {
+    let className;
+    if (cardValue == 1)
+        className = 'guard';
+    if (cardValue == 2)
+        className = 'priest';
+    if (cardValue == 3)
+        className = 'baron';
+    if (cardValue == 4)
+        className = 'handmaid';
+    if (cardValue == 5)
+        className = 'prince';
+    if (cardValue == 6)
+        className = 'king';
+    if (cardValue == 7)
+        className = 'countess';
+    if (cardValue == 8)
+        className = 'princess';
+
+    return className;
+}

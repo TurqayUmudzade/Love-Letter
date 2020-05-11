@@ -14,16 +14,38 @@ $('#myModal').on('shown.bs.modal', function() {
     // $('#exampleModal').trigger('focus')
 })
 
+function classDeterminer(cardValue) {
+    let className;
+    if (cardValue == 1)
+        className = 'guard';
+    if (cardValue == 2)
+        className = 'priest';
+    if (cardValue == 3)
+        className = 'baron';
+    if (cardValue == 4)
+        className = 'handmaid';
+    if (cardValue == 5)
+        className = 'prince';
+    if (cardValue == 6)
+        className = 'king';
+    if (cardValue == 7)
+        className = 'countess';
+    if (cardValue == 8)
+        className = 'princess';
 
+    return className;
+}
 
 function getCard(cardValue) {
     $('.pile-card').addClass('shift-card').delay(500).queue(function(next) {
-        $(".my-cards").append("<div class='card' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
+        var className = classDeterminer(cardValue);
+        $(".my-cards").append("<div class='card " + className + " ' id=" + cardValue + " draggable='true' ondragstart='dragStart(event)'>" + cardValue + "</div>");
         $('.pile-card').removeClass('shift-card');
         next();
     });
 }
 
+getCard(2);
 // $(".modal").show();
 // $(".modal-content").children("modal-content").remove();
 // var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card guard-js' id='1'></div> <div class='card guard-js' id='2'></div> <div class='card guard-js' id='3'></div> <div class='card guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card guard-js' id='5'></div> <div class='card guard-js' id='6'> </div> <div class='card guard-js' id='7'></div> <div class='card guard-js' id='8'></div> </div> </div>";
@@ -121,3 +143,6 @@ function test() {
     console.log(test);
     $('.mycards .card').remove();
 }
+
+
+console.log($('#lobby-space').text());
