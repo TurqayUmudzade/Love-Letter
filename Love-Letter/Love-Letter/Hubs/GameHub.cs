@@ -74,10 +74,10 @@ namespace Love_Letter.Hubs
         }
 
 
-        public async Task Prince(string lobbyID, string card, string toWhom, string byWho, int attackercard)
+        public async Task Prince(string lobbyID, string card, string toWhom, string byWho)
         {
             Debug.WriteLine("Prince");
-            await Clients.Group(lobbyID).SendAsync("Prince", card, toWhom, byWho, attackercard);
+            await Clients.Group(lobbyID).SendAsync("Prince", card, toWhom, byWho);
         }
         public async Task King(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
@@ -99,9 +99,9 @@ namespace Love_Letter.Hubs
         //CARDS END
 
 
-        public async Task Result(string lobbyID, string result, string loser)
+        public async Task Result(string lobbyID, string result, string loser,int attackCard)
         {
-            await Clients.Group(lobbyID).SendAsync("Result", result, loser);
+            await Clients.Group(lobbyID).SendAsync("Result", result, loser, attackCard);
         }
 
         public async Task Next(string lobbyID)

@@ -169,13 +169,17 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
     //Guard
     if (card == 1) {
         $(".modal").show();
-        $(".modal-content").children("modal-content").remove();
-        var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card guard-js' id='2'></div> <div class='card guard-js' id='3'></div> <div class='card guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card guard-js' id='5'></div> <div class='card guard-js' id='6'> </div> <div class='card guard-js' id='7'></div> <div class='card guard-js' id='8'></div> </div> </div>";
+        $(".modal-content .card-text").remove();
+        $(".modal-content").addClass('guard-rgba');
+
+        var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card priest guard-js' id='2'></div> <div class='card baron guard-js' id='3'></div> <div class='card handmaid guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card prince guard-js' id='5'></div> <div class='card king guard-js' id='6'> </div> <div class='card countess guard-js' id='7'></div> <div class='card princess guard-js' id='8'></div> </div> </div>";
         $(".modal-content").append(guardContent);
         $(".modal-content").addClass('guardModal');
+        //CHOICE CLICK
         $('.guard-js').on("click", function () {
             var myGuess = $(this).attr('id');
             $(".modal-content").removeClass('guardModal');
+            $(".modal-content").removeClass('guard-rgba');
             $(".modal").hide();
             $(".modal-content").children(".modal-g-cards").remove();
             connection.invoke("Guard", lobbyID, towhom, bywho, myGuess).catch(function (err) {
@@ -203,7 +207,7 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
     }
     if (card == 5) {
         console.log("Prince");
-        connection.invoke("Prince", lobbyID, card, towhom, bywho, card2).catch(function (err) {
+        connection.invoke("Prince", lobbyID, card, towhom, bywho).catch(function (err) {
             return console.error(err.tostring());
         });
     }
@@ -236,7 +240,8 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
 
 //othersInGroup
 connection.on("CardMoved", function (card, bywho) {
-    $('#' + bywho).append($("<div class='card princess card-on-enemydeck ' id=" + card + " >" + card + "</div>").clone());//add to enemy view that i moved
+    let cardClass = classDeterminer(card);
+    $('#' + bywho).append($("<div class='card " + cardClass+" card-on-enemydeck ' id=" + card + " ></div>").clone());//add to enemy view that i moved
 });
 
 //All
@@ -271,6 +276,7 @@ connection.on("Next", function () {
 //CARDS
 connection.on("Guard", function (towhom, bywho, guess) {
     if (towhom == myconnectionID) {
+        
         let text = bywho + " guees with " + guess + " " + towhom;
         let loser = "";
         if (mycards[0] == guess) {
@@ -281,9 +287,10 @@ connection.on("Guard", function (towhom, bywho, guess) {
         } else {
             text += " guessed wrong"
         }
-        connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
+        connection.invoke("Result", lobbyID, text, loser, 1).catch(function (err) {
             return console.error(err.tostring());
         });
+        console.log("result1")
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -332,7 +339,7 @@ connection.on("Baron", function (card, towhom, bywho, attackercard) {
             }
         console.log(text);
 
-        connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
+        connection.invoke("Result", lobbyID, text, loser, attackercard).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -363,7 +370,7 @@ connection.on("RemoveProtection", function (user) {
 
 });
 
-connection.on("Prince", function (card, towhom, bywho, ) {
+connection.on("Prince", function (card, towhom, bywho ) {
     let text = bywho + " attacked with " + card + " " + towhom;
     let loser = "";
     if (towhom == myconnectionID) {
@@ -373,9 +380,9 @@ connection.on("Prince", function (card, towhom, bywho, ) {
             iLost();
             loser == myconnectionID
         } else {
+            mycards.shift();
             getCard(allcards[0]);
         }
-        getCard(allcards[0]);
         connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -391,7 +398,7 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
         //remove my card view
         $('.my-cards .card').remove();
         //add king attacker card to view
-        $(".my-cards").append("<div class='card princess' id=" + attackercard + " draggable='true' ondragstart='dragStart(event)'>" + attackercard + "</div>");
+        $(".my-cards").append("<div class='card ' id=" + attackercard + " draggable='true' ondragstart='dragStart(event)'>" + attackercard + "</div>");
         //save my old card
         var exchangecard = mycards[0];
         //update my card
@@ -407,10 +414,12 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
 });
 
 //All
-connection.on("Result", function (text, loser) {
-    $(".modal-content .card-text").remove();
+connection.on("Result", function (text, loser, attackCard) {
+    $(".modal-content .modal-info-content").remove();
     $(".modal").show();
-    $(".modal-content").append("<p class='card-text'>" + text + "</h5>");
+    console.log("result")
+    let content = "<div class='modal-info-content' > <div class='card mx-auto " + classDeterminer(attackCard) + "' ></div> <p class='card-text'>" + text + "</p> </div>";
+    $(".modal-content").append(content);
     $('#' + loser).append("<div>LOST</div>");
     $('#' + loser).removeAttr('ondrop');
     $('#' + loser).removeAttr('ondragover');
@@ -422,7 +431,7 @@ connection.on("Result", function (text, loser) {
 
 connection.on("ResultKing", function (text, loser, returnCard) {
 
-    $(".modal-content .card-text").remove();
+    $(".modal-content .modal-info-content").remove();
     $(".modal").show();
     $(".modal-content").append("<p class='card-text'>" + text + "</h5>");
     console.log(loser)
@@ -432,7 +441,7 @@ connection.on("ResultKing", function (text, loser, returnCard) {
         mycards[0] = returnCard;
         $('.my-cards .card').remove();
         //add king attacker card to view
-        $(".my-cards").append("<div class='card princess' id=" + returnCard + " draggable='true' ondragstart='dragStart(event)'>" + returnCard + "</div>");
+        $(".my-cards").append("<div class='card ' id=" + returnCard + " draggable='true' ondragstart='dragStart(event)'>" + returnCard + "</div>");
     }
 });
 
