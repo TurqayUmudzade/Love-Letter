@@ -171,6 +171,7 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
         $(".modal").show();
         $(".modal-content .card-text").remove();
         $(".modal-content").addClass('guard-rgba');
+        $(".modal-content .close").addClass('d-none');
 
         var guardContent = "<div class='modal-g-cards'> <div class='d-flex justify-content-center'> <div class='card priest guard-js' id='2'></div> <div class='card baron guard-js' id='3'></div> <div class='card handmaid guard-js' id='4'></div> </div> <div class='d-flex justify-content-center'> <div class='card prince guard-js' id='5'></div> <div class='card king guard-js' id='6'> </div> <div class='card countess guard-js' id='7'></div> <div class='card princess guard-js' id='8'></div> </div> </div>";
         $(".modal-content").append(guardContent);
@@ -180,6 +181,7 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
             var myGuess = $(this).attr('id');
             $(".modal-content").removeClass('guardModal');
             $(".modal-content").removeClass('guard-rgba');
+            $(".modal-content .close").removeClass('d-none');
             $(".modal").hide();
             $(".modal-content").children(".modal-g-cards").remove();
             connection.invoke("Guard", lobbyID, towhom, bywho, myGuess).catch(function (err) {
@@ -277,15 +279,15 @@ connection.on("Next", function () {
 connection.on("Guard", function (towhom, bywho, guess) {
     if (towhom == myconnectionID) {
         
-        let text = bywho + " guees with " + guess + " " + towhom;
+        let text = bywho + " guessed: " + guess + " " + towhom;
         let loser = "";
         if (mycards[0] == guess) {
             Lost = true;
-            text += " guessed right";
+            text += "|<i class='fas fa-check-circle'></i>";
             loser = myconnectionID;
             iLost();
         } else {
-            text += " guessed wrong"
+            text += "|guessed wrong"
         }
         connection.invoke("Result", lobbyID, text, loser, 1).catch(function (err) {
             return console.error(err.tostring());
@@ -415,11 +417,15 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
 
 //All
 connection.on("Result", function (text, loser, attackCard) {
+    //clean modal before it
+    let info = text.split("|");
+    
     $(".modal-content .modal-info-content").remove();
     $(".modal").show();
-    console.log("result")
-    let content = "<div class='modal-info-content' > <div class='card mx-auto " + classDeterminer(attackCard) + "' ></div> <p class='card-text'>" + text + "</p> </div>";
+   
+    let content = "<div class='modal-info-content' >  <p class='card-text'>" + info[0] + "<br>" + info[1] + " </p> </div>";
     $(".modal-content").append(content);
+    $(".modal-content").addClass(classDeterminer(attackCard));
     $('#' + loser).append("<div>LOST</div>");
     $('#' + loser).removeAttr('ondrop');
     $('#' + loser).removeAttr('ondragover');
