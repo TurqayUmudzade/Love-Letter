@@ -9,7 +9,7 @@ let unshiftcard;
 const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
-let allcards = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 5, 6, 7, 8];
+let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -322,24 +322,23 @@ connection.on("PriestShowCard", function (card, attacker, text) {
     }
 });
 connection.on("Baron", function (card, towhom, bywho, attackercard) {
-    let text = bywho + " attacked with " + card + " " + towhom;
+    let text = bywho + " attacked " + towhom;
     let loser;
     if (towhom == myconnectionID) {
         console.log(mycards + "MYCARDS");
         //win
         if (mycards[0] > attackercard) {
-            text += towhom + "wins";
+            text += "|"+towhom + "wins";
             loser = bywho;
         }
         else
             if (mycards[0] < attackercard) {
-                text += bywho + "lost";
+                text += "|" + bywho + "wins";
                 loser = towhom;
                 Lost = true;
-                console.log("lose true");
             }
             else {
-                text += " tie ";
+                text += "|Draw! ";
             }
         console.log(text);
 
