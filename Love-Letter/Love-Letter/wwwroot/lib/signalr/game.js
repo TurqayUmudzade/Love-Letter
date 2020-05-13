@@ -9,7 +9,7 @@ let unshiftcard;
 const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
-let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
+let allcards = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 5, 6, 7, 8];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -243,7 +243,7 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
 //othersInGroup
 connection.on("CardMoved", function (card, bywho) {
     let cardClass = classDeterminer(card);
-    $('#' + bywho).append($("<div class='card " + cardClass+" card-on-enemydeck ' id=" + card + " ></div>").clone());//add to enemy view that i moved
+    $('#' + bywho).append($("<div class='card " + cardClass + " card-on-enemydeck ' id=" + card + " ></div>").clone());//add to enemy view that i moved
 });
 
 //All
@@ -278,7 +278,7 @@ connection.on("Next", function () {
 //CARDS
 connection.on("Guard", function (towhom, bywho, guess) {
     if (towhom == myconnectionID) {
-        
+
         let text = bywho + " guessed: " + guess + " " + towhom;
         let loser = "";
         if (mycards[0] == guess) {
@@ -287,7 +287,7 @@ connection.on("Guard", function (towhom, bywho, guess) {
             loser = myconnectionID;
             iLost();
         } else {
-            text += "|guessed wrong"
+            text += "|<i class='fas fa-times-circle'></i>"
         }
         connection.invoke("Result", lobbyID, text, loser, 1).catch(function (err) {
             return console.error(err.tostring());
@@ -300,8 +300,8 @@ connection.on("Guard", function (towhom, bywho, guess) {
 });
 connection.on("Priest", function (card, towhom, bywho, attackercard) {
     if (towhom == myconnectionID) {
-        let text = bywho + " peeked with priest"  + towhom;
-        connection.invoke("PriestShowCard", lobbyID, mycards[0], bywho,text).catch(function (err) {
+        let text = bywho + " peeked the card of" + towhom;
+        connection.invoke("PriestShowCard", lobbyID, mycards[0], bywho, text).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -310,12 +310,14 @@ connection.on("Priest", function (card, towhom, bywho, attackercard) {
     }
 });
 
-connection.on("PriestShowCard", function (card, attacker,text) {
-
-    $(".modal-content .card-text").remove();
+connection.on("PriestShowCard", function (card, attacker, text) {
+    $(".modal-content .modal-info-content").remove();
     $(".modal").show();
-    $(".modal-content").append("<p class='card-text'>" + text + "</h5>");
+    let content = "<div class='modal-info-content' >  <p class='card-text'>" + text + "</p> </div>";
+    $(".modal-content").append(content);
+    $(".modal-content").addClass(classDeterminer(2));
     if (attacker == myconnectionID) {
+        //ISA show users card
         alert(card);
     }
 });
@@ -341,7 +343,7 @@ connection.on("Baron", function (card, towhom, bywho, attackercard) {
             }
         console.log(text);
 
-        connection.invoke("Result", lobbyID, text, loser, attackercard).catch(function (err) {
+        connection.invoke("Result", lobbyID, text, loser, 3).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -372,7 +374,7 @@ connection.on("RemoveProtection", function (user) {
 
 });
 
-connection.on("Prince", function (card, towhom, bywho ) {
+connection.on("Prince", function (card, towhom, bywho) {
     let text = bywho + " attacked with " + card + " " + towhom;
     let loser = "";
     if (towhom == myconnectionID) {
@@ -385,7 +387,7 @@ connection.on("Prince", function (card, towhom, bywho ) {
             mycards.shift();
             getCard(allcards[0]);
         }
-        connection.invoke("Result", lobbyID, text, loser).catch(function (err) {
+        connection.invoke("Result", lobbyID, text, loser,5).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -419,10 +421,10 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
 connection.on("Result", function (text, loser, attackCard) {
     //clean modal before it
     let info = text.split("|");
-    
+
     $(".modal-content .modal-info-content").remove();
     $(".modal").show();
-   
+
     let content = "<div class='modal-info-content' >  <p class='card-text'>" + info[0] + "<br>" + info[1] + " </p> </div>";
     $(".modal-content").append(content);
     $(".modal-content").addClass(classDeterminer(attackCard));
@@ -505,6 +507,7 @@ function iLost() {
 
 $(".close").on("click", function () {
     $(this).parent().parent().hide();
+    cleanModal();
 });
 
 
@@ -532,4 +535,10 @@ function classDeterminer(cardValue) {
         className = 'princess';
 
     return className;
+}
+
+function cleanModal() {
+    for (var i = 1; i <=8; i++) {
+        $(".modal-content").removeClass(classDeterminer(i));
+    }
 }
