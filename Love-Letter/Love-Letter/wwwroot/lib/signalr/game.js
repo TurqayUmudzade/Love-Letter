@@ -221,15 +221,18 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
     }
     if (card == 7) {
         hasCountess = false;
-
+        let text = myconnectionID+ " has used the Countess| ";
+        connection.invoke("Result", lobbyID, text, myconnectionID, 7).catch(function (err) {
+            return console.error(err.tostring());
+        });
         connection.invoke("Next", lobbyID).catch(function (err) {
             return console.error(err.tostring());
         });
     }
     if (card == 8) {
         Lost = true;
-        let text = "used princess";
-        connection.invoke("Result", lobbyID, text, myconnectionID).catch(function (err) {
+        let text = myconnectionID + " has used the Princess| ";
+        connection.invoke("Result", lobbyID, text, myconnectionID,8).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -353,9 +356,17 @@ connection.on("Baron", function (card, towhom, bywho, attackercard) {
 
 
 connection.on("Handmaid", function (bywho) {
+
     $('#' + bywho).append("<div class='handmaidProtected' >PROTECTED</div>");
     $('#' + bywho).removeAttr('ondrop');
     $('#' + bywho).removeAttr('ondragover');
+
+    $(".modal-content .modal-info-content").remove();
+    $(".modal").show();
+
+    let content = "<div class='modal-info-content' >  <p class='card-text'> " + bywho + " is now protected </p> </div>";
+    $(".modal-content").append(content);
+    $(".modal-content").addClass(classDeterminer(4));
 
     if (bywho == myconnectionID) {
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -374,7 +385,7 @@ connection.on("RemoveProtection", function (user) {
 });
 
 connection.on("Prince", function (card, towhom, bywho) {
-    let text = bywho + " attacked with " + card + " " + towhom;
+    let text = bywho + " made " + towhom+" discard their card";
     let loser = "";
     if (towhom == myconnectionID) {
 
@@ -396,7 +407,7 @@ connection.on("Prince", function (card, towhom, bywho) {
 });
 
 connection.on("King", function (card, towhom, bywho, attackercard) {
-    let text = bywho + " attacked with " + card + " " + towhom;
+    let text = bywho + " switched cards with " + towhom;
     if (towhom == myconnectionID) {
         //remove my card view
         $('.my-cards .card').remove();
@@ -436,14 +447,17 @@ connection.on("Result", function (text, loser, attackCard) {
     }
 });
 
-connection.on("ResultKing", function (text, loser, returnCard) {
+connection.on("ResultKing", function (text, sender, returnCard) {
 
     $(".modal-content .modal-info-content").remove();
     $(".modal").show();
-    $(".modal-content").append("<p class='card-text'>" + text + "</h5>");
+
+    let content = "<div class='modal-info-content' >  <p class='card-text'>" + text + " </p> </div>";
+    $(".modal-content").append(content);
+    $(".modal-content").addClass(classDeterminer(attackCard));
     console.log(loser)
     //UPDATE add here remove droppable
-    if (myconnectionID == loser) {
+    if (myconnectionID == sender) {
         console.log("here");
         mycards[0] = returnCard;
         $('.my-cards .card').remove();
