@@ -213,22 +213,22 @@ CARDS
 */
 
 .guard {
-    background-image: url(../images/EditedCards/guard.svg);
+    background-image: url(../images/EditedCardsCompressed/guard.png);
     background-size: cover;
 }
 
 .priest {
-    background-image: url(../images/EditedCards/priest.svg);
+    background-image: url(../images/EditedCardsCompressed/priest.svg);
     background-size: cover;
 }
 
 .baron {
-    background-image: url(../images/EditedCards/baron.svg);
+    background-image: url(../images/EditedCardsCompressed/baron.png);
     background-size: cover;
 }
 
 .handmaid {
-    background-image: url(../images/EditedCards/handmaid.svg);
+    background-image: url(../images/EditedCardsCompressed/handmaid.svg);
     background-size: cover;
 }
 
@@ -238,16 +238,16 @@ CARDS
 }
 
 .king {
-    background-image: url(../images/EditedCards/king.svg);
+    background-image: url(../images/EditedCardsCompressed/king.png);
     background-size: cover;
 }
 
 .countess {
-    background-image: url(../images/EditedCards/countess.svg);
+    background-image: url(../images/EditedCardsCompressed/countess.png);
     background-size: cover;
 }
 
 .princess {
-    background-image: url(../images/EditedCards/princess.svg);
+    background-image: url(../images/EditedCardsCompressed/princess.svg);
     background-size: cover;
 }

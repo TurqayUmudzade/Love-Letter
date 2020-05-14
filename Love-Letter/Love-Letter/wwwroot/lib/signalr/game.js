@@ -222,7 +222,7 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
     if (card == 7) {
         hasCountess = false;
         let text = myconnectionID+ " has used the Countess| ";
-        connection.invoke("Result", lobbyID, text, myconnectionID, 7).catch(function (err) {
+        connection.invoke("Result", lobbyID, text, "none", 7).catch(function (err) {
             return console.error(err.tostring());
         });
         connection.invoke("Next", lobbyID).catch(function (err) {
@@ -288,7 +288,6 @@ connection.on("Guard", function (towhom, bywho, guess) {
             Lost = true;
             text += "|<i class='fas fa-check-circle'></i>";
             loser = myconnectionID;
-            iLost();
         } else {
             text += "|<i class='fas fa-times-circle'></i>"
         }
@@ -385,7 +384,7 @@ connection.on("RemoveProtection", function (user) {
 });
 
 connection.on("Prince", function (card, towhom, bywho) {
-    let text = bywho + " made " + towhom+" discard their card";
+    let text = bywho + " made " + towhom+" discard their card| " ;
     let loser = "";
     if (towhom == myconnectionID) {
 
@@ -512,6 +511,12 @@ function iLost() {
     //make my view unplayable
     $('.my-cards').children('.card ').removeAttr('draggable');
     $('.my-cards').children('.card ').removeAttr('ondragstart');
+
+
+    //discard my last card
+    connection.invoke("CardMoved", lobbyID, mycards[0].toString(), myconnectionID).catch(function (err) {
+        return console.error(err.tostring());
+    });
 }
 
 
