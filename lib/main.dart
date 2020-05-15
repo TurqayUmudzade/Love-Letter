@@ -7,7 +7,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Util flameUtil = Util();
   flameUtil.fullScreen();
-  flameUtil.setOrientation(DeviceOrientation.portraitUp);
+  flameUtil.setOrientation(DeviceOrientation.landscapeLeft);
   
   GameController gameController = GameController();
   runApp(gameController.widget);

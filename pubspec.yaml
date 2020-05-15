@@ -44,14 +44,14 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/images/baron.jpg
-    - assets/images/countess.jpg
-    - assets/images/guard.jpg
-    - assets/images/handmaid.jpg
-    - assets/images/king.jpg
-    - assets/images/priest.jpg
-    - assets/images/prince.jpg
-    - assets/images/princess.jpg
+    - assets/images/baron.png
+    - assets/images/countess.png
+    - assets/images/guard.png
+    - assets/images/handmaid.png
+    - assets/images/king.png
+    - assets/images/priest.png
+    - assets/images/prince.png
+    - assets/images/princess.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
