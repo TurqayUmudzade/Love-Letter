@@ -45,7 +45,7 @@ namespace Love_Letter.Hubs
 
 
         //CARDS
-        public async Task Guard(string lobbyID, string toWhom, string byWho,string guess )
+        public async Task Guard(string lobbyID, string toWhom, string byWho, string guess)
         {
             Debug.WriteLine("Guard");
             await Clients.Group(lobbyID).SendAsync("Guard", toWhom, byWho, guess);
@@ -54,7 +54,7 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("Priest", card, toWhom, byWho, attackercard);
         }
-        public async Task PriestShowCard(string lobbyID, int card, string attacker,string text)
+        public async Task PriestShowCard(string lobbyID, int card, string attacker, string text)
         {
             await Clients.Group(lobbyID).SendAsync("PriestShowCard", card, attacker, text);
         }
@@ -85,11 +85,11 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("King", card, toWhom, byWho, attackercard);
         }
 
-        public async Task ResultKing(string lobbyID, string result, string loser,int returnCard)
+        public async Task ResultKing(string lobbyID, string result, string loser, int returnCard)
         {
-            await Clients.Group(lobbyID).SendAsync("ResultKing", result, loser,returnCard);
+            await Clients.Group(lobbyID).SendAsync("ResultKing", result, loser, returnCard);
         }
-      
+
         public async Task Princess(string lobbyID, string card, string toWhom, string byWho, int attackercard)
         {
             Debug.WriteLine("Princess");
@@ -99,7 +99,7 @@ namespace Love_Letter.Hubs
         //CARDS END
 
 
-        public async Task Result(string lobbyID, string result, string loser,int attackCard)
+        public async Task Result(string lobbyID, string result, string loser, int attackCard)
         {
             await Clients.Group(lobbyID).SendAsync("Result", result, loser, attackCard);
         }
@@ -124,6 +124,12 @@ namespace Love_Letter.Hubs
         {
             await Clients.Group(lobbyID).SendAsync("GameOver");
         }
+
+        public async Task RoundWinner(string lobbyID, int card, int order)
+        {
+            await Clients.Group(lobbyID).SendAsync("GameOver", card, order);
+        }
+
 
         //FOR later
         public Task LeaveLobby(string roomName)

@@ -201,7 +201,6 @@
     pointer-events: none;
     top: -35px;
     height: 200px !important;
-    width: 135px !important;
 }
 
 .guard-rgba {
@@ -233,7 +232,7 @@ CARDS
 }
 
 .prince {
-    background-image: url(../images/OriginalCards/5_Marshall_Lee_en.png);
+    background-image: url(../images/EditedCardsCompressed/prince.png);
     background-size: cover;
 }
 
