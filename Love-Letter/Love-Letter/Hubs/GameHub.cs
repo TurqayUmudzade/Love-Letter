@@ -125,9 +125,9 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("GameOver");
         }
 
-        public async Task RoundWinner(string lobbyID, int card, int order)
+        public async Task RoundWinner(string lobbyID, int card, int order,string winner)
         {
-            await Clients.Group(lobbyID).SendAsync("GameOver", card, order);
+            await Clients.Group(lobbyID).SendAsync("RoundWinner", card, order,winner);
         }
 
 

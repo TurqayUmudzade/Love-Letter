@@ -9,7 +9,8 @@ let unshiftcard;
 const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
-let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
+//let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
+let allcards = [1, 2, 3, 4, 5, 7, 8];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -257,6 +258,7 @@ connection.on("Next", function () {
         userCounter++;
         if (userCounter == lobbySize) {
             if (typeof allcards[0] == 'undefined') {
+                console.log("gg1");
                 connection.invoke("GameOver", lobbyID).catch(function (err) {
                     return console.error(err.tostring());
                 });
@@ -471,13 +473,13 @@ connection.on("GameOver", function () {
         console.log("-1");
         if (Lost == false) {
             console.log("-1.5");
-            connection.invoke("RoundWinner", lobbyID, mycards[0], 1).catch(function (err) {
+            connection.invoke("RoundWinner", lobbyID, mycards[0], 1, myconnectionID).catch(function (err) {
                 return console.error(err.tostring());
                 console.log("0");
             });
         } else {
             console.log("0");
-            connection.invoke("RoundWinner", lobbyID, 0, 1).catch(function (err) {
+            connection.invoke("RoundWinner", lobbyID, 0, 1,"").catch(function (err) {
                 return console.error(err.tostring());
             });
         }
@@ -485,22 +487,18 @@ connection.on("GameOver", function () {
 });
 
 //All
-connection.on("RoundWinner", function (highestCard, order) {
+connection.on("RoundWinner", function (highestCard, order,winner) {
     userCounter++;
-    console.log("1");
     if (order == 4) {
-        alert("highest card is" + highestCard);
+        alert("highest card is" + highestCard + "the winner is" + winner);
     } else {
-        console.log("2");
         if (userCounter == 4) {
-            console.log("3");
             if (mycards[0] > highestCard) {
-                console.log("4");
-                connection.invoke("RoundWinner", lobbyID, mycards[0], order + 1).catch(function (err) {
+                connection.invoke("RoundWinner", lobbyID, mycards[0], order + 1, myconnectionID).catch(function (err) {
                     return console.error(err.tostring());
                 });
             } else {
-                connection.invoke("RoundWinner", lobbyID, highestCard, order + 1).catch(function (err) {
+                connection.invoke("RoundWinner", lobbyID, highestCard, order + 1, winner).catch(function (err) {
                     return console.error(err.tostring());
                 });
             }
