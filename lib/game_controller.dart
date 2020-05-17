@@ -18,14 +18,16 @@ class GameController extends Game {
     'priest',
     'prince',
     'princess',
+    'background',
   ];
 
   GameController() {
     initialize();
     cards = List.generate(
-      8,
+      9,
       (i) => GameCard(names[i]),
     );
+    Flame.images.load('background.jpg');
   }
 
   void initialize() async {
@@ -39,20 +41,20 @@ class GameController extends Game {
   void update(double t) {}
 
   void render(Canvas c) async {
-    Rect rect = Rect.fromLTWH(
-      0,
-      0,
-      screenSize.width,
-      screenSize.height,
-    );
-    Paint paint = Paint()..color = Colors.redAccent[400];
-    c.drawRect(rect, paint);
+    cards[8].image.renderScaled(
+          c,
+          Position(
+            0,
+            0,
+          ),
+          scale: 0.43,
+        );
 
     cards[0].image.renderScaled(
           c,
           Position(
             screenSize.width - screenSize.width / 6 - 300 * 0.43 / 2,
-            screenSize.height - 418 * 0.43,
+            screenSize.height - 418 * 0.43 - 10,
           ),
           scale: 0.43,
         );
@@ -164,22 +166,24 @@ class GameController extends Game {
     );
 
     TextPainter tp = TextPainter(
-        text: TextSpan(
-          text: 'Deck',
-          style: TextStyle(
-            backgroundColor: Colors.transparent,
-            fontSize: 25,
-            color: Colors.greenAccent[400],
-          ),
+      text: TextSpan(
+        text: 'Deck',
+        style: TextStyle(
+          backgroundColor: Colors.transparent,
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
         ),
-        textDirection: TextDirection.ltr,
-        textAlign: TextAlign.center);
+      ),
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.center,
+    );
     tp.layout();
     tp.paint(
       c,
       Offset(
-        screenSize.width / 6 - 24,
-        screenSize.height - 418 * 0.43 / 2 - 20,
+        screenSize.width / 6 - 26,
+        screenSize.height - 418 * 0.43 / 2 - 24,
       ),
     );
   }

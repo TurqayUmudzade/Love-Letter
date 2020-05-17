@@ -35,7 +35,6 @@ class GameCard {
           name + '.png',
           width: 300,
           height: 418,
-          
         );
         count = 2;
         break;
@@ -70,6 +69,11 @@ class GameCard {
           height: 418,
         );
         count = 1;
+        break;
+      case 'background':
+        image = Sprite(
+          name + '.jpg',
+        );
         break;
       default:
         break;
