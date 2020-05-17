@@ -130,6 +130,12 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("RoundWinner", card, order,winner);
         }
 
+        public async Task LoserCounterIncrement(string lobbyID)
+        {
+            await Clients.Group(lobbyID).SendAsync("LoserCounterIncrement");
+        }
+
+        
 
         //FOR later
         public Task LeaveLobby(string roomName)

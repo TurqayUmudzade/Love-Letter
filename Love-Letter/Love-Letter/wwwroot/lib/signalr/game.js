@@ -9,8 +9,8 @@ let unshiftcard;
 const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
-//let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
-let allcards = [1, 2, 3, 4, 5, 7, 8];
+let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
+//let allcards = [1, 2, 3, 4, 5, 7, 8];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -20,9 +20,9 @@ var isProtectedH = false;
 var hasCountess = false;
 let mydeckPoints = 0;
 let gameOver = false;
+let loserCounter = 0;
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
-console.log(connection);
 
 connection.start().then(function () { }).catch(function (err) {
     return console.error(err.toString());
@@ -40,7 +40,6 @@ connection.on("UserConnected", function (ConnectionId) {
 //WHEN SOMEONE JOINS
 connection.on("JoinedLobby", function (ConnectionId) {
     userCounter++; //FOR ORDER
-    console.log("usercounter on join:" + userCounter);
     //get all cards
     enemies.push(ConnectionId); //user one will get all the cards
     $(".enemy-cards").append("<div class='card-container '> <h4 class='username-h4'>" + ConnectionId + "</h4>  <div class='enemy-deck' id=" + ConnectionId + " ondrop='drop(event)' ondragover='dragover(event)'></div></div >");
@@ -74,7 +73,6 @@ connection.on("GameStart", function () {
         //user 1 will randomize cards
         allcards.sort(() => Math.random() - 0.5);
         allcards.pop(); //discard one 
-        console.log(allcards);
         connection.invoke("GiveFirstCards", allcards, lobbyID).catch(function (err) {
             return console.error(err.toString());
         });
@@ -452,11 +450,9 @@ connection.on("ResultKing", function (text, sender, returnCard) {
     let content = "<div class='modal-info-content' >  <p class='card-text'>" + text + " </p> </div>";
     $(".modal-content").append(content);
     $(".modal-content").addClass(classDeterminer(5));
-    console.log("result king " + myconnectionID + " and sender  " + sender);
     //UPDATE add here remove droppable
     
     if (myconnectionID == sender) {
-        console.log("switch back");
         mycards[0] = returnCard;
         $('.my-cards .card').remove();
         //add king attacker card to view  
@@ -470,15 +466,11 @@ connection.on("ResultKing", function (text, sender, returnCard) {
 connection.on("GameOver", function () {
     gameOver = true;
     if (userCounter == 4) {
-        console.log("-1");
         if (Lost == false) {
-            console.log("-1.5");
             connection.invoke("RoundWinner", lobbyID, mycards[0], 1, myconnectionID).catch(function (err) {
                 return console.error(err.tostring());
-                console.log("0");
             });
         } else {
-            console.log("0");
             connection.invoke("RoundWinner", lobbyID, 0, 1,"").catch(function (err) {
                 return console.error(err.tostring());
             });
@@ -508,7 +500,6 @@ connection.on("RoundWinner", function (highestCard, order,winner) {
 
 
 connection.on("Unshift", function () {
-    console.log(unshiftcard);
     allcards.unshift(unshiftcard);
 });
 
@@ -540,6 +531,16 @@ connection.on("shiftdeck", function () {
     allcards.shift();
 });
 
+//All
+connection.on("LoserCounterIncrement", function () {
+    loserCounter++;
+    if (loserCounter == lobbySize-1) {
+        if (Lost == false) {
+            alert("you win");
+        }
+    }
+});
+
 
 function iLost() {
     alert("you lost");
@@ -551,6 +552,9 @@ function iLost() {
 
     //discard my last card
     connection.invoke("CardMoved", lobbyID, mycards[0].toString(), myconnectionID).catch(function (err) {
+        return console.error(err.tostring());
+    });
+    connection.invoke("LoserCounterIncrement", lobbyID).catch(function (err) {
         return console.error(err.tostring());
     });
 }
