@@ -34,7 +34,20 @@ namespace Love_Letter.Controllers
             return View(model);
         }
 
-        
+        [HttpPost]
+
+        public IActionResult CreateLobby (string password,string space)
+        {
+            Lobby lobby = new Lobby(Int32.Parse(space));
+            if (!string.IsNullOrEmpty(password))
+            {
+                lobby.Password = password;
+            }
+            _context.Lobbies.Add(lobby);
+            _context.SaveChanges();
+
+            return Redirect("/Game");
+        }
 
         [Authorize]
         public IActionResult Lobby(int lobbyID)

@@ -1,0 +1,5 @@
+Love Letter 1.0.0 finished on 15 May
+
+Love Letter 1.0.1
+-Prince discarding prince would not cause a lose alert on other players fixed
+-King view model being displayed as prince fixed

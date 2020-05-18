@@ -387,7 +387,7 @@ connection.on("Prince", function (card, towhom, bywho) {
         $('.my-cards .card').remove();
         if (mycards[0] == 8) {
             iLost();
-            loser == myconnectionID
+            loser = myconnectionID
         } else {
             mycards.shift();
             getCard(allcards[0]);
@@ -449,9 +449,9 @@ connection.on("ResultKing", function (text, sender, returnCard) {
 
     let content = "<div class='modal-info-content' >  <p class='card-text'>" + text + " </p> </div>";
     $(".modal-content").append(content);
-    $(".modal-content").addClass(classDeterminer(5));
+    $(".modal-content").addClass(classDeterminer(6));
     //UPDATE add here remove droppable
-    
+
     if (myconnectionID == sender) {
         mycards[0] = returnCard;
         $('.my-cards .card').remove();
@@ -471,7 +471,7 @@ connection.on("GameOver", function () {
                 return console.error(err.tostring());
             });
         } else {
-            connection.invoke("RoundWinner", lobbyID, 0, 1,"").catch(function (err) {
+            connection.invoke("RoundWinner", lobbyID, 0, 1, "").catch(function (err) {
                 return console.error(err.tostring());
             });
         }
@@ -479,17 +479,23 @@ connection.on("GameOver", function () {
 });
 
 //All
-connection.on("RoundWinner", function (highestCard, order,winner) {
+connection.on("RoundWinner", function (highestCard, order, winner) {
     userCounter++;
     if (order == 4) {
         alert("highest card is" + highestCard + "the winner is" + winner);
     } else {
         if (userCounter == 4) {
-            if (mycards[0] > highestCard) {
-                connection.invoke("RoundWinner", lobbyID, mycards[0], order + 1, myconnectionID).catch(function (err) {
-                    return console.error(err.tostring());
-                });
-            } else {
+            if (Lost == false) {
+                if (mycards[0] > highestCard) {
+                    connection.invoke("RoundWinner", lobbyID, mycards[0], order + 1, myconnectionID).catch(function (err) {
+                        return console.error(err.tostring());
+                    });
+                } else {
+                    connection.invoke("RoundWinner", lobbyID, highestCard, order + 1, winner).catch(function (err) {
+                        return console.error(err.tostring());
+                    });
+                }
+            } else if (Lost === true) {
                 connection.invoke("RoundWinner", lobbyID, highestCard, order + 1, winner).catch(function (err) {
                     return console.error(err.tostring());
                 });
@@ -534,7 +540,7 @@ connection.on("shiftdeck", function () {
 //All
 connection.on("LoserCounterIncrement", function () {
     loserCounter++;
-    if (loserCounter == lobbySize-1) {
+    if (loserCounter == lobbySize - 1) {
         if (Lost == false) {
             alert("you win");
         }

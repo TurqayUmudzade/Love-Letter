@@ -2,19 +2,47 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/JesusNav.cshtml";
-    
+
 }
 @model LobbiesViewModel
 <div class="container ">
     <h1>Lobbies</h1>
-    <button class="btn  btn-primary ">Create Lobby</button>
+    <button class='btn btn-primary js-cr-lobby'> Create Lobby</button>
+    <div class="create-lobby d-none">
+        <h1 class="h2 pb-3 border-bottom ">Create Lobby</h1>
+        <form method="post" asp-controller="Game" asp-action="CreateLobby">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Lobby Size</label>
+                    <select id="inputState" class="form-control" name="space">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control js-pswd" id="exampleInputPassword1" placeholder="Password" disabled>
+                </div>
+
+
+            </div>
+            <div class="form-check col-md-4">
+                <input type="checkbox" class="form-check-input js-private-checkbox" id="exampleCheck1" >
+                <label class="form-check-label" >Private Lobby</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
     @foreach (Lobby lobby in Model.Lobbies)
     {
         <div class="card lobby mt-4">
             <div class="card-body">
                 <h1>Lobby#@lobby.LobbyID</h1>
                 <h5>@lobby.numberOfPlayers/@lobby.Space</h5>
-               
+
                 <a class="btn btn-light" href="@Url.ActionLink("Lobby","Game",new {lobbyID=lobby.LobbyID })">Join</a>
             </div>
         </div>
@@ -22,4 +50,6 @@
 
 
 </div>
+
+<script src="~/js/lobbyList.js"></script>
 

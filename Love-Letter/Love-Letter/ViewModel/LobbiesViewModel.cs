@@ -8,6 +8,7 @@ namespace Love_Letter.ViewModel
 {
     public class LobbiesViewModel
     {
+
         public List<Lobby> Lobbies { get; set; }
 
         public Lobby Lobby { get; set; }
