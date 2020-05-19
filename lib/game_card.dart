@@ -2,9 +2,9 @@ import 'package:flame/sprite.dart';
 
 class GameCard {
   Sprite image;
-  int count;
   Function power;
-  GameCard(name) {
+  String name;
+  GameCard(this.name) {
     switch (name) {
       case 'baron':
         image = Sprite(
@@ -12,7 +12,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 2;
         break;
       case 'countess':
         image = Sprite(
@@ -20,7 +19,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 1;
         break;
       case 'guard':
         image = Sprite(
@@ -28,7 +26,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 5;
         break;
       case 'handmaid':
         image = Sprite(
@@ -36,7 +33,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 2;
         break;
       case 'king':
         image = Sprite(
@@ -44,7 +40,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 1;
         break;
       case 'priest':
         image = Sprite(
@@ -52,7 +47,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 2;
         break;
       case 'prince':
         image = Sprite(
@@ -60,7 +54,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 2;
         break;
       case 'princess':
         image = Sprite(
@@ -68,7 +61,6 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        count = 1;
         break;
       case 'background':
         image = Sprite(

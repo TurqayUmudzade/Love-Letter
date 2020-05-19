@@ -1,0 +1,24 @@
+import 'package:loveletter/game_card.dart';
+import 'package:loveletter/game_controller.dart';
+
+class Player {
+  String name;
+  List<GameCard> cards = [];
+  bool isDead = false;
+  GameController gameController;
+
+  Player(this.gameController, this.name);
+
+  void drawCard (GameCard card){
+    cards.add(card);
+  }
+
+  void discard(GameCard card){
+    cards.remove(card);
+  }
+
+  void lose(){
+    isDead = true;
+  }
+
+}

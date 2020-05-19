@@ -5,6 +5,7 @@ import 'package:flame/game.dart';
 import 'package:flame/position.dart';
 import 'package:flutter/material.dart';
 import 'package:loveletter/game_card.dart';
+import 'package:loveletter/player.dart';
 
 class GameController extends Game {
   static Size screenSize;
@@ -21,13 +22,39 @@ class GameController extends Game {
     'background',
   ];
 
+  List<GameCard> deck;
+  List<Player> players;
+
   GameController() {
     initialize();
     cards = List.generate(
       9,
       (i) => GameCard(names[i]),
     );
-    Flame.images.load('background.jpg');
+    deck = [
+      cards[0],
+      cards[0],
+      cards[1],
+      cards[2],
+      cards[2],
+      cards[2],
+      cards[2],
+      cards[2],
+      cards[3],
+      cards[3],
+      cards[4],
+      cards[5],
+      cards[5],
+      cards[6],
+      cards[6],
+      cards[7],
+    ];
+    deck.shuffle();
+    players = [];
+    players.add(Player(
+      this,
+      'Player 1',
+    ));
   }
 
   void initialize() async {
@@ -41,6 +68,7 @@ class GameController extends Game {
   void update(double t) {}
 
   void render(Canvas c) async {
+    players[0].drawCard(deck[0]);
     cards[8].image.renderScaled(
           c,
           Position(
@@ -50,7 +78,7 @@ class GameController extends Game {
           scale: 0.43,
         );
 
-    cards[0].image.renderScaled(
+    players[0].cards[0].image.renderScaled(
           c,
           Position(
             screenSize.width - screenSize.width / 6 - 300 * 0.43 / 2,
@@ -182,8 +210,8 @@ class GameController extends Game {
     tp.paint(
       c,
       Offset(
-        screenSize.width / 6 - 26,
-        screenSize.height - 418 * 0.43 / 2 - 24,
+        screenSize.width / 6 - tp.width / 2,
+        screenSize.height - 418 * 0.43 / 2 - tp.height / 2 - 10,
       ),
     );
   }
