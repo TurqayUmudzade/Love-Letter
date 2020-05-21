@@ -25,9 +25,9 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("RecievEnemyList", enemies);
         }
 
-        public async Task GiveFirstCards(int[] a, string lobbyID)
+        public async Task GiveFirstCards(int[] a, string lobbyID,int FirstDiscardedCard)
         {
-            await Clients.Group(lobbyID).SendAsync("GiveCards", a);
+            await Clients.Group(lobbyID).SendAsync("GiveCards", a, FirstDiscardedCard);
         }
 
         public async Task CardPower(string lobbyID, string card, string toWhom, string byWho, int mycard)

@@ -21,6 +21,7 @@ var hasCountess = false;
 let mydeckPoints = 0;
 let gameOver = false;
 let loserCounter = 0;
+let FirstDiscardedCard=0;
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
@@ -71,19 +72,22 @@ connection.on("GameStart", function () {
     if (userCounter === lobbySize) {
         //user 1 will randomize cards
         allcards.sort(() => Math.random() - 0.5);
+        //save the first card for prince
+        FirstDiscardedCard = allcards[0];
         allcards.pop(); //discard one 
         if (lobbySize == 2) {
             allcards.pop();
             allcards.pop();
         }
-        connection.invoke("GiveFirstCards", allcards, lobbyID).catch(function (err) {
+        connection.invoke("GiveFirstCards", allcards, lobbyID, FirstDiscardedCard).catch(function (err) {
             return console.error(err.toString());
         });
     }
 });
 
 //ALL
-connection.on("GiveCards", function (a) {
+connection.on("GiveCards", function (a, fdc) {
+    FirstDiscardedCard = fdc;
     allcards = a; //user 1 sends shuffled deck to everyone
     if (userCounter == lobbySize) {
         getCard(allcards[0]);
@@ -122,7 +126,7 @@ function dragover(event) {
 function drop(event) {
 
     if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6)) {
-        alert("you cant use prince or king if you have countess ");
+        PopUps("you cant use prince or king if you have countess","danger");
         return;
     }
 
@@ -327,8 +331,8 @@ connection.on("PriestShowCard", function (card, attacker, text) {
     $(".modal-content").append(content);
     $(".modal-content").addClass(classDeterminer(2));
     if (attacker == myconnectionID) {
-        //ISA show users card
-        alert(card);
+        let popUptext = "The enemy's card is a " + classDeterminer(card);
+        PopUps(popUptext,"warning");
     }
 });
 connection.on("Baron", function (card, towhom, bywho, attackercard) {
@@ -396,7 +400,6 @@ connection.on("Prince", function (card, towhom, bywho) {
 
         $('.my-cards .card').remove();
         if (mycards[0] == 8) {
-            iLost();
             loser = myconnectionID
         } else {
             mycards.shift();
@@ -580,6 +583,7 @@ function iLost() {
 //VISIBILITY
 
 function PopUps(text, type, time) {
+    
     if (time == undefined) {
         time = 2
     }
@@ -589,9 +593,9 @@ function PopUps(text, type, time) {
     setTimeout(() => {
         $(".alert").fadeOut('slow')
     }, time * 1000);
-    setTimeout(() => {
+    /*setTimeout(() => {
         $(".alert").alert('close')
-    }, (time * 1000) + 2000);
+    }, (time * 1000) + 4000);*/
 }
 
 function cardInfoPopUp(cardID, type) {
