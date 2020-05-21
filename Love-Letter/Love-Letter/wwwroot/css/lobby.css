@@ -207,6 +207,13 @@
     background: rgba(0,0,0,0.6)
 }
 
+.alert-box {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    width: 230px;
+}
+
 /* 
 CARDS
 */

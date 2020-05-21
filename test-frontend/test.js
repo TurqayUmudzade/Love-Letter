@@ -7,7 +7,9 @@ $('.card').on("click", function() {
 });
 getCard(1);
 $('.pressme').on("click", function() {
-    $('.my-cards .card').remove();
+    console.log("sa")
+    $('.alert').alert()
+        //  $(".alert").alert('close')
 });
 
 $('#myModal').on('shown.bs.modal', function() {

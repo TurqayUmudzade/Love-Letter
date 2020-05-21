@@ -20609,6 +20609,11 @@
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Home\\AboutUs.cshtml",
+      "TargetPath": "Views\\Home\\AboutUs.cshtml",
+      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"

@@ -49,7 +49,6 @@ connection.on("JoinedLobby", function (ConnectionId) {
             return console.error(err.toString());
         });
     }
-
 });
 
 //recive list of opponets
@@ -73,6 +72,10 @@ connection.on("GameStart", function () {
         //user 1 will randomize cards
         allcards.sort(() => Math.random() - 0.5);
         allcards.pop(); //discard one 
+        if (lobbySize == 2) {
+            allcards.pop();
+            allcards.pop();
+        }
         connection.invoke("GiveFirstCards", allcards, lobbyID).catch(function (err) {
             return console.error(err.toString());
         });
@@ -122,21 +125,28 @@ function drop(event) {
         alert("you cant use prince or king if you have countess ");
         return;
     }
+
     if (userCounter == lobbySize && didnotcheat) {
         event.preventDefault();
         if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6))
-
             if (isProtectedH == true) {
                 isProtectedH = false;
                 connection.invoke("RemoveProtection", lobbyID, myconnectionID).catch(function (err) {
                     return console.error(err.tostring());
-
                 });
             }
 
         enemyID = $(event.target).attr("id");
 
-        //UPDATEadd if null
+        if (enemyID == null) {
+            PopUps("Something went wrong", "danger")
+            return;
+        }
+        if (!didnotcheat) {
+            PopUps("Changed HTML ELEMENT", "danger");
+            iLost();
+            return;
+        }
         //make it undraggable
 
         //make my cards on my throw undraggable
@@ -549,7 +559,7 @@ connection.on("LoserCounterIncrement", function () {
 
 
 function iLost() {
-    alert("you lost");
+    PopUps("You lost", "danger");
     Lost = true;
     //make my view unplayable
     $('.my-cards').children('.card ').removeAttr('draggable');
@@ -568,6 +578,61 @@ function iLost() {
 
 
 //VISIBILITY
+
+function PopUps(text, type, time) {
+    if (time == undefined) {
+        time = 2
+    }
+    var alert = "<div class='alert alert-" + type + "' role='alert'> " + text + " </div>";
+    $('.alert-modal').append(alert);
+    $('.alert').addClass('alert-box');
+    setTimeout(() => {
+        $(".alert").fadeOut('slow')
+    }, time * 1000);
+    setTimeout(() => {
+        $(".alert").alert('close')
+    }, (time * 1000) + 2000);
+}
+
+function cardInfoPopUp(cardID, type) {
+    if (type == undefined) {
+        type = "primary"
+    }
+    if (cardID == 1)
+        text = "When you use the Guard, choose a player and pick a number (other than 1). If that player has that card , that player is knocked out of the round.";
+    if (cardID == 2)
+        text = "When you use the Priest, you can look at another player’s hand.";
+    if (cardID == 3)
+        text = "When you use the Baron, you and that player secretly compare your hands. The player with the lower number is knocked out of the round. In case of a tie, nothing happens.";
+    if (cardID == 4)
+        text = "When you use the Handmaid, you are immune to the effects of other players’ cards until the start of your next turn.";
+    if (cardID == 5)
+        text = "When you use the Prince, choose one player still in the round (including yourself). That player discards his or her hand ";
+    if (cardID == 6)
+        text = "When use the  King , trade the card in your hand with the card held by another player of your choice.";
+    if (cardID == 7)
+        text = "If you ever have the Countess and either the King or Prince in your hand, you must discard the Countes";
+    if (cardID == 8)
+        text = "If you use the Princess, you are immediately knocked out of the round";
+    var alert = "<div class='alert alert-" + type + "' role='alert'> " + text + " </div>";
+    $('.alert-modal').append(alert);
+    $('.alert').addClass('alert-box');
+}
+
+$(".card").hover(
+    function () {
+        var id = $(this).attr('id');
+        cardInfoPopUp(id);
+    },
+    function () {
+        setTimeout(() => {
+            $(".alert").fadeOut('slow')
+        }, 1000);
+        setTimeout(() => {
+            $(".alert").alert('close')
+        }, (1000) + 2000);
+    }
+);
 
 $(".close").on("click", function () {
     $(this).parent().parent().hide();
