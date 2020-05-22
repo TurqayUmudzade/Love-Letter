@@ -8,3 +8,7 @@ Love Letter 1.0.2
 Love Letter 1.0.3
 -Only 4,5,7,8 can be appended on your deck
 -Prince can be used on yourself
+Love Letter 1.0.4
+-Prince on  yourself would be applied everytime someone else uses it bug fixed
+Love Letter 1.0.4
+-Discard option added to all cards when everyone is protected

@@ -9,8 +9,8 @@ let unshiftcard;
 const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
-let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
-//let allcards = [1, 2, 3, 4, 5, 7, 8];
+//let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
+let allcards = [1, 8, 8, 1, 4, 4, 4,4,1,2,6,1];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -21,9 +21,10 @@ var hasCountess = false;
 let mydeckPoints = 0;
 let gameOver = false;
 let loserCounter = 0;
+let protectedCounter = 0;
 let FirstDiscardedCard = 0;
-let IsUnPlayable = false;
 let PrinceOnSelf = false;
+let isUnPlayable = false;
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
@@ -127,31 +128,40 @@ function dragover(event) {
 
 function drop(event) {
 
+    //check for countess
     if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6)) {
-        PopUps("you cant use prince or king if you have countess", "danger");
+        PopUps("you can't use prince or king if you have countess", "danger");
         return;
     }
 
+    //Can move if my turn and did not change mycards
     if (userCounter == lobbySize && didnotcheat) {
         event.preventDefault();
-        if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6))
-            if (isProtectedH == true) {
-                isProtectedH = false;
-                connection.invoke("RemoveProtection", lobbyID, myconnectionID).catch(function (err) {
-                    return console.error(err.tostring());
-                });
-            }
+        if (isProtectedH == true) {
+            isProtectedH = false;
+            //me
+            protectedCounter--;
+            //others
+            connection.invoke("RemoveProtection", lobbyID, myconnectionID).catch(function (err) {
+                return console.error(err.tostring());
+            });
+        }
 
         enemyID = $(event.target).attr("id");
         //if  my deck
+        isUnPlayable = false;
         if (enemyID == null) {
-            if (thiscard == 1 || thiscard == 2 || thiscard == 3 || thiscard == 6) {
-                PopUps("Something went wrong", "danger")
-                return;
-            }
-            if (thiscard == 5) {
-                PrinceOnSelf = true;
-            }
+            if (loserCounter + protectedCounter != lobbySize - 1) {
+
+                if (thiscard == 1 || thiscard == 2 || thiscard == 3 || thiscard == 6) {
+                    PopUps("Something went wrong", "danger")
+                    return;
+                }
+                if (thiscard == 5) {
+                    PrinceOnSelf = true;
+                }
+            } else
+                isUnPlayable = true;
         }
 
         if (!didnotcheat) {
@@ -212,7 +222,6 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
         })
     }
     if (card == 2) {
-        console.log("Priest");
         connection.invoke("Priest", lobbyID, card, towhom, bywho, card2).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -230,13 +239,11 @@ connection.on("CardPower", function (card, towhom, bywho, card2) {
         });
     }
     if (card == 5) {
-        console.log("Prince");
         connection.invoke("Prince", lobbyID, card, towhom, bywho).catch(function (err) {
             return console.error(err.tostring());
         });
     }
     if (card == 6) {
-        console.log("King");
         connection.invoke("King", lobbyID, card, towhom, bywho, card2).catch(function (err) {
             return console.error(err.tostring());
         });
@@ -302,8 +309,17 @@ connection.on("Next", function () {
 //CARDS
 //All
 connection.on("Guard", function (towhom, bywho, guess) {
+    if (isUnPlayable == true) {
+        let text = bywho + "discarded the card|<i class='fas fa-trash'></i>";
+        connection.invoke("Result", lobbyID, text, "", 1).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        return
+    }
     if (towhom == myconnectionID) {
-
         let text = bywho + " guessed: " + guess + " " + towhom;
         let loser = "";
         if (mycards[0] == guess) {
@@ -322,6 +338,16 @@ connection.on("Guard", function (towhom, bywho, guess) {
     }
 });
 connection.on("Priest", function (card, towhom, bywho, attackercard) {
+    if (isUnPlayable == true) {
+        let text = bywho + "discarded the card|<i class='fas fa-trash'></i>";
+        connection.invoke("Result", lobbyID, text, "", 1).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        return
+    }
     if (towhom == myconnectionID) {
         let text = bywho + " peeked the card of" + towhom;
         connection.invoke("PriestShowCard", lobbyID, mycards[0], bywho, text).catch(function (err) {
@@ -345,6 +371,16 @@ connection.on("PriestShowCard", function (card, attacker, text) {
     }
 });
 connection.on("Baron", function (card, towhom, bywho, attackercard) {
+    if (isUnPlayable == true) {
+        let text = bywho + "discarded the card|<i class='fas fa-trash'></i>";
+        connection.invoke("Result", lobbyID, text, "", 1).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        return;
+    }
     let text = bywho + " attacked " + towhom;
     let loser;
     if (towhom == myconnectionID) {
@@ -372,9 +408,9 @@ connection.on("Baron", function (card, towhom, bywho, attackercard) {
     }
 });
 
-
+//All
 connection.on("Handmaid", function (bywho) {
-
+    protectedCounter++;
     $('#' + bywho).append("<div class='handmaidProtected' >PROTECTED</div>");
     $('#' + bywho).removeAttr('ondrop');
     $('#' + bywho).removeAttr('ondragover');
@@ -396,6 +432,7 @@ connection.on("Handmaid", function (bywho) {
 
 //Others
 connection.on("RemoveProtection", function (user) {
+    protectedCounter--;
     $('#' + user + " .handmaidProtected").remove();
     $('#' + user).attr("ondrop", "drop(event)");
     $('#' + user).attr("ondragover", "dragover(event)");
@@ -430,6 +467,17 @@ connection.on("Prince", function (card, towhom, bywho) {
 });
 
 connection.on("King", function (card, towhom, bywho, attackercard) {
+    if (isUnPlayable == true) {
+        let text = bywho + "discarded the card|<i class='fas fa-trash'></i>";
+        connection.invoke("Result", lobbyID, text, "", 1).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        connection.invoke("Next", lobbyID).catch(function (err) {
+            return console.error(err.tostring());
+        });
+        return;
+    }
+    
     let text = bywho + " switched cards with " + towhom;
     if (towhom == myconnectionID) {
         //remove my card view
