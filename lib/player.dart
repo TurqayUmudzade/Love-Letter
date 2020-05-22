@@ -8,7 +8,7 @@ class Player {
   GameController gameController;
   bool isProtected = false;
   GameCard chosenCard;
-
+  GameCard enemyCard;
   Player(this.gameController, this.name);
 
   void drawCard (GameCard card){
