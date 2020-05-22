@@ -1,4 +1,5 @@
 import 'package:flame/sprite.dart';
+import 'package:loveletter/player.dart';
 
 class GameCard {
   Sprite image;
@@ -33,6 +34,7 @@ class GameCard {
           width: 300,
           height: 418,
         );
+        power = (Player player) => player.isProtected = true;
         break;
       case 'king':
         image = Sprite(
