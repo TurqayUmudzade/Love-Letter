@@ -21,6 +21,11 @@ class GameCard {
           width: 300,
           height: 418,
         );
+        power = (Player player){
+          if(player.cards.contains(GameCard('prince')) || player.cards.contains(GameCard('king'))){
+            player.chosenCard = this;
+          }
+        }
         break;
       case 'guard':
         image = Sprite(

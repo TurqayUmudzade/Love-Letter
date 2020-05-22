@@ -7,6 +7,7 @@ class Player {
   bool isDead = false;
   GameController gameController;
   bool isProtected = false;
+  GameCard chosenCard;
 
   Player(this.gameController, this.name);
 
