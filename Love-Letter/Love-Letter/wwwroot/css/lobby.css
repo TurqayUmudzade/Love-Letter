@@ -216,6 +216,7 @@
     top: 30%;
     transform: translateX(-50%);
     text-align: center;
+    z-index:1;
 }
 
 
@@ -236,7 +237,7 @@
     left: 50%;
     transform: translateX(-50%);
     width: fit-content;
-    z-index: 1;
+    z-index: 800;
 }
 
 /* 

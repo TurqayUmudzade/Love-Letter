@@ -10,7 +10,7 @@ const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
 //let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
-let allcards = [1, 8, 8, 1, 4, 4, 4,4,1,2,6,1];
+let allcards = [6, 6, 6, 6, 2, 2, 2, 1, 3, 4, 2, 1, 5];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -477,7 +477,7 @@ connection.on("King", function (card, towhom, bywho, attackercard) {
         });
         return;
     }
-    
+
     let text = bywho + " switched cards with " + towhom;
     if (towhom == myconnectionID) {
         //remove my card view
@@ -662,6 +662,7 @@ function PopUps(text, type, time) {
 }
 
 function cardInfoPopUp(cardID, type) {
+    let text;
     if (type == undefined) {
         type = "primary"
     }
@@ -687,9 +688,12 @@ function cardInfoPopUp(cardID, type) {
 }
 
 $(".card").hover(
+
     function () {
+        console.log("here");
         var id = $(this).attr('id');
         cardInfoPopUp(id);
+        
     },
     function () {
         setTimeout(() => {

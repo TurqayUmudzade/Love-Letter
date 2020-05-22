@@ -29,7 +29,7 @@ namespace Love_Letter.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index","Home");
         }
 
 
@@ -85,10 +85,10 @@ namespace Love_Letter.Controllers
                     var signInresult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
 
                     if (signInresult.Succeeded)
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index","Home");
 
-                    return Content(signInresult.ToString());
-                   // return View("Login");
+                    
+                    return View("Login");
                 }
                 else
                 {
