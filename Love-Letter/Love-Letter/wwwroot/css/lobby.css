@@ -1,7 +1,7 @@
 #table {
     overflow: hidden;
     background-image: url(../images/backgrounds/442432.jpg);
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
 }
 
 .table {
@@ -27,6 +27,7 @@
         }
 
         .enemy-cards .card-container .enemy-deck {
+            position: relative;
             width: 80%;
             height: 80%;
             border: 1px solid rgba(0, 0, 0, 0.4);
@@ -178,7 +179,6 @@
         font-size: 18px;
         text-align: center;
         margin-bottom: 25px !important;
-    
         height: fit-content;
     }
 
@@ -207,11 +207,36 @@
     background: rgba(0,0,0,0.6)
 }
 
+.gg {
+    font-weight: bold;
+    font-size: 22px;
+    height: fit-content;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+
+.handmaidProtected {
+    font-weight: bold;
+    font-size: 22px;
+    height: fit-content;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
 .alert-box {
     position: absolute;
-    bottom: 0;
-    right: 10px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     width: fit-content;
+    z-index: 1;
 }
 
 /* 

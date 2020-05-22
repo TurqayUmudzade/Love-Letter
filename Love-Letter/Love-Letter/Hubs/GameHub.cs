@@ -25,7 +25,7 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("RecievEnemyList", enemies);
         }
 
-        public async Task GiveFirstCards(int[] a, string lobbyID,int FirstDiscardedCard)
+        public async Task GiveFirstCards(int[] a, string lobbyID, int FirstDiscardedCard)
         {
             await Clients.Group(lobbyID).SendAsync("GiveCards", a, FirstDiscardedCard);
         }
@@ -125,9 +125,9 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("GameOver");
         }
 
-        public async Task RoundWinner(string lobbyID, int card, int order,string winner)
+        public async Task RoundWinner(string lobbyID, int card, int order, string winner)
         {
-            await Clients.Group(lobbyID).SendAsync("RoundWinner", card, order,winner);
+            await Clients.Group(lobbyID).SendAsync("RoundWinner", card, order, winner);
         }
 
         public async Task LoserCounterIncrement(string lobbyID)
@@ -135,7 +135,7 @@ namespace Love_Letter.Hubs
             await Clients.Group(lobbyID).SendAsync("LoserCounterIncrement");
         }
 
-        
+
 
         //FOR later
         public Task LeaveLobby(string roomName)

@@ -21,7 +21,7 @@ var hasCountess = false;
 let mydeckPoints = 0;
 let gameOver = false;
 let loserCounter = 0;
-let FirstDiscardedCard=0;
+let FirstDiscardedCard = 0;
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
@@ -126,7 +126,7 @@ function dragover(event) {
 function drop(event) {
 
     if (hasCountess == true && (parseInt(thiscard) == 5 || parseInt(thiscard) == 6)) {
-        PopUps("you cant use prince or king if you have countess","danger");
+        PopUps("you cant use prince or king if you have countess", "danger");
         return;
     }
 
@@ -332,7 +332,7 @@ connection.on("PriestShowCard", function (card, attacker, text) {
     $(".modal-content").addClass(classDeterminer(2));
     if (attacker == myconnectionID) {
         let popUptext = "The enemy's card is a " + classDeterminer(card);
-        PopUps(popUptext,"warning");
+        PopUps(popUptext, "warning", 5);
     }
 });
 connection.on("Baron", function (card, towhom, bywho, attackercard) {
@@ -446,7 +446,7 @@ connection.on("Result", function (text, loser, attackCard) {
     let content = "<div class='modal-info-content' >  <p class='card-text'>" + info[0] + "<br>" + info[1] + " </p> </div>";
     $(".modal-content").append(content);
     $(".modal-content").addClass(classDeterminer(attackCard));
-    $('#' + loser).append("<div>LOST</div>");
+    $('#' + loser).append("<div class='gg'>LOST</div>");
     $('#' + loser).removeAttr('ondrop');
     $('#' + loser).removeAttr('ondragover');
     //UPDATE add here remove droppable
@@ -583,7 +583,7 @@ function iLost() {
 //VISIBILITY
 
 function PopUps(text, type, time) {
-    
+
     if (time == undefined) {
         time = 2
     }
@@ -593,9 +593,9 @@ function PopUps(text, type, time) {
     setTimeout(() => {
         $(".alert").fadeOut('slow')
     }, time * 1000);
-    /*setTimeout(() => {
+    setTimeout(() => {
         $(".alert").alert('close')
-    }, (time * 1000) + 4000);*/
+    }, (time * 1000) + 4000);
 }
 
 function cardInfoPopUp(cardID, type) {

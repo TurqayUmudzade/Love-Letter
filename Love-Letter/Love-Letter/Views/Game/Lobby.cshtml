@@ -4,71 +4,71 @@
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 @model LobbiesViewModel
-    <body id="table">
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
+<body id="table">
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
 
-            </div>
         </div>
-        <div class="alert-modal"></div>
-        <h1 class="d-none">
-            Lobby#
-            <span id="lobbyID">@Model.Lobby.LobbyID</span>
-            <span id="lobby-space">@Model.Lobby.Space</span>
-        </h1>
-        <div class="table">
+    </div>
+    <div class="alert-modal"></div>
+    <h1 class="d-none">
+        Lobby#
+        <span id="lobbyID">@Model.Lobby.LobbyID</span>
+        <span id="lobby-space">@Model.Lobby.Space</span>
+    </h1>
+    <div class="table">
 
-            <div class="enemy-cards">
-                @if (Model.Lobby.user1 != null && Model.Lobby.user1 != Model.username)
-                {
-                    <div class="card-container ">
-                        <h4 class="username-h4">@Model.Lobby.user1</h4>
-                        <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
-                    </div>
-                }
+        <div class="enemy-cards">
+            @if (Model.Lobby.user1 != null && Model.Lobby.user1 != Model.username)
+            {
+                <div class="card-container ">
+                    <h4 class="username-h4">@Model.Lobby.user1</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                </div>
+            }
 
-                @if (Model.Lobby.user2 != null && (Model.Lobby.user2 != Model.username || true))
-                {
-                    <div class="card-container ">
-                        <h4 class="username-h4">@Model.Lobby.user2</h4>
-                        <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
-                    </div>
-                }
-                @if (Model.Lobby.user3 != null && (Model.Lobby.user3 != Model.username || true))
-                {
-                    <div class="card-container ">
-                        <h4 class="username-h4">@Model.Lobby.user3</h4>
-                        <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
-                    </div>
-                }
-                @if (Model.Lobby.user4 != null && (Model.Lobby.user4 != Model.username || true))
-                {
-                    <div class="card-container ">
-                        <h4 class="username-h4">@Model.Lobby.user4</h4>
-                        <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
-                    </div>
-                }
-            </div>
+            @if (Model.Lobby.user2 != null && (Model.Lobby.user2 != Model.username || true))
+            {
+                <div class="card-container ">
+                    <h4 class="username-h4">@Model.Lobby.user2</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                </div>
+            }
+            @if (Model.Lobby.user3 != null && (Model.Lobby.user3 != Model.username || true))
+            {
+                <div class="card-container ">
+                    <h4 class="username-h4">@Model.Lobby.user3</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                </div>
+            }
+            @if (Model.Lobby.user4 != null && (Model.Lobby.user4 != Model.username || true))
+            {
+                <div class="card-container ">
+                    <h4 class="username-h4">@Model.Lobby.user4</h4>
+                    <div class="enemy-deck" ondrop="drop(event)" ondragover="dragover(event)"></div>
+                </div>
+            }
+        </div>
 
-            <div class="pile">
-                <div class="card pile-card">back of the card</div>
-            </div>
+        <div class="pile">
+            <div class="card pile-card">back of the card</div>
+        </div>
 
-            <div class="my-side">
-                <div class="deck " ondrop="drop(event)" ondragover="dragover(event)"></div>
-                <div class="right">
-                    <h4 class="text-center">@Model.username</h4>
-                    <div class="my-cards-container">
-                        <div class="my-cards"></div>
-                    </div>
+        <div class="my-side">
+            <div class="deck " ondrop="drop(event)" ondragover="dragover(event)"></div>
+            <div class="right">
+                <h4 class="text-center">@Model.username</h4>
+                <div class="my-cards-container">
+                    <div class="my-cards"></div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-    </body>
+</body>
 <script src="~/lib/signalr/signalr.js"></script>
 <script src="~/lib/signalr/game.js"></script>

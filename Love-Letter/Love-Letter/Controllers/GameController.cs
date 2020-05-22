@@ -36,7 +36,7 @@ namespace Love_Letter.Controllers
 
         [HttpPost]
 
-        public IActionResult CreateLobby (string password,string space)
+        public IActionResult CreateLobby(string password, string space)
         {
             Lobby lobby = new Lobby(Int32.Parse(space));
             if (!string.IsNullOrEmpty(password))
@@ -56,16 +56,39 @@ namespace Love_Letter.Controllers
 
             Lobby lobby = _context.Lobbies.Find(lobbyID);
 
-            if (String.IsNullOrEmpty(lobby.user1))
-                lobby.user1 = username;
-            else if (String.IsNullOrEmpty(lobby.user2))
-                lobby.user2 = username;
-            else if (String.IsNullOrEmpty(lobby.user3))
-                lobby.user3 = username;
-            else if (String.IsNullOrEmpty(lobby.user4))
-                lobby.user4 = username;
-            else
-                return Content("LobbyFull");
+            if (lobby.Space == 4)
+            {
+                if (String.IsNullOrEmpty(lobby.user1))
+                    lobby.user1 = username;
+                else if (String.IsNullOrEmpty(lobby.user2))
+                    lobby.user2 = username;
+                else if (String.IsNullOrEmpty(lobby.user3))
+                    lobby.user3 = username;
+                else if (String.IsNullOrEmpty(lobby.user4))
+                    lobby.user4 = username;
+                else
+                    return Content("LobbyFull");
+            }
+            if (lobby.Space == 3)
+            {
+                if (String.IsNullOrEmpty(lobby.user1))
+                    lobby.user1 = username;
+                else if (String.IsNullOrEmpty(lobby.user2))
+                    lobby.user2 = username;
+                else if (String.IsNullOrEmpty(lobby.user3))
+                    lobby.user3 = username;
+                else
+                    return Content("LobbyFull");
+            }
+            if (lobby.Space == 2)
+            {
+                if (String.IsNullOrEmpty(lobby.user1))
+                    lobby.user1 = username;
+                else if (String.IsNullOrEmpty(lobby.user2))
+                    lobby.user2 = username;
+                else
+                    return Content("LobbyFull");
+            }
 
             lobby.numberOfPlayers++;
             _context.SaveChanges();
