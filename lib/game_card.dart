@@ -4,6 +4,7 @@ import 'package:loveletter/player.dart';
 class GameCard {
   Sprite image;
   Function power;
+  int number;
   String name;
   GameCard(this.name) {
     switch (name) {
@@ -27,6 +28,11 @@ class GameCard {
           width: 300,
           height: 418,
         );
+        power = (Player player, GameCard card){
+          if (player.cards.contains(card)){
+            player.isDead = true;
+          }
+        };
         break;
       case 'handmaid':
         image = Sprite(
