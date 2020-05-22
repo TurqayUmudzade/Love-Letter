@@ -406,6 +406,9 @@ connection.on("Prince", function (card, towhom, bywho) {
     let text = bywho + " made " + towhom + " discard their card| ";
     let loser = "";
     if (towhom == myconnectionID || PrinceOnSelf) {
+        if (PrinceOnSelf == true) {
+            PrinceOnSelf = false;
+        }
         $('.my-cards .card').remove();
         if (mycards[0] == 8) {
             loser = myconnectionID
