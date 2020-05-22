@@ -6,6 +6,7 @@ class Player {
   List<GameCard> cards = [];
   bool isDead = false;
   GameController gameController;
+  bool isProtected = false;
 
   Player(this.gameController, this.name);
 

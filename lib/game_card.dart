@@ -56,6 +56,7 @@ class GameCard {
           width: 300,
           height: 418,
         );
+        power = (Player player) => player.cards.removeLast();
         break;
       case 'princess':
         image = Sprite(
