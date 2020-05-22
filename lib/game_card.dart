@@ -42,6 +42,11 @@ class GameCard {
           width: 300,
           height: 418,
         );
+        power = (Player player1, Player player2) {
+          List<GameCard> tmp = player1.cards;
+          player1.cards = player2.cards;
+          player2.cards = tmp;
+        };
         break;
       case 'priest':
         image = Sprite(
@@ -49,6 +54,7 @@ class GameCard {
           width: 300,
           height: 418,
         );
+
         break;
       case 'prince':
         image = Sprite(
@@ -56,7 +62,7 @@ class GameCard {
           width: 300,
           height: 418,
         );
-        power = (Player player) => player.cards.removeLast();
+        power = (Player player) => player.discard(player.cards[0]);
         break;
       case 'princess':
         image = Sprite(
