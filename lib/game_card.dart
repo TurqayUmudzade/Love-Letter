@@ -101,6 +101,13 @@ class GameCard {
         number = 8;
         power = (Player player) => player.isDead = true;
         break;
+      case 'secret':
+        image = Sprite(
+          name + '.png',
+          width: 300,
+          height: 418,
+        );
+        break;
       case 'background':
         image = Sprite(
           name + '.jpg',

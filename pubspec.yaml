@@ -53,6 +53,7 @@ flutter:
     - assets/images/prince.png
     - assets/images/princess.png
     - assets/images/background.jpg
+    - assets/images/secret.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

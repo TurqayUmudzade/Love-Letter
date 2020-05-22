@@ -19,6 +19,7 @@ class GameController extends Game {
     'priest',
     'prince',
     'princess',
+    'secret',
     'background',
   ];
 
@@ -28,7 +29,7 @@ class GameController extends Game {
   GameController() {
     initialize();
     cards = List.generate(
-      9,
+      10,
       (i) => GameCard(names[i]),
     );
     deck = [
@@ -51,10 +52,30 @@ class GameController extends Game {
     ];
     deck.shuffle();
     players = [];
-    players.add(Player(
-      this,
-      'Player 1',
-    ));
+    players.add(
+      Player(
+        this,
+        'Player 1',
+      ),
+    );
+    players.add(
+      Player(
+        this,
+        'Player 2',
+      ),
+    );
+    players.add(
+      Player(
+        this,
+        'Player 3',
+      ),
+    );
+    players.add(
+      Player(
+        this,
+        'Player 4',
+      ),
+    );
   }
 
   void initialize() async {
@@ -68,8 +89,25 @@ class GameController extends Game {
   void update(double t) {}
 
   void render(Canvas c) async {
+    Position p1 = Position(
+      screenSize.width / 6 - 300 * 0.43 / 2,
+      10,
+    );
+    Position p2 = Position(
+      screenSize.width / 2 - 300 * 0.43 / 2,
+      10,
+    );
+    Position p3 = Position(
+      screenSize.width * 5 / 6 - 300 * 0.43 / 2,
+      10,
+    );
+    Position p4 = Position(
+      screenSize.width * 5 / 6 - 300 * 0.43 / 2,
+      screenSize.height - 418 * 0.43 - 10,
+    );
+
     players[0].drawCard(deck[0]);
-    cards[8].image.renderScaled(
+    cards[9].image.renderScaled(
           c,
           Position(
             0,
@@ -80,139 +118,56 @@ class GameController extends Game {
 
     players[0].cards[0].image.renderScaled(
           c,
+          p4,
+          scale: 0.43,
+        );
+
+    cards[8].image.renderScaled(
+          c,
           Position(
-            screenSize.width - screenSize.width / 6 - 300 * 0.43 / 2,
+            screenSize.width / 6 - 300 * 0.43 / 2,
             screenSize.height - 418 * 0.43 - 10,
           ),
           scale: 0.43,
         );
 
-    Paint deckColor = Paint()..color = Colors.amber;
-    RRect deckRRect = RRect.fromLTRBXY(
-      screenSize.width / 6 - 300 * 0.43 / 2,
-      screenSize.height - 418 * 0.43 - 10,
-      screenSize.width / 6 + 300 * 0.43 / 2,
-      screenSize.height - 10,
-      10,
-      10,
-    );
-    c.drawRRect(deckRRect, deckColor);
-    Paint enemyColor = Paint()..color = Color(0xFF999999);
-    RRect enemy1 = RRect.fromLTRBXY(
-      screenSize.width / 6 - 300 * 0.43 / 2,
-      10,
-      screenSize.width / 6 + 300 * 0.43 / 2,
-      418 * 0.43 + 10,
-      10,
-      10,
-    );
-    c.drawRRect(enemy1, enemyColor);
-
-    RRect enemy2 = RRect.fromLTRBXY(
-      screenSize.width / 2 - 300 * 0.43 / 2,
-      10,
-      screenSize.width / 2 + 300 * 0.43 / 2,
-      418 * 0.43 + 10,
-      10,
-      10,
-    );
-    c.drawRRect(enemy2, enemyColor);
-
-    RRect enemy3 = RRect.fromLTRBXY(
-      screenSize.width * 5 / 6 - 300 * 0.43 / 2,
-      10,
-      screenSize.width * 5 / 6 + 300 * 0.43 / 2,
-      418 * 0.43 + 10,
-      10,
-      10,
-    );
-    c.drawRRect(enemy3, enemyColor);
-    TextPainter enemyName1 = TextPainter(
-      text: TextSpan(
-        text: 'Enemy 1',
-        style: TextStyle(
-          backgroundColor: Colors.transparent,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.center,
-    );
-    enemyName1.layout();
-    enemyName1.paint(
-      c,
-      Offset(
-        screenSize.width / 6 - 300 * 0.43 / 2 + 5,
-        15,
-      ),
-    );
-
-    TextPainter enemyName2 = TextPainter(
-      text: TextSpan(
-        text: 'Enemy 2',
-        style: TextStyle(
-          backgroundColor: Colors.transparent,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.center,
-    );
-    enemyName2.layout();
-    enemyName2.paint(
-      c,
-      Offset(
-        screenSize.width / 2 - 300 * 0.43 / 2 + 5,
-        15,
-      ),
-    );
-
-    TextPainter enemyName3 = TextPainter(
-      text: TextSpan(
-        text: 'Enemy 3',
-        style: TextStyle(
-          backgroundColor: Colors.transparent,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.center,
-    );
-    enemyName3.layout();
-    enemyName3.paint(
-      c,
-      Offset(
-        screenSize.width * 5 / 6 - 300 * 0.43 / 2 + 5,
-        15,
-      ),
-    );
-
-    TextPainter tp = TextPainter(
+    TextPainter deckText = TextPainter(
       text: TextSpan(
         text: 'Deck',
         style: TextStyle(
           backgroundColor: Colors.transparent,
-          fontSize: 25,
+          fontSize: 35,
           fontWeight: FontWeight.bold,
-          color: Colors.black87,
+          color: Colors.black,
         ),
       ),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     );
-    tp.layout();
-    tp.paint(
+    deckText.layout();
+    deckText.paint(
       c,
       Offset(
-        screenSize.width / 6 - tp.width / 2,
-        screenSize.height - 418 * 0.43 / 2 - tp.height / 2 - 10,
+        screenSize.width / 6 - deckText.width / 2,
+        screenSize.height - 418 * 0.43 / 2 - deckText.height / 2 - 75,
       ),
     );
+
+    cards[8].image.renderScaled(
+          c,
+          p1,
+          scale: 0.43,
+        );
+    cards[8].image.renderScaled(
+          c,
+          p2,
+          scale: 0.43,
+        );
+    cards[8].image.renderScaled(
+          c,
+          p3,
+          scale: 0.43,
+        );
+
   }
 }
