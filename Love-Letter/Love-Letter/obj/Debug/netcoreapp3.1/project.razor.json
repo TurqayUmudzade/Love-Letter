@@ -20566,6 +20566,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Game\\LobbyFull.cshtml",
+      "TargetPath": "Views\\Game\\LobbyFull.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Turqay\\Desktop\\LoveLetter\\Love-Letter\\Love-Letter\\Views\\Account\\VerifyEmail.cshtml",
       "TargetPath": "Views\\Account\\VerifyEmail.cshtml",
       "FileKind": "mvc"

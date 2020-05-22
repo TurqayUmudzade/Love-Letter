@@ -34,6 +34,12 @@ namespace Love_Letter.Controllers
             return View(model);
         }
 
+        public IActionResult LobbyFull()
+        {
+          
+            return View();
+        }
+
         [HttpPost]
 
         public IActionResult CreateLobby(string password, string space)
@@ -67,7 +73,7 @@ namespace Love_Letter.Controllers
                 else if (String.IsNullOrEmpty(lobby.user4))
                     lobby.user4 = username;
                 else
-                    return Content("LobbyFull");
+                    return View("LobbyFull");
             }
             if (lobby.Space == 3)
             {
