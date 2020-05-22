@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> @ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css">
+    <link href="home.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/aboutus.css">
+
+    <title></title>
+</head>
+
+<body>
+    <div class="jumbotron text-center ">
+        <h1>Love Letter</h1>
+        <blockquote>Love me or leave me forever (c) Three Days Grace </blockquote>
+
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Love Letter</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.ActionLink(" Index ","Home ")">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.ActionLink(" Index ","Game ")">Lobbies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">About Us</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.ActionLink(" Login ","Account ")">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.ActionLink(" Register ","Account ")">Register</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <section id="team">
+
+        <div class="container">
+            <div class="text defaultText">
+                <h1>Our Team</h1>
+                <p>Donec vulputate urna sed rutrum venenatis. Cras consequat magna quis arcu elementum, quis congue risus volutpat.</p>
+            </div>
+            <div class="team">
+                <div class="teamMember">
+                    <div class="designBox"></div>
+                    <div class="memberInfo">
+
+                        <h3>Turqay Umudzade</h3>
+                        <span>Full Stack Web Developer</span>
+
+
+                        <div class="icons">
+                            <i class="im im-facebook"></i>
+                            <i class="im im-twitter"></i>
+                            <i class="im im-linkedin"></i>
+                            <i class="im im-github"></i>
+                        </div>
+                        <p>Proin arcu ligula, malesuada id tincidunt laoreet, facilisis at justo. Sed at lorem.</p>
+                    </div>
+                    <div class="image">
+                        <img src="assets/images/team/1.jpg" alt="">
+                    </div>
+
+                </div>
+
+                <div class="teamMember">
+                    <div class="designBox"></div>
+                    <div class="memberInfo">
+                        <h3>Isa Bagirov</h3>
+                        <span>Visual Designer</span>
+
+
+                        <div class="icons">
+                            <i class="im im-facebook"></i>
+                            <i class="im im-twitter"></i>
+                            <i class="im im-linkedin"></i>
+                            <i class="im im-github"></i>
+                        </div>
+                        <p>Aliquam eget convallis nunc, et porta libero. Etiam velit, lobortis ut tristique.</p>
+                    </div>
+                    <div class="image">
+                        <img src="assets/images/team/2.jpg" alt="">
+                    </div>
+
+                </div>
+
+                <div class="teamMember">
+                    <div class="designBox"></div>
+                    <div class="memberInfo">
+                        <h3>Rashad Aliev</h3>
+                        <span>Android/IOS Developer</span>
+
+
+                        <div class="icons">
+                            <i class="im im-facebook"></i>
+                            <i class="im im-twitter"></i>
+                            <i class="im im-linkedin"></i>
+                            <i class="im im-github"></i>
+                        </div>
+                        <p>Proin arcu ligula, malesuada id tincidunt laoreet, facilisis at justo. Sed at lorem.</p>
+                    </div>
+                    <div class="image">
+                        <img src="assets/images/team/3.jpg" alt="">
+                    </div>
+
+                </div>
+
+                <div class="teamMember">
+                    <div class="designBox"></div>
+                    <div class="memberInfo">
+                        <h3>Mehriban</h3>
+                        <span>Unit Testing</span>
+
+
+                        <div class="icons">
+                            <i class="im im-facebook"></i>
+                            <i class="im im-twitter"></i>
+                            <i class="im im-linkedin"></i>
+                            <i class="im im-github"></i>
+                        </div>
+                        <p>Nunc posuere lectus ut aliquet facilisis. Nam varius id magna et convallis.</p>
+                    </div>
+                    <div class="image">
+                        <img src="assets/images/team/4.jpg" alt="">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- Footer -->
+    <footer class="page-footer font-small blue">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            © 2020 Copyright:
+            <a href="https://mdbootstrap.com/">Love-Letter.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</body>
+
+</html>
