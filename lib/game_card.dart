@@ -64,6 +64,7 @@ class GameCard {
           width: 300,
           height: 418,
         );
+        power = (Player player) => player.isDead = true;
         break;
       case 'background':
         image = Sprite(
