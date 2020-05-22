@@ -15,6 +15,13 @@ class GameCard {
           height: 418,
         );
         number = 3;
+        power = (Player player1, Player player2) {
+          if (player1.cards[0].number > player2.cards[0].number) {
+            player2.isDead = true;
+          } else if (player2.cards[0].number > player1.cards[0].number) {
+            player2.isDead = true;
+          }
+        };
         break;
       case 'countess':
         image = Sprite(
@@ -72,9 +79,9 @@ class GameCard {
           height: 418,
         );
         number = 2;
-        power = (Player player1, Player player2){
+        power = (Player player1, Player player2) {
           player1.enemyCard = player2.cards[0];
-        }
+        };
         break;
       case 'prince':
         image = Sprite(
