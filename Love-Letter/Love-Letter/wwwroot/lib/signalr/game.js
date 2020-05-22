@@ -22,6 +22,8 @@ let mydeckPoints = 0;
 let gameOver = false;
 let loserCounter = 0;
 let FirstDiscardedCard = 0;
+let IsUnPlayable = false;
+let PrinceOnSelf = false;
 //CONNECT TO SOCKET
 var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
@@ -141,11 +143,17 @@ function drop(event) {
             }
 
         enemyID = $(event.target).attr("id");
-
+        //if  my deck
         if (enemyID == null) {
-            PopUps("Something went wrong", "danger")
-            return;
+            if (thiscard == 1 || thiscard == 2 || thiscard == 3 || thiscard == 6) {
+                PopUps("Something went wrong", "danger")
+                return;
+            }
+            if (thiscard == 5) {
+                PrinceOnSelf = true;
+            }
         }
+
         if (!didnotcheat) {
             PopUps("Changed HTML ELEMENT", "danger");
             iLost();
@@ -292,6 +300,7 @@ connection.on("Next", function () {
 });
 
 //CARDS
+//All
 connection.on("Guard", function (towhom, bywho, guess) {
     if (towhom == myconnectionID) {
 
@@ -396,12 +405,15 @@ connection.on("RemoveProtection", function (user) {
 connection.on("Prince", function (card, towhom, bywho) {
     let text = bywho + " made " + towhom + " discard their card| ";
     let loser = "";
-    if (towhom == myconnectionID) {
-
+    if (towhom == myconnectionID || PrinceOnSelf) {
         $('.my-cards .card').remove();
         if (mycards[0] == 8) {
             loser = myconnectionID
         } else {
+            //remove my card and get an another one
+            connection.invoke("CardMoved", lobbyID, mycards[0].toString(), myconnectionID).catch(function (err) {
+                return console.error(err.tostring());
+            });
             mycards.shift();
             getCard(allcards[0]);
         }
