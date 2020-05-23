@@ -46,8 +46,8 @@
 
 .card {
     position: relative;
-    height: 250px;
-    width: 165px;
+    height: 250px !important;
+    width: 165px !important;
     border: 1px solid black;
     border-radius: 12px;
     margin: 50px 20px;
@@ -205,6 +205,10 @@
 
 .guard-rgba {
     background: rgba(0,0,0,0.6)
+}
+
+.gg-deck {
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .gg {

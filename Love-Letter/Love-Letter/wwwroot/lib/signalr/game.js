@@ -9,8 +9,7 @@ let unshiftcard;
 const lobbySize = parseInt($('#lobby-space').text());
 //GAME VARS
 let thiscard;
-//let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
-let allcards = [6, 6, 6, 6, 2, 2, 2, 1, 3, 4, 2, 1, 5];
+let allcards = [1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8];
 let mycards = new Array();
 var enemydeck;
 var lobbyID = $('#lobbyID').text();
@@ -113,6 +112,14 @@ var draggedcard;
 var draggedcardtype;
 
 function dragStart(event) {
+    var id = $(event.target).attr('id')
+    cardInfoPopUp(id);
+    setTimeout(() => {
+        $(".alert").fadeOut('slow')
+    }, 2000);
+    setTimeout(() => {
+        $(".alert").alert('close')
+    }, (2000) + 2000);
     if (userCounter == lobbySize) {
         thiscard = $(event.target).attr('id');
         didnotcheat = mycards.includes(parseInt(thiscard));
@@ -510,6 +517,7 @@ connection.on("Result", function (text, loser, attackCard) {
     $(".modal-content").append(content);
     $(".modal-content").addClass(classDeterminer(attackCard));
     $('#' + loser).append("<div class='gg'>LOST</div>");
+    $('#' + loser).addClass('.gg-deck');
     $('#' + loser).removeAttr('ondrop');
     $('#' + loser).removeAttr('ondragover');
     //UPDATE add here remove droppable
@@ -541,7 +549,7 @@ connection.on("ResultKing", function (text, sender, returnCard) {
 //All
 connection.on("GameOver", function () {
     gameOver = true;
-    if (userCounter == 4) {
+    if (userCounter == lobbySize) {
         if (Lost == false) {
             connection.invoke("RoundWinner", lobbyID, mycards[0], 1, myconnectionID).catch(function (err) {
                 return console.error(err.tostring());
@@ -557,10 +565,11 @@ connection.on("GameOver", function () {
 //All
 connection.on("RoundWinner", function (highestCard, order, winner) {
     userCounter++;
-    if (order == 4) {
-        alert("highest card is" + highestCard + "the winner is" + winner);
+    if (order == lobbySize) {
+        let finalText = "highest card is " + highestCard + " the winner is " + winner;
+        PopUps(finalText,"primary",10)
     } else {
-        if (userCounter == 4) {
+        if (userCounter == lobbySize) {
             if (Lost == false) {
                 if (mycards[0] > highestCard) {
                     connection.invoke("RoundWinner", lobbyID, mycards[0], order + 1, myconnectionID).catch(function (err) {
@@ -664,7 +673,7 @@ function PopUps(text, type, time) {
 function cardInfoPopUp(cardID, type) {
     let text;
     if (type == undefined) {
-        type = "primary"
+        type = "info"
     }
     if (cardID == 1)
         text = "When you use the Guard, choose a player and pick a number (other than 1). If that player has that card , that player is knocked out of the round.";
